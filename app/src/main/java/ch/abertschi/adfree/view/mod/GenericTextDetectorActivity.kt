@@ -71,7 +71,7 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
                 it.dismiss()
             }
             .create()
-            d.window?.setBackgroundDrawableResource(R.color.colorBackground)
+        d.window?.setBackgroundDrawableResource(R.color.colorBackground)
         d.show()
     }
 
@@ -110,7 +110,10 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 
             var entry = data[position]
-            holder.more.onClick { presenter.onMoreClicked(entry) }
+
+            // CORREGIT: Canviat .onClick per .setOnClickListener
+            holder.more.setOnClickListener { presenter.onMoreClicked(entry) }
+
             holder.title.setText(entry.packageName)
             holder.subtitle.setText(entry.content.joinToString(separator = "\n"))
 
@@ -157,4 +160,3 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
     }
 
 }
-

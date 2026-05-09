@@ -39,7 +39,12 @@ class CategoriesActivity : AppCompatActivity(), AnkoLogger {
         presenter = CategoriesPresenter(this)
 
         findViewById<ScrollView>(R.id.mod_active_scroll).scrollTo(0, 0)
-        findViewById<TextView>(R.id.detectors_activity_title).onClick { presenter.onTabTitle() }
+
+        // CORREGIT: Canviat onClick per setOnClickListener
+        findViewById<TextView>(R.id.detectors_activity_title).setOnClickListener {
+            presenter.onTabTitle()
+        }
+
         initRecycleView()
     }
 
@@ -93,6 +98,7 @@ class CategoryAdapter(
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
+        // CORREGIT: Totes les referències usen ara el mètode natiu
         holder.view.setOnClickListener {
             presenter.onCategorySelected(cateogries[position])
         }
@@ -102,10 +108,6 @@ class CategoryAdapter(
         holder.subtitle.setOnClickListener {
             presenter.onCategorySelected(cateogries[position])
         }
-        holder.view.setOnClickListener {
-            presenter.onCategorySelected(cateogries[position])
-        }
-
 
         holder.title.text = "> " + cateogries[position]
         holder.subtitle.text = "configure detectors for " + cateogries[position]

@@ -18,13 +18,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import ch.abertschi.adfree.BuildConfig
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.di.AboutModul
 import ch.abertschi.adfree.presenter.AboutPresenter
 import ch.abertschi.adfree.view.ViewSettings
 import ch.abertschi.adfree.view.about.AboutView
-import org.jetbrains.anko.onClick
 
 /**
  * Created by abertschi on 21.04.17.
@@ -49,24 +47,24 @@ class AboutActivity : Fragment(), AboutView {
         val textView = view?.findViewById(R.id.authorTitle) as TextView
         textView.typeface = typeFace
         val text =
-                "built with much &lt;3 by <font color=#FFFFFF>abertschi</font>. " +
-                        "get my latest hacks and follow me on twitter."
+            "built with much &lt;3 by <font color=#FFFFFF>abertschi</font>. " +
+                    "get my latest hacks and follow me on twitter."
 
         textView?.text = Html.fromHtml(text)
 
-        view.findViewById<ImageView>(R.id.twitter).onClick {
+        view.findViewById<ImageView>(R.id.twitter).setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://twitter.com/andrinbertschi?rel=adfree"))
+                Uri.parse("https://twitter.com/andrinbertschi?rel=adfree"))
             this.context!!.startActivity(browserIntent)
         }
 
-        view.findViewById<ImageView>(R.id.website).onClick {
+        view.findViewById<ImageView>(R.id.website).setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW,
-                    Uri.parse("http://abertschi.ch?rel=adfree"))
+                Uri.parse("http://abertschi.ch?rel=adfree"))
             this.context!!.startActivity(browserIntent)
         }
 
-        view.findViewById<ImageView>(R.id.moresettings).onClick {
+        view.findViewById<ImageView>(R.id.moresettings).setOnClickListener {
             presenter.showMoreSettings()
         }
 

@@ -1,33 +1,31 @@
+/*
+ * Ad Free
+ * Copyright (c) 2017 by abertschi, www.abertschi.ch
+ * See the file "LICENSE" for the full license governing this code.
+ */
+
 package ch.abertschi.adfree.view.mod
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SwitchCompat
 import android.text.Html
-
-import android.view.View
-
-import android.widget.TextView
-
-import android.support.v7.app.AlertDialog
-import android.widget.SeekBar
-
-
 import android.view.LayoutInflater
+import android.view.View
+import android.widget.SeekBar
+import android.widget.TextView
 import ch.abertschi.adfree.AdFreeApplication
+import ch.abertschi.adfree.BuildConfig
 import ch.abertschi.adfree.R
 import org.jetbrains.anko.*
-
-import android.content.Intent
-import android.net.Uri
-import ch.abertschi.adfree.BuildConfig
-
 
 class ModActivity : AppCompatActivity(), AnkoLogger {
 
     private lateinit var delayDialog: AlertDialog
-
     private lateinit var delayLayout: View
     private var enabledSwitch: SwitchCompat? = null
     private var alwaysOnSwitch: SwitchCompat? = null
@@ -35,17 +33,14 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
     private var onCreateActive = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        onCreateActive = true;
+        onCreateActive = true
         super.onCreate(savedInstanceState)
         setContentView(R.layout.mod_activity)
 
-        presenter = ModPresenter(this,
-                (application as AdFreeApplication).prefs)
+        presenter = ModPresenter(this, (application as AdFreeApplication).prefs)
 
         val textView = findViewById(R.id.modTitle) as TextView
-        val text =
-                "change how <font color=#FFFFFF>ad-free</font> " +
-                        "internally works."
+        val text = "change how <font color=#FFFFFF>ad-free</font> internally works."
         textView.text = Html.fromHtml(text)
 
         val factory = LayoutInflater.from(this)
@@ -53,39 +48,37 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
 
         enabledSwitch = findViewById(R.id.enableAdfreeSwitch)
 
-        findViewById<View>(R.id.enableText).onClick { presenter.onEnableToggleChanged() }
-        findViewById<View>(R.id.enableSubtext).onClick { presenter.onEnableToggleChanged() }
-        findViewById<View>(R.id.enabledLayout).onClick { presenter.onEnableToggleChanged() }
-        findViewById<View>(R.id.enableAdfreeSwitch).onClick { presenter.onEnableToggleChanged() }
+        // CORREGIT: Tots els .onClick canviats a .setOnClickListener
+        findViewById<View>(R.id.enableText).setOnClickListener { presenter.onEnableToggleChanged() }
+        findViewById<View>(R.id.enableSubtext).setOnClickListener { presenter.onEnableToggleChanged() }
+        findViewById<View>(R.id.enabledLayout).setOnClickListener { presenter.onEnableToggleChanged() }
+        findViewById<View>(R.id.enableAdfreeSwitch).setOnClickListener { presenter.onEnableToggleChanged() }
 
+        findViewById<View>(R.id.delay_unmute_mod_layout).setOnClickListener { presenter.onDelayUnmute() }
+        findViewById<View>(R.id.delay_unmute_mod_title).setOnClickListener { presenter.onDelayUnmute() }
+        findViewById<View>(R.id.delay_unmute_mod_subtitle).setOnClickListener { presenter.onDelayUnmute() }
 
-        findViewById<View>(R.id.delay_unmute_mod_layout).onClick { presenter.onDelayUnmute() }
-        findViewById<View>(R.id.delay_unmute_mod_title).onClick { presenter.onDelayUnmute() }
-        findViewById<View>(R.id.delay_unmute_mod_subtitle).onClick { presenter.onDelayUnmute() }
+        findViewById<View>(R.id.always_on_layout).setOnClickListener { presenter.onToggleAlwaysOnChanged() }
+        findViewById<View>(R.id.always_on_text).setOnClickListener { presenter.onToggleAlwaysOnChanged() }
+        findViewById<View>(R.id.always_on_subtext).setOnClickListener { presenter.onToggleAlwaysOnChanged() }
+        findViewById<View>(R.id.always_on_switch).setOnClickListener { presenter.onToggleAlwaysOnChanged() }
 
-        findViewById<View>(R.id.always_on_layout).onClick { presenter.onToggleAlwaysOnChanged() }
-        findViewById<View>(R.id.always_on_text).onClick { presenter.onToggleAlwaysOnChanged() }
-        findViewById<View>(R.id.always_on_subtext).onClick { presenter.onToggleAlwaysOnChanged() }
-        findViewById<View>(R.id.always_on_switch).onClick { presenter.onToggleAlwaysOnChanged() }
+        findViewById<View>(R.id.active_detectors_layout).setOnClickListener { presenter.onLaunchActiveDetectorsView() }
+        findViewById<View>(R.id.active_detectors_title).setOnClickListener { presenter.onLaunchActiveDetectorsView() }
+        findViewById<View>(R.id.active_detectors_subtitle).setOnClickListener { presenter.onLaunchActiveDetectorsView() }
 
-        findViewById<View>(R.id.active_detectors_layout).onClick { presenter.onLaunchActiveDetectorsView() }
-        findViewById<View>(R.id.active_detectors_title).onClick { presenter.onLaunchActiveDetectorsView() }
-        findViewById<View>(R.id.active_detectors_subtitle).onClick { presenter.onLaunchActiveDetectorsView() }
-
-        findViewById<TextView>(R.id.mod_status_service).onClick {
+        findViewById<TextView>(R.id.mod_status_service).setOnClickListener {
             presenter.onLaunchNotificationListenerSystemSettings()
         }
 
         val versionView = findViewById<TextView>(R.id.mod_version1)
-        versionView.text =
-                "> version ${BuildConfig.VERSION_NAME} / ${BuildConfig.VERSION_CODE}"
+        versionView.text = "> version ${BuildConfig.VERSION_NAME} / ${BuildConfig.VERSION_CODE}"
 
-        versionView.onClick {
+        versionView.setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://github.com/abertschi/ad-free/blob/master/CHANGELOG.md"))
+                Uri.parse("https://github.com/abertschi/ad-free/blob/master/CHANGELOG.md"))
             this.startActivity(browserIntent)
         }
-
 
         val alert = AlertDialog.Builder(this)
         alert.setTitle("> delay unmute")
@@ -97,10 +90,9 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         seek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                if (!onCreateActive){
+                if (!onCreateActive) {
                     presenter.onDelayChanged(progress)
                 }
-
             }
 
             override fun onStopTrackingTouch(seekBar: SeekBar?) {
@@ -111,17 +103,17 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         })
 
         presenter.onCreate(this)
-        onCreateActive = false;
+        onCreateActive = false
     }
 
     fun showDetectorCount(active: Int, total: Int) {
         findViewById<TextView>(R.id.active_detectors_subtitle).text =
-                "choose active detectors ( $active/$total )"
+            "choose active detectors ( $active/$total )"
     }
 
     fun showDelayUnmute() {
         delayDialog.show()
-        delayDialog.window.setBackgroundDrawableResource(R.color.colorBackground)
+        delayDialog.window?.setBackgroundDrawableResource(R.color.colorBackground)
     }
 
     fun setDelayValue(p: Int) {
@@ -149,7 +141,7 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
     }
 
     fun showPowerEnabled() {
-        this.applicationContext?.runOnUiThread {
+        this.runOnUiThread {
             toast("ad-free enabled")
         }
     }
@@ -161,7 +153,6 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
 
     fun showNotifiationListenerConnected() {
         findViewById<TextView>(R.id.mod_status_service).text = "notification service is connected"
-
     }
 
     fun showNotificationListenerDisconnected() {
@@ -169,22 +160,21 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
     }
 
     fun hideDeveloperModeFeatures() {
-        val view = findViewById<View>(R.id.google_cast_layout)
-        view.visibility = View.GONE
+        findViewById<View>(R.id.google_cast_layout).visibility = View.GONE
     }
+
     fun showDeveloperModeFeatures() {
         val view = findViewById<View>(R.id.google_cast_layout)
         view.visibility = View.VISIBLE
-        view.onClick {
+        view.setOnClickListener {
             presenter.onGoogleCastToggle()
         }
-        findViewById<View>(R.id.google_cast_title).onClick { presenter.onGoogleCastToggle() }
-        findViewById<View>(R.id.google_cast_subtitle).onClick {
-            // info { "on notification listener connected" }
+        findViewById<View>(R.id.google_cast_title).setOnClickListener { presenter.onGoogleCastToggle() }
+        findViewById<View>(R.id.google_cast_subtitle).setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://support.google.com/chromecast/answer/7206638?hl=en"))
+                Uri.parse("https://support.google.com/chromecast/answer/7206638?hl=en"))
             this.startActivity(browserIntent)
         }
-        findViewById<View>(R.id.google_cast_switch).onClick { presenter.onGoogleCastToggle() }
+        findViewById<View>(R.id.google_cast_switch).setOnClickListener { presenter.onGoogleCastToggle() }
     }
 }
