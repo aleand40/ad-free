@@ -108,52 +108,47 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
         }
 
         override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-
-            var entry = data[position]
-
-            // CORREGIT: Canviat .onClick per .setOnClickListener
-            holder.more.setOnClickListener { presenter.onMoreClicked(entry) }
+            // Use 'position' only for the immediate visual binding
+            val entry = data[position]
 
             holder.title.setText(entry.packageName)
             holder.subtitle.setText(entry.content.joinToString(separator = "\n"))
-
-            holder.title.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-
-                override fun afterTextChanged(s: Editable) {
-                    entry.packageName = s.toString()
-                    presenter.updateEntry(entry)
-                }
-            })
-            holder.subtitle.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(
-                    s: CharSequence?,
-                    start: Int,
-                    count: Int,
-                    after: Int
-                ) {
-                }
-
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                }
-
-                override fun afterTextChanged(s: Editable) {
-                    entry.content = s.toString().split("\n")
-                    presenter.updateEntry(entry)
-                }
-            })
-
             holder.sepView.visibility =
                 if (position == data.size - 1) View.INVISIBLE else View.VISIBLE
+
+            holder.more.setOnClickListener {
+                // Check the real position at the exact moment of the click
+                val currentPos = holder.adapterPosition
+                if (currentPos != RecyclerView.NO_POSITION) {
+                    presenter.onMoreClicked(data[currentPos])
+                }
+            }
+
+            holder.title.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    val currentPos = holder.adapterPosition
+                    if (currentPos != RecyclerView.NO_POSITION) {
+                        val currentEntry = data[currentPos]
+                        currentEntry.packageName = s.toString()
+                        presenter.updateEntry(currentEntry)
+                    }
+                }
+            })
+
+            holder.subtitle.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    val currentPos = holder.adapterPosition
+                    if (currentPos != RecyclerView.NO_POSITION) {
+                        val currentEntry = data[currentPos]
+                        currentEntry.content = s.toString().split("\n")
+                        presenter.updateEntry(currentEntry)
+                    }
+                }
+            })
         }
 
         override fun getItemCount() = data.size
