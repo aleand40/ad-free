@@ -42,7 +42,7 @@ class LocalMusicPlugin(val context: Context,
                        val audioController: AudioController,
                        val yesNoModel: YesNoModel) : AdPlugin, AnkoLogger {
 
-    private val supportedFileExt = listOf(".mp3", ".wav", ".m4a")
+    private val supportedFileExt = listOf(".mp3", ".wav", ".m4a", ".flac", ".ogg", ".opus")
     private var view: LocalMusicView? = null
     private var player: AudioPlayer = AudioPlayer(context, prefs, audioController)
 
