@@ -3,7 +3,6 @@ package ch.abertschi.adfree.view.mod
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.Html
@@ -30,18 +29,21 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
         val textView = findViewById<TextView>(R.id.textdetector_activity_title)
         val text =
             "the <font color=#FFFFFF>text detector</font> flags a notification based on the presence of text."
-        textView.text = Html.fromHtml(text)
+
+        // Handle HTML parsing depending on the Android version to avoid deprecation warnings
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            textView.text = Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            @Suppress("DEPRECATION")
+            textView.text = Html.fromHtml(text)
+        }
+
         findViewById<ScrollView>(R.id.mod_text_scroll).scrollTo(0, 0)
 
         presenter = GenericTextDetectorPresenter(this, this)
 
 
-        var viewManager = LinearLayoutManager(this)
         viewAdapter = DetectorAdapter(presenter.getData(), presenter)
-        var recyclerView = findViewById<RecyclerView>(R.id.detector_recycle_view).apply {
-            layoutManager = viewManager
-            adapter = viewAdapter
-        }
         findViewById<TextView>(R.id.det_title_text).setOnClickListener {
             presenter.addNewEntry()
         }
@@ -54,29 +56,39 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
         findViewById<TextView>(R.id.det_subtitle_help).setOnClickListener {
             presenter.browseHelp()
         }
+
+        val recyclerView = findViewById<RecyclerView>(R.id.detector_recycle_view)
+        recyclerView.layoutManager = android.support.v7.widget.LinearLayoutManager(this)
+        recyclerView.adapter = viewAdapter
     }
 
+    @android.annotation.SuppressLint("InflateParams")
     fun showOptionDialog(entry: TextRepositoryData) {
-
         val d = AlertDialog.Builder(this)
             .setTitle("Options")
+            // Passing null is required here because the dialog window doesn't exist yet
             .setView(LayoutInflater.from(this).inflate(R.layout.delete_dialog, null))
-            .setPositiveButton(android.R.string.yes) { dialog, which ->
+            .setPositiveButton(android.R.string.yes) { _, _ ->
                 presenter.deleteEntry(entry)
             }
-            .setNegativeButton(android.R.string.no) { dialog, which ->
+            .setNegativeButton(android.R.string.no) { dialog, _ ->
                 dialog.dismiss()
             }
             .setOnDismissListener {
                 it.dismiss()
             }
             .create()
+
         d.window?.setBackgroundDrawableResource(R.color.colorBackground)
         d.show()
     }
 
     fun insertData() {
-        viewAdapter.notifyDataSetChanged();
+        val insertIndex = viewAdapter.itemCount - 1
+
+        if (insertIndex >= 0) {
+            viewAdapter.notifyItemInserted(insertIndex)
+        }
     }
 
     private class DetectorAdapter(
@@ -86,7 +98,7 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
         RecyclerView.Adapter<DetectorAdapter.MyViewHolder>(), AnkoLogger {
 
         class MyViewHolder(
-            val view: View,
+            view: View,
             val title: EditText,
             val subtitle: EditText,
             val more: ImageView,
@@ -100,9 +112,9 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
 
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.mod_text_detector_view_element, parent, false)
-            val title = view.findViewById(R.id.det_title) as EditText
-            val subtitle = view.findViewById(R.id.det_subtitle) as EditText
-            val more = view.findViewById<ImageView>(R.id.det_more) as ImageView
+            val title: EditText = view.findViewById(R.id.det_title)
+            val subtitle: EditText = view.findViewById(R.id.det_subtitle)
+            val more: ImageView = view.findViewById(R.id.det_more)
             val sep = view.findViewById<View>(R.id.mod_det_seperation)
             return MyViewHolder(view, title, subtitle, more, sep)
         }
