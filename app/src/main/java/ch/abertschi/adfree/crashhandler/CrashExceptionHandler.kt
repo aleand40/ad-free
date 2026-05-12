@@ -1,6 +1,5 @@
 package ch.abertschi.adfree.crashhandler
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInfo
@@ -22,26 +21,23 @@ import kotlin.system.exitProcess
  */
 class CrashExceptionHandler(val context: Context) : Thread.UncaughtExceptionHandler {
 
-    @SuppressLint("SimpleDateFormat")
     override fun uncaughtException(t: Thread?, e: Throwable?) {
-        e?.printStackTrace() // not all Android versions will print the stack trace automatically
+        e?.printStackTrace() // Not all Android versions print the stack trace automatically
 
         val (summary, logcat) = generateReport(e)
         val filename = writeLogfile(logcat)
 
-        val i = Intent()
-        i.action = SendCrashReportActivity.ACTION_NAME
+                val i = Intent(context, SendCrashReportActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         i.putExtra(SendCrashReportActivity.EXTRA_LOGFILE, filename)
         i.putExtra(SendCrashReportActivity.EXTRA_SUMMARY, summary)
         context.startActivity(i)
 
-        System.exit(1)
         exitProcess(1)
     }
 
     private fun writeLogfile(logcat: String): String {
-        val time = SimpleDateFormat("yyyy-MM-dd-HH:mm:ss").format(Date())
+        val time = SimpleDateFormat("yyyy-MM-dd-HH:mm:ss", Locale.US).format(Date())
         val filename = "adfree-crashlog-${time}.txt"
 
         val file = File(context.filesDir, filename)
@@ -49,37 +45,42 @@ class CrashExceptionHandler(val context: Context) : Thread.UncaughtExceptionHand
         return filename
     }
 
-    @SuppressLint("SimpleDateFormat")
     private fun generateReport(th: Throwable?): Pair<String, String> {
         val manager = context.packageManager
         var info: PackageInfo? = null
         try {
             info = manager.getPackageInfo(context.packageName, 0)
-        } catch (e2: PackageManager.NameNotFoundException) {
+        } catch (_: PackageManager.NameNotFoundException) {
         }
 
         var model = MODEL
-        if (!model.startsWith(MANUFACTURER))
+        if (!model.startsWith(MANUFACTURER)) {
             model = "$MANUFACTURER $model"
+        }
 
         val summary = StringBuilder()
-        summary.append("Android version: " + Build.VERSION.SDK_INT + "\n")
-        summary.append("Device: $model\n")
-        summary.append("App version: " + (info?.versionCode ?: "(null)") + "\n")
-        summary.append("Time: " + SimpleDateFormat("yyyy-MM-dd-HH:mm:ss").format(Date()) + "\n")
-        summary.append("Root cause: \n" + Log.getStackTraceString(th) + "")
+
+        val time = SimpleDateFormat("yyyy-MM-dd-HH:mm:ss", Locale.US).format(Date())
+
+        summary.append("Android version: ").append(Build.VERSION.SDK_INT).append("\n")
+        summary.append("Device: ").append(model).append("\n")
+        summary.append("App version: ").append(info?.versionCode ?: "(null)").append("\n")
+        summary.append("Time: ").append(time).append("\n")
+        summary.append("Root cause: \n").append(Log.getStackTraceString(th))
 
         val logcat = StringBuilder()
-        logcat.append("Logcat messages: \n" + th?.message)
+        logcat.append("Logcat messages: \n").append(th?.message)
         logcat.append(readLogcat())
         return Pair(summary.toString(), logcat.toString())
     }
 
     private fun readLogcat(): String {
-        val process = Runtime.getRuntime().exec("logcat -d")
-        val bufferedReader = BufferedReader(
-                InputStreamReader(process.inputStream))
-        val log = bufferedReader.readText()
-        return log
+        return try {
+            val process = Runtime.getRuntime().exec("logcat -d")
+            val bufferedReader = BufferedReader(InputStreamReader(process.inputStream))
+            bufferedReader.readText()
+        } catch (e: Exception) {
+            "Could not read logcat: ${e.message}"
+        }
     }
 }
