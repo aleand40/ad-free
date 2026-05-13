@@ -9,6 +9,11 @@ import org.jetbrains.anko.info
 class StartOnBootListener: BroadcastReceiver(), AnkoLogger {
 
     override fun onReceive(context: Context?, intent: Intent?) {
+        // check that the action is really the one to boot the system
+        if (intent?.action != Intent.ACTION_BOOT_COMPLETED) {
+            return
+        }
+
         info { "launching ad-free on boot. Hello world" }
 
         val app = context?.applicationContext as AdFreeApplication
