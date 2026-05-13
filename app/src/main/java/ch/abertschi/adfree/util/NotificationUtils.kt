@@ -23,11 +23,14 @@ import org.jetbrains.anko.info
  */
 class NotificationUtils(val context: Context) : AnkoLogger {
 
-    public companion object {
-        val actionDismiss = "actionDismiss"
-        val blockingNotificationId = 1
-        val textgNotificationId = 2
-        val CHANNEL_ID = "ad_channel"
+    companion object {
+        const val ACTION_DISMISS = "actionDismiss"
+        // Keeping these constants for potential future implementations of blocking notifications
+        @Suppress("unused")
+        const val BLOCKING_NOTIFICATION_ID = 1
+        @Suppress("unused")
+        const val TEXT_NOTIFICATION_ID = 2
+        const val CHANNEL_ID = "ad_channel"
 
         private val actionDismissCallables: ArrayList<() -> Unit> = ArrayList()
     }
@@ -41,7 +44,7 @@ class NotificationUtils(val context: Context) : AnkoLogger {
     }
 
     fun updateTextNotificationIfAvailable(id: Int, title: String? = null, content: String? = null) {
-        val builder = updateNotificationMap.get(id)
+        val builder = updateNotificationMap[id]
         builder?.let {
             if (title != null) it.setContentTitle(title)
             if (content != null) it.setContentText(content)
@@ -54,12 +57,12 @@ class NotificationUtils(val context: Context) : AnkoLogger {
 
     fun showTextNotification(id: Int, title: String, content: String = "",
                              dismissCallable: () -> Unit = {},
-                             priority: Int = NotificationCompat.PRIORITY_DEFAULT, notifiy: Boolean = true): Notification {
+                             priority: Int = NotificationCompat.PRIORITY_DEFAULT, notify: Boolean = true): Notification {
 
         val dismissIntent = PendingIntent
                 .getService(context, 0, Intent(context
-                        , NotificationInteractionService::class.java).setAction(actionDismiss)
-                        , PendingIntent.FLAG_ONE_SHOT)
+                        , NotificationInteractionService::class.java).setAction(ACTION_DISMISS)
+                        , PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
                 .setContentTitle(title)
@@ -88,7 +91,7 @@ class NotificationUtils(val context: Context) : AnkoLogger {
         }
 
         val manager = NotificationManagerCompat.from(context)
-        if (notifiy) {
+        if (notify) {
             manager.notify(id, notification)
         }
         return notification
@@ -151,8 +154,8 @@ class NotificationUtils(val context: Context) : AnkoLogger {
             if (intent == null || intent.action == null) {
                 return
             }
-            val actionKey: String = intent!!.action
-            if (actionKey.equals(actionDismiss)) {
+            val actionKey: String? = intent.action
+            if (actionKey == ACTION_DISMISS) {
                 synchronized(actionDismissCallables) {
                     actionDismissCallables.forEach {
                         it()
