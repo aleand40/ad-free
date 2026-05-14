@@ -4,6 +4,7 @@
     <string name="chromecast_subtitle">requires chromecast audio to announce current playback as system notification. see option <u>let others control your cast media</u> in google home app (experimental).</string>
     <string name="troubleshooting_text"><![CDATA[> troubleshooting]]></string>
     <string name="new_version_text"><![CDATA[> a new version is]]></string>
+    <string name="pager_description">Main application screens</string>
     <string-array name="test">
     </string-array>
 </resources>
