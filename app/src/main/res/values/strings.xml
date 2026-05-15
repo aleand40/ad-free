@@ -7,6 +7,17 @@
     <string name="pager_description">Main application screens</string>
     <string name="detector_title_placeholder"><![CDATA[> title]]></string>
     <string name="detector_subtitle_placeholder">subtitle</string>
+    <string name="mod_activity_title">change how ad-free internally works</string>
+    <string name="mod_adfree_title"><![CDATA[> ad-free]]></string>
+    <string name="mod_adfree_subtitle_enabled">enabled</string>
+    <string name="mod_active_detectors_title"><![CDATA[> ad detectors]]></string>
+    <string name="mod_active_detectors_subtitle">choose active detectors</string>
+    <string name="mod_delay_unmute_title"><![CDATA[> delay unmute]]></string>
+    <string name="mod_delay_unmute_subtitle">not delayed</string>
+    <string name="mod_always_on_title"><![CDATA[> always-on notification]]></string>
+    <string name="mod_always_on_subtitle">prevents ad-free form being killed by Android OS. leave disabled unless you run into issues.</string>
+    <string name="mod_google_cast_title"><![CDATA[> mute chromecast audio]]></string>
+    <string name="mod_version_title"><![CDATA[> version X.X]]></string>
     <string-array name="test">
     </string-array>
 </resources>
