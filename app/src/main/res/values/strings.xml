@@ -18,6 +18,14 @@
     <string name="mod_always_on_subtitle">prevents ad-free form being killed by Android OS. leave disabled unless you run into issues.</string>
     <string name="mod_google_cast_title"><![CDATA[> mute chromecast audio]]></string>
     <string name="mod_version_title"><![CDATA[> version X.X]]></string>
+    <string name="local_music_audio_volume_title"><![CDATA[> audio volume]]></string>
+    <string name="local_music_audio_volume_subtitle">configure volume of playback</string>
+    <string name="local_music_directory_title"><![CDATA[> music directory]]></string>
+    <string name="local_music_directory_subtitle">directory is not set</string>
+    <string name="local_music_play_until_end_title"><![CDATA[> play until end]]></string>
+    <string name="local_music_play_until_end_subtitle">play music until end before unmuting ad</string>
+    <string name="local_music_loop_title"><![CDATA[> loop music]]></string>
+    <string name="local_music_loop_subtitle">loop music until end of ad</string>
     <string-array name="test">
     </string-array>
 </resources>
