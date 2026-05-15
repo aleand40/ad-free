@@ -26,6 +26,11 @@
     <string name="local_music_play_until_end_subtitle">play music until end before unmuting ad</string>
     <string name="local_music_loop_title"><![CDATA[> loop music]]></string>
     <string name="local_music_loop_subtitle">loop music until end of ad</string>
+    <string name="textdetector_activity_title">The text detector flags a notification based on the presence of text.</string>
+    <string name="det_add_entry_title"><![CDATA[> Add Entry]]></string>
+    <string name="det_add_entry_subtitle">\"Add a new entry for the text detector</string>
+    <string name="det_browse_help_title"><![CDATA[> Browse Help]]></string>
+    <string name="det_browse_help_subtitle">Browse help page for more information</string>
     <string-array name="test">
     </string-array>
 </resources>
