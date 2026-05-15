@@ -19,28 +19,32 @@ import org.jetbrains.anko.info
 
 class RemoteManager(prefFactory: PreferencesFactory) : AnkoLogger {
 
-    private var URL: String = ViewSettings.AD_FREE_RESOURCE_ADDRESS +
+    private val url: String = ViewSettings.AD_FREE_RESOURCE_ADDRESS +
             "settings.yaml" + ViewSettings.GITHUB_RAW_SUFFIX
 
     var remoteSettings: RemoteSetting? = null
     var configFactory: YamlRemoteConfigFactory<RemoteSetting> =
-            YamlRemoteConfigFactory(URL, RemoteSetting::class.java, prefFactory)
+        YamlRemoteConfigFactory(url, RemoteSetting::class.java, prefFactory)
 
     fun getRemoteSettingsObservable(): Observable<RemoteSetting> {
-        info("feting settings getRemoteSettingsObservable")
+        info("fetching settings getRemoteSettingsObservable")
         remoteSettings = configFactory.loadFromLocalStore()
+
         return Observable.create<RemoteSetting> { source ->
-            configFactory.downloadObservable()
-                    .map { source -> source.first }
-                    .doOnNext { remoteSettings = it }
-                    .doOnNext { configFactory.storeToLocalStore(it) }
-                    .subscribe({ _-> source.onNext(remoteSettings!!) },
-                            { err ->
-                                info(err)
-                                //source.onError(err)
-//                                source.onNext(remoteSettings)
-                            })
+            // Link the subscription to the source lifecycle to prevent memory leaks
+            val disposable = configFactory.downloadObservable()
+                .map { it.first }
+                .doOnNext {
+                    remoteSettings = it
+                    configFactory.storeToLocalStore(it) // Persist state locally
+                }
+                .subscribe({ _ -> source.onNext(remoteSettings!!) },
+                    { err ->
+                        info(err)
+                    })
+
+            source.setDisposable(disposable)
         }
-                .observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+            .observeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
     }
 }
