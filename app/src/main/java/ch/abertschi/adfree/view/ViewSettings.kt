@@ -1,37 +1,23 @@
-/*
- * Ad Free
- * Copyright (c) 2017 by abertschi, www.abertschi.ch
- * See the file "LICENSE" for the full license governing this code.
- */
-
 package ch.abertschi.adfree.view
 
 import android.content.Context
 import android.graphics.Typeface
 
+class ViewSettings private constructor(context: Context) {
 
-/**
- * Created by abertschi on 21.04.17.
- */
-
-class ViewSettings private constructor(val context: Context) {
-
-    var typeFace: Typeface = Typeface.createFromAsset(context.assets, "fonts/Raleway-ExtraLight.ttf")
-
+    var typeFace: Typeface = Typeface.createFromAsset(context.applicationContext.assets, "fonts/Raleway-ExtraLight.ttf")
 
     companion object {
-        val AD_FREE_RESOURCE_ADRESS: String
-                = "https://github.com/abertschi/ad-free-resources/blob/master/"
+        const val AD_FREE_RESOURCE_ADDRESS: String = "https://github.com/abertschi/ad-free-resources/blob/master/"
+        const val GITHUB_RAW_SUFFIX: String = "?raw=true"
 
-        val GITHUB_RAW_SUFFIX: String = "?raw=true"
-
-        var _instance: ViewSettings? = null
+        private var cachedInstance: ViewSettings? = null
 
         fun instance(context: Context): ViewSettings {
-            if (_instance == null) {
-                _instance = ViewSettings(context)
+            if (cachedInstance == null) {
+                cachedInstance = ViewSettings(context)
             }
-            return _instance!!
+            return cachedInstance!!
         }
     }
 }
