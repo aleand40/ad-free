@@ -115,7 +115,7 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
             val title: EditText = view.findViewById(R.id.det_title)
             val subtitle: EditText = view.findViewById(R.id.det_subtitle)
             val more: ImageView = view.findViewById(R.id.det_more)
-            val sep = view.findViewById<View>(R.id.mod_det_seperation)
+            val sep = view.findViewById<View>(R.id.mod_det_separation)
             return MyViewHolder(view, title, subtitle, more, sep)
         }
 

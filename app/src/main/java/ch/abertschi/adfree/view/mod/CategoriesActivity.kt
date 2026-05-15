@@ -91,7 +91,7 @@ class CategoryAdapter(
             .inflate(R.layout.mod_active_detectors_view_element, parent, false)
         val title = view.findViewById(R.id.det_title) as TextView
         val subtitle = view.findViewById(R.id.det_subtitle) as TextView
-        val sep = view.findViewById<View>(R.id.mod_det_seperation)
+        val sep = view.findViewById<View>(R.id.mod_det_separation)
         val switch = view.findViewById<TextView>(R.id.det_switch) as SwitchCompat
         switch.visibility = View.GONE;
         return CategoryViewHolder(view, title, subtitle, sep)

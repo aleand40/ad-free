@@ -75,7 +75,7 @@
     </FrameLayout>
 
     <View
-        android:id="@+id/mod_det_seperation"
+        android:id="@+id/mod_det_separation"
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_marginTop="15dp"

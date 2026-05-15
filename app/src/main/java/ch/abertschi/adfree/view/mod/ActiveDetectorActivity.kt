@@ -1,6 +1,5 @@
 package ch.abertschi.adfree.view.mod
 
-import android.opengl.Visibility
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.text.Html
@@ -86,7 +85,7 @@ class DetectorAdapter(
         val title = view.findViewById(R.id.det_title) as TextView
         val subtitle = view.findViewById(R.id.det_subtitle) as TextView
         val switch = view.findViewById<TextView>(R.id.det_switch) as SwitchCompat
-        val sep = view.findViewById<View>(R.id.mod_det_seperation)
+        val sep = view.findViewById<View>(R.id.mod_det_separation)
         return MyViewHolder(view, title, subtitle, switch, sep)
     }
 

@@ -5,6 +5,8 @@
     <string name="troubleshooting_text"><![CDATA[> troubleshooting]]></string>
     <string name="new_version_text"><![CDATA[> a new version is]]></string>
     <string name="pager_description">Main application screens</string>
+    <string name="detector_title_placeholder"><![CDATA[> title]]></string>
+    <string name="detector_subtitle_placeholder">subtitle</string>
     <string-array name="test">
     </string-array>
 </resources>
