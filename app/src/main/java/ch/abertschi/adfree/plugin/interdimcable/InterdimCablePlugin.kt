@@ -24,21 +24,19 @@ import org.jetbrains.anko.error
 import org.jetbrains.anko.info
 import java.util.concurrent.TimeUnit
 
-/**
- * Created by abertschi on 21.04.17.
- */
 class InterdimCablePlugin(
     val prefs: PreferencesFactory,
     val audioController: AudioController,
-    val globalContext: Context,
+    globalContext: Context,
     val notificationChannel: NotificationChannel
 ) : AdPlugin, AnkoLogger {
 
-    private val GITHUB_RAW_SUFFIX = "?raw=true"
-    private val AD_FREE_RESOURCE_ADRESS = "https://github.com/abertschi/ad-free-resources/blob/master/"
-
-    private val BASE_URL = AD_FREE_RESOURCE_ADRESS + "plugins/interdimensional-cable/"
-    private val PLUGIN_FILE_PATH = BASE_URL + "plugin.yaml" + GITHUB_RAW_SUFFIX
+    companion object {
+        private const val GITHUB_RAW_SUFFIX = "?raw=true"
+        private const val AD_FREE_RESOURCE_ADDRESS = "https://github.com/abertschi/ad-free-resources/blob/master/"
+        private const val BASE_URL = AD_FREE_RESOURCE_ADDRESS + "plugins/interdimensional-cable/"
+        private const val PLUGIN_FILE_PATH = BASE_URL + "plugin.yaml" + GITHUB_RAW_SUFFIX
+    }
 
     private var configFactory: YamlRemoteConfigFactory<InterdimCableModel> =
         YamlRemoteConfigFactory(PLUGIN_FILE_PATH, InterdimCableModel::class.java, prefs)
@@ -52,7 +50,7 @@ class InterdimCablePlugin(
 
     override fun hasSettingsView(): Boolean = true
 
-    override fun settingsView(c: Context, actions: PluginActivityAction): View? {
+    override fun settingsView(context: Context, activityActions: PluginActivityAction): View? {
         return interdimCableView?.onCreate(this)
     }
 
