@@ -15,7 +15,6 @@
     tools:ignore="VisualLintSystemWindow">
 
     <TextView
-        android:id="@+id/alertDialogText"
         style="@style/AppTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

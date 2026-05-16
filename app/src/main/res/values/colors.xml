@@ -6,7 +6,6 @@
 
     <color name="colorPrimary">@color/charcoal_dark</color>
     <color name="colorPrimaryDark">@color/charcoal_dark</color>
-    <color name="colorAccent">@color/charcoal_dark</color>
     <color name="colorBackground">@color/charcoal_dark</color>
     <color name="textColorSecondary">@color/sand_beige</color>
     <color name="textColorSecondaryTransparent">@color/sand_beige_transparent</color>

@@ -34,11 +34,6 @@
     <string name="hint_package_name">package name</string>
     <string name="hint_line_separated_list">line separated list of text</string>
     <string name="desc_more_options">More options</string>
-    <string name="debug_title">ad-free not working?</string>
-    <string name="debug_info_text">run spotify for a while so ads can appear and be captured.</string>
-    <string name="debug_send_logs_title"><![CDATA[> send logs]]></string>
-    <string name="choose_audio_dir_instruction">android:text="In order to display directories on internal storage,
-                          tap at the top right onto the three dots and select internal storage."</string>
     <string name="desc_website">View website</string>
     <string name="desc_twitter">View Twitter profile</string>
     <string name="settings_title">what do you want to do while ads are being played</string>
