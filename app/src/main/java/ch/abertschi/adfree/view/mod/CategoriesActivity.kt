@@ -1,23 +1,18 @@
 package ch.abertschi.adfree.view.mod
 
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.SwitchCompat
 import android.text.Html
-
-import android.widget.TextView
-
 import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.TextView
 import ch.abertschi.adfree.R
 import org.jetbrains.anko.*
-
-import android.support.v7.widget.RecyclerView
-import android.view.ViewGroup
-
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.SwitchCompat
-import android.view.View
-import android.widget.ScrollView
-
 
 class CategoriesActivity : AppCompatActivity(), AnkoLogger {
     private lateinit var categoriesRecyclerView: RecyclerView
@@ -31,17 +26,18 @@ class CategoriesActivity : AppCompatActivity(), AnkoLogger {
         setContentView(R.layout.mod_active_detectors)
 
         val textView = findViewById<TextView>(R.id.detectors_activity_title)
-        val text =
-            "detectors <font color=#FFFFFF>find ads</font>. " +
-                    "choose what's active."
-        textView.text = Html.fromHtml(text)
+        val text = "detectors <font color=#FFFFFF>find ads</font>. choose what's active."
+
+        textView.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            @Suppress("DEPRECATION")
+            Html.fromHtml(text)
+        }
 
         presenter = CategoriesPresenter(this)
 
-        findViewById<ScrollView>(R.id.mod_active_scroll).scrollTo(0, 0)
-
-        // CORREGIT: Canviat onClick per setOnClickListener
-        findViewById<TextView>(R.id.detectors_activity_title).setOnClickListener {
+        textView.setOnClickListener {
             presenter.onTabTitle()
         }
 
@@ -54,7 +50,6 @@ class CategoriesActivity : AppCompatActivity(), AnkoLogger {
         categoriesRecyclerView = findViewById<RecyclerView>(R.id.detector_recycle_view).apply {
             layoutManager = categoriesViewManager
             adapter = categoriesViewAdapter
-
         }
     }
 
@@ -70,10 +65,9 @@ class CategoriesActivity : AppCompatActivity(), AnkoLogger {
 }
 
 class CategoryAdapter(
-    private val cateogries: List<String>,
+    private val categories: List<String>,
     private val presenter: CategoriesPresenter
-) :
-    RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(), AnkoLogger {
+) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(), AnkoLogger {
 
     class CategoryViewHolder(
         val view: View,
@@ -86,34 +80,39 @@ class CategoryAdapter(
         parent: ViewGroup,
         viewType: Int
     ): CategoryViewHolder {
-
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.mod_active_detectors_view_element, parent, false)
-        val title = view.findViewById(R.id.det_title) as TextView
-        val subtitle = view.findViewById(R.id.det_subtitle) as TextView
+
+        val title = view.findViewById<TextView>(R.id.det_title)
+        val subtitle = view.findViewById<TextView>(R.id.det_subtitle)
         val sep = view.findViewById<View>(R.id.mod_det_separation)
-        val switch = view.findViewById<TextView>(R.id.det_switch) as SwitchCompat
-        switch.visibility = View.GONE;
+        val switch = view.findViewById<SwitchCompat>(R.id.det_switch)
+
+        // This layout element is reused; the switch is not needed for categories view
+        switch.visibility = View.GONE
         return CategoryViewHolder(view, title, subtitle, sep)
     }
 
     override fun onBindViewHolder(holder: CategoryViewHolder, position: Int) {
-        // CORREGIT: Totes les referències usen ara el mètode natiu
+        val context = holder.view.context
+        val categoryName = categories[position]
+
         holder.view.setOnClickListener {
-            presenter.onCategorySelected(cateogries[position])
+            presenter.onCategorySelected(categoryName)
         }
         holder.title.setOnClickListener {
-            presenter.onCategorySelected(cateogries[position])
+            presenter.onCategorySelected(categoryName)
         }
         holder.subtitle.setOnClickListener {
-            presenter.onCategorySelected(cateogries[position])
+            presenter.onCategorySelected(categoryName)
         }
 
-        holder.title.text = "> " + cateogries[position]
-        holder.subtitle.text = "configure detectors for " + cateogries[position]
+        holder.title.text = context.getString(R.string.detector_title_format, categoryName)
+        holder.subtitle.text = context.getString(R.string.category_subtitle_format, categoryName)
+
         holder.sepView.visibility =
-            if (position == cateogries.size - 1) View.INVISIBLE else View.VISIBLE
+            if (position == categories.size - 1) View.INVISIBLE else View.VISIBLE
     }
 
-    override fun getItemCount() = cateogries.size
+    override fun getItemCount() = categories.size
 }

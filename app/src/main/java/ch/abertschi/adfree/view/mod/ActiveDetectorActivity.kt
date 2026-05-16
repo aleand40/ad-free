@@ -1,24 +1,19 @@
 package ch.abertschi.adfree.view.mod
 
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.text.Html
-
-import android.widget.TextView
-
-
-import android.view.LayoutInflater
-import ch.abertschi.adfree.R
-import org.jetbrains.anko.*
-
-import android.support.v7.widget.RecyclerView
-import android.view.ViewGroup
-
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SwitchCompat
+import android.text.Html
+import android.view.LayoutInflater
 import android.view.View
-import android.widget.ScrollView
+import android.view.ViewGroup
+import android.widget.TextView
+import ch.abertschi.adfree.R
 import ch.abertschi.adfree.detector.AdDetectable
+import org.jetbrains.anko.*
 import java.lang.IllegalStateException
 
 class ActiveDetectorActivity : AppCompatActivity(), AnkoLogger {
@@ -37,22 +32,23 @@ class ActiveDetectorActivity : AppCompatActivity(), AnkoLogger {
 
         presenter = ActiveDetectorPresenter(this)
 
-        val category: String = intent.extras.getString(CategoriesPresenter.BUNDLE_CATEGORY_KEY)
-            ?: throw  IllegalStateException("must set category")
+        val category: String = intent.extras?.getString(CategoriesPresenter.BUNDLE_CATEGORY_KEY)
+            ?: throw IllegalStateException("must set category")
 
-        val text =
-            "fine-tune detectors for <font color=#FFFFFF>$category</font>."
-        textView.text = Html.fromHtml(text)
+        val text = "fine-tune detectors for <font color=#FFFFFF>$category</font>."
 
-
-        findViewById<ScrollView>(R.id.mod_active_scroll).scrollTo(0, 0)
+        textView.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            @Suppress("DEPRECATION")
+            Html.fromHtml(text)
+        }
 
         detectorViewManager = LinearLayoutManager(this)
         detectorViewAdapter = DetectorAdapter(presenter.getDetectors(category), presenter)
         detectorRecyclerView = findViewById<RecyclerView>(R.id.detector_recycle_view).apply {
             layoutManager = detectorViewManager
             adapter = detectorViewAdapter
-
         }
     }
 
@@ -64,8 +60,7 @@ class ActiveDetectorActivity : AppCompatActivity(), AnkoLogger {
 class DetectorAdapter(
     private val detectors: List<AdDetectable>,
     private val presenter: ActiveDetectorPresenter
-) :
-    RecyclerView.Adapter<DetectorAdapter.MyViewHolder>(), AnkoLogger {
+) : RecyclerView.Adapter<DetectorAdapter.MyViewHolder>(), AnkoLogger {
 
     class MyViewHolder(
         val view: View,
@@ -79,18 +74,21 @@ class DetectorAdapter(
         parent: ViewGroup,
         viewType: Int
     ): MyViewHolder {
-
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.mod_active_detectors_view_element, parent, false)
-        val title = view.findViewById(R.id.det_title) as TextView
-        val subtitle = view.findViewById(R.id.det_subtitle) as TextView
-        val switch = view.findViewById<TextView>(R.id.det_switch) as SwitchCompat
+
+        val title = view.findViewById<TextView>(R.id.det_title)
+        val subtitle = view.findViewById<TextView>(R.id.det_subtitle)
+        val switch = view.findViewById<SwitchCompat>(R.id.det_switch)
         val sep = view.findViewById<View>(R.id.mod_det_separation)
+
         return MyViewHolder(view, title, subtitle, switch, sep)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.title.text = "> " + detectors[position].getMeta().title
+        val rawTitle = detectors[position].getMeta().title
+        holder.title.text = holder.title.context.getString(R.string.detector_title_format, rawTitle)
+
         holder.subtitle.text = detectors[position].getMeta().description
         holder.switch.isChecked = presenter.isEnabled(detectors[position])
 
@@ -100,7 +98,6 @@ class DetectorAdapter(
         holder.subtitle.setOnClickListener {
             holder.switch.toggle()
         }
-
         holder.view.setOnClickListener {
             holder.switch.toggle()
         }

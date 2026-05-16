@@ -49,6 +49,8 @@
     <string name="detectors_mask_title">detectors find ads. choose what\'s active.</string>
     <string name="delay_unmute_description">change how long advertisement stays muted before playback continues</string>
     <string name="delay_unmute_default_value">0 seconds</string>
+    <string name="detector_title_format">&gt; %s</string>
+    <string name="category_subtitle_format">configure detectors for %s</string>
     <string-array name="test">
     </string-array>
 </resources>
