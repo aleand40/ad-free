@@ -58,7 +58,7 @@ class YamlRemoteConfigFactory<MODEL>(val downloadUrl: String,
     fun storeToLocalStore(model: MODEL) {
         val yaml = createYamlInstance()
         preferences.getPreferences()
-                .edit().putString(SETTING_PERSISTENCE_LOCAL_KEY, yaml.dump(model)).commit()
+                .edit().putString(SETTING_PERSISTENCE_LOCAL_KEY, yaml.dump(model)).apply()
     }
 
     private fun createYamlInstance(): org.yaml.snakeyaml.Yaml {

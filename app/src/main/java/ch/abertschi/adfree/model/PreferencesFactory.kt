@@ -41,7 +41,7 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     }
 
     fun setBlockingEnabled(enabled: Boolean) {
-        prefs.edit().putBoolean(prefIsEnabled, enabled).commit()
+        prefs.edit().putBoolean(prefIsEnabled, enabled).apply()
     }
 
     fun getLastUpdateInServiceDate(): Date {
@@ -49,11 +49,11 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     }
 
     fun setLastUpdateInServiceDate(date: Date) {
-        prefs.edit().putLong(prefsLastUpdateInServiceDate, date.time).commit()
+        prefs.edit().putLong(prefsLastUpdateInServiceDate, date.time).apply()
     }
 
     fun setFirstRun() {
-        prefs.edit().putBoolean(prefsFirstRun, true).commit()
+        prefs.edit().putBoolean(prefsFirstRun, true).apply()
     }
 
     fun isFirstRun(): Boolean = prefs.getBoolean(prefsFirstRun, false)
