@@ -34,6 +34,9 @@
     <string name="hint_package_name">package name</string>
     <string name="hint_line_separated_list">line separated list of text</string>
     <string name="desc_more_options">More options</string>
+    <string name="debug_title">ad-free not working?</string>
+    <string name="debug_info_text">run spotify for a while so ads can appear and be captured.</string>
+    <string name="debug_send_logs_title"><![CDATA[> send logs]]></string>
     <string-array name="test">
     </string-array>
 </resources>
