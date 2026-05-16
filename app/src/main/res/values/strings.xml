@@ -47,6 +47,8 @@
     <string name="send_logs">crash_send_logs</string>
     <string name="delete_dialog_message">Do you want to delete the entry?</string>
     <string name="detectors_mask_title">detectors find ads. choose what\'s active.</string>
+    <string name="delay_unmute_description">change how long advertisement stays muted before playback continues</string>
+    <string name="delay_unmute_default_value">0 seconds</string>
     <string-array name="test">
     </string-array>
 </resources>
