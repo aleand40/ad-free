@@ -9,6 +9,7 @@ package ch.abertschi.adfree.view.mod
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -39,16 +40,23 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
 
         presenter = ModPresenter(this, (application as AdFreeApplication).prefs)
 
-        val textView = findViewById(R.id.modTitle) as TextView
+        val textView = findViewById<TextView>(R.id.modTitle)
         val text = "change how <font color=#FFFFFF>ad-free</font> internally works."
-        textView.text = Html.fromHtml(text)
+
+        textView.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            @Suppress("DEPRECATION")
+            Html.fromHtml(text)
+        }
 
         val factory = LayoutInflater.from(this)
+
+        @SuppressLint("InflateParams")
         delayLayout = factory.inflate(R.layout.mod_delay_unmute, null)
 
         enabledSwitch = findViewById(R.id.enableAdfreeSwitch)
 
-        // CORREGIT: Tots els .onClick canviats a .setOnClickListener
         findViewById<View>(R.id.enableText).setOnClickListener { presenter.onEnableToggleChanged() }
         findViewById<View>(R.id.enableSubtext).setOnClickListener { presenter.onEnableToggleChanged() }
         findViewById<View>(R.id.enabledLayout).setOnClickListener { presenter.onEnableToggleChanged() }
@@ -72,7 +80,7 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         }
 
         val versionView = findViewById<TextView>(R.id.mod_version1)
-        versionView.text = "> version ${BuildConfig.VERSION_NAME} / ${BuildConfig.VERSION_CODE}"
+        versionView.text = getString(R.string.mod_version_format, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
 
         versionView.setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW,
@@ -84,9 +92,9 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         alert.setTitle("> delay unmute")
         alert.setView(delayLayout)
         delayDialog = alert.create()
-        alwaysOnSwitch = findViewById<SwitchCompat>(R.id.always_on_switch)
+        alwaysOnSwitch = findViewById(R.id.always_on_switch)
 
-        val seek = delayLayout.findViewById(R.id.delay_unmute_seekbar) as SeekBar
+        val seek = delayLayout.findViewById<SeekBar>(R.id.delay_unmute_seekbar)
         seek.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onStartTrackingTouch(seekBar: SeekBar?) {}
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
@@ -108,7 +116,7 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
 
     fun showDetectorCount(active: Int, total: Int) {
         findViewById<TextView>(R.id.active_detectors_subtitle).text =
-            "choose active detectors ( $active/$total )"
+            getString(R.string.mod_active_detectors_count, active, total)
     }
 
     fun showDelayUnmute() {
@@ -117,18 +125,19 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
     }
 
     fun setDelayValue(p: Int) {
-        val view = delayLayout.findViewById(R.id.unmutetext2) as TextView
-        val text = "${p} seconds"
+        val view = delayLayout.findViewById<TextView>(R.id.unmutetext2)
+        val text = getString(R.string.mod_seconds_format, p)
         view.text = text
 
-        val seek = delayLayout.findViewById(R.id.delay_unmute_seekbar) as SeekBar
+        val seek = delayLayout.findViewById<SeekBar>(R.id.delay_unmute_seekbar)
         seek.progress = p
         findViewById<TextView>(R.id.delay_unmute_mod_subtitle).text = text
     }
 
     fun setEnableToggle(b: Boolean) {
         enabledSwitch?.isChecked = b
-        findViewById<TextView>(R.id.enableSubtext)?.text = if (b) "enabled" else "disabled"
+        findViewById<TextView>(R.id.enableSubtext)?.text =
+            if (b) getString(R.string.mod_status_enabled) else getString(R.string.mod_status_disabled)
     }
 
     fun setGoogleCastToggle(b: Boolean) {
@@ -142,7 +151,7 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
 
     fun showPowerEnabled() {
         this.runOnUiThread {
-            toast("ad-free enabled")
+            toast(R.string.mod_status_toast_enabled)
         }
     }
 
@@ -151,12 +160,12 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         presenter.onResume()
     }
 
-    fun showNotifiationListenerConnected() {
-        findViewById<TextView>(R.id.mod_status_service).text = "notification service is connected"
+    fun showNotificationListenerConnected() {
+        findViewById<TextView>(R.id.mod_status_service).text = getString(R.string.mod_service_connected)
     }
 
     fun showNotificationListenerDisconnected() {
-        findViewById<TextView>(R.id.mod_status_service).text = "notification service is disconnected"
+        findViewById<TextView>(R.id.mod_status_service).text = getString(R.string.mod_service_disconnected)
     }
 
     fun hideDeveloperModeFeatures() {

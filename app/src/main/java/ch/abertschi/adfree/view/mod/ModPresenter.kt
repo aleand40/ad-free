@@ -8,8 +8,6 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.runOnUiThread
 import android.os.AsyncTask
-import android.app.AlarmManager
-import android.app.PendingIntent
 import ch.abertschi.adfree.*
 
 
@@ -26,7 +24,7 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory) : AnkoL
         context.runOnUiThread {
             info { "notification listener changed status: $status" }
             if (status == ListenerStatus.CONNECTED) {
-                view.showNotifiationListenerConnected()
+                view.showNotificationListenerConnected()
             } else {
                 view.showNotificationListenerDisconnected()
             }

@@ -53,6 +53,14 @@
     <string name="category_subtitle_format">configure detectors for %s</string>
     <string name="plugin_interdim_cable_volume_title">configure audio volume</string>
     <string name="replacer_setting_item_name">item name</string>
+    <string name="mod_active_detectors_count">choose active detectors ( %1$d/%2$d )</string>
+    <string name="mod_seconds_format">%1$d seconds</string>
+    <string name="mod_status_enabled">enabled</string>
+    <string name="mod_status_disabled">disabled</string>
+    <string name="mod_status_toast_enabled">ad-free enabled</string>
+    <string name="mod_service_connected">notification service is connected</string>
+    <string name="mod_service_disconnected">notification service is disconnected</string>
+    <string name="mod_version_format">&gt; version %1$s / %2$d</string>
     <string-array name="test">
     </string-array>
 </resources>
