@@ -31,6 +31,9 @@
     <string name="det_add_entry_subtitle">\"Add a new entry for the text detector</string>
     <string name="det_browse_help_title"><![CDATA[> Browse Help]]></string>
     <string name="det_browse_help_subtitle">Browse help page for more information</string>
+    <string name="hint_package_name">package name</string>
+    <string name="hint_line_separated_list">line separated list of text</string>
+    <string name="desc_more_options">More options</string>
     <string-array name="test">
     </string-array>
 </resources>
