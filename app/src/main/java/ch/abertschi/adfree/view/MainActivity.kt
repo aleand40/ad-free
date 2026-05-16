@@ -14,6 +14,7 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
 import ch.abertschi.adfree.AdFreeApplication
@@ -46,7 +47,7 @@ class MainActivity : FragmentActivity() {
 
         val tabLayout = findViewById<TabLayout>(R.id.tabDots)
         tabLayout.setupWithViewPager(mPager, true)
-        window.navigationBarColor = Color.parseColor("#252A2E")
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.colorBackground)
 
         // XXX: Workaround, global access to activity to prevent detached fragments
         var app = applicationContext as AdFreeApplication
