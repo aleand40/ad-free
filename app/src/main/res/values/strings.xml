@@ -52,6 +52,7 @@
     <string name="detector_title_format">&gt; %s</string>
     <string name="category_subtitle_format">configure detectors for %s</string>
     <string name="plugin_interdim_cable_volume_title">configure audio volume</string>
+    <string name="replacer_setting_item_name">item name</string>
     <string-array name="test">
     </string-array>
 </resources>
