@@ -6,8 +6,6 @@
 
 package ch.abertschi.adfree.view
 
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
@@ -20,7 +18,7 @@ import android.support.v4.view.ViewPager
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.view.home.HomeActivity
-import ch.abertschi.adfree.view.setting.AboutActivity
+import ch.abertschi.adfree.view.about.AboutActivity
 import ch.abertschi.adfree.view.setting.SettingsActivity
 
 /**
@@ -30,7 +28,7 @@ import ch.abertschi.adfree.view.setting.SettingsActivity
 class MainActivity : FragmentActivity() {
 
     companion object {
-        private val NUM_PAGES = 3
+        private const val NUM_PAGES = 3
     }
 
     private var mPager: ViewPager? = null
@@ -40,8 +38,7 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
-
-        mPager = findViewById(R.id.pager) as ViewPager
+        mPager = findViewById(R.id.pager)
         mPagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
         mPager!!.adapter = mPagerAdapter
 
@@ -50,17 +47,17 @@ class MainActivity : FragmentActivity() {
         window.navigationBarColor = ContextCompat.getColor(this, R.color.colorBackground)
 
         // XXX: Workaround, global access to activity to prevent detached fragments
-        var app = applicationContext as AdFreeApplication
+        val app = applicationContext as AdFreeApplication
         app.mainActivity = this
     }
 
-    private inner class ScreenSlidePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+    private class ScreenSlidePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
-        override fun getItem(position: Int): Fragment? {
-            when (position) {
-                0 -> return HomeActivity()
-                1 -> return SettingsActivity()
-                else -> return AboutActivity()
+        override fun getItem(position: Int): Fragment {
+            return when (position) {
+                0 -> HomeActivity()
+                1 -> SettingsActivity()
+                else -> AboutActivity()
             }
         }
 
