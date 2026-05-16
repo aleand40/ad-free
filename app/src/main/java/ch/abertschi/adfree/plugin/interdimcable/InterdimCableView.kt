@@ -3,9 +3,12 @@
  * Copyright (c) 2017 by abertschi, www.abertschi.ch
  * See the file "LICENSE" for the full license governing this code.
  */
+
 package ch.abertschi.adfree.plugin.interdimcable
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
@@ -22,41 +25,46 @@ class InterdimCableView(val context: Context) {
 
     private var viewInstance: View? = null
 
+    @SuppressLint("InflateParams")
     fun onCreate(presenter: InterdimCablePlugin): View? {
         val inflater = LayoutInflater.from(context)
         viewInstance = inflater.inflate(R.layout.plugin_interdim_cable, null, false)
 
-        var text = viewInstance?.findViewById(R.id.plugin_interdim_cable_audio_volume_text) as TextView
+        val text = viewInstance?.findViewById<TextView>(R.id.plugin_interdim_cable_audio_volume_text)
         text?.typeface = ViewSettings.instance(context).typeFace
-        var t = "> configure <font color=#FFFFFF>audio volume</font>"
-        text?.text = Html.fromHtml(t)
-        text.setOnClickListener { presenter.configureAudioVolume() }
 
-        var des = viewInstance?.findViewById(R.id.plugin_interdim_cable_description) as TextView
+        var t = "> configure <font color=#FFFFFF>audio volume</font>"
+        text?.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(t, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            @Suppress("DEPRECATION")
+            Html.fromHtml(t)
+        }
+        text?.setOnClickListener { presenter.configureAudioVolume() }
+
+        val des = viewInstance?.findViewById<TextView>(R.id.plugin_interdim_cable_description)
         des?.typeface = ViewSettings.instance(context).typeFace
 
-        t = "enjoy intergalactic television featured in " +
-                "rick and morty by adult swim"
-        des?.text = Html.fromHtml(t)
+        t = "enjoy intergalactic television featured in rick and morty by adult swim"
+        des?.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(t, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            @Suppress("DEPRECATION")
+            Html.fromHtml(t)
+        }
 
         return viewInstance
     }
 
     fun showInternetError() {
         context.applicationContext.runOnUiThread {
-            longToast("Unable to download intermidmensional ads. Did you check your internet?")
-        }
-    }
-
-    fun showDownloadingTrack() {
-        context.runOnUiThread {
-            longToast("Downloading track ...")
+            longToast("Unable to download interdimensional ads. Did you check your internet?")
         }
     }
 
     fun showAudioError() {
         context.runOnUiThread {
-            longToast("Whooops, there was an error with audio")
+            longToast("Whoops, there was an error with audio")
         }
     }
 
