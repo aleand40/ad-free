@@ -4,6 +4,7 @@ import android.app.Notification
 import android.os.Bundle
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.warn
+import java.util.Locale
 
 abstract class AbstractNotificationBundleAndroidTextDetector : AdDetectable, AnkoLogger, AbstractNotificationDetector() {
 
@@ -11,7 +12,7 @@ abstract class AbstractNotificationBundleAndroidTextDetector : AdDetectable, Ank
         return try {
             Pair(
                 (extras?.get(key) as CharSequence?)
-                    ?.toString()?.trim()?.toLowerCase(), true
+                    ?.toString()?.trim()?.toLowerCase(Locale.ROOT), true
             )
         } catch (e: Exception) {
             warn { e }

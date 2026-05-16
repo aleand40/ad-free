@@ -8,6 +8,7 @@ package ch.abertschi.adfree.detector
 
 import ch.abertschi.adfree.model.TrackRepository
 import org.jetbrains.anko.AnkoLogger
+import java.util.Locale
 
 /**
  * AdDetectable that checks for the Keyword Spotify
@@ -30,10 +31,10 @@ class SpotifyTitleDetector(val trackRepository: TrackRepository) :
     }
 
     override fun flagAsAdvertisement(payload: AdPayload): Boolean
-            = getTitle(payload)?.toLowerCase()?.trim()?.run {
+            = getTitle(payload)?.toLowerCase(java.util.Locale.ROOT)?.trim()?.run {
         var isAdd = false
         for(k in keywords) {
-            isAdd = isAdd || k.toLowerCase() == this
+            isAdd = isAdd || k.toLowerCase(Locale.ROOT) == this
         }
         isAdd }?: false
 

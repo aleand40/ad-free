@@ -5,6 +5,7 @@ import android.widget.RemoteViews
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.warn
+import java.util.Locale
 import kotlin.reflect.jvm.internal.impl.load.kotlin.JvmType
 
 class AccuradioDetector : AdDetectable, AnkoLogger, AbstractNotificationDetector() {
@@ -76,7 +77,7 @@ class AccuradioDetector : AdDetectable, AnkoLogger, AbstractNotificationDetector
                         if (value !is CharSequence) {
                             continue
                         }
-                        if (value.toString().trim().toLowerCase().contains("music will resume shortly")) {
+                        if (value.toString().trim().toLowerCase(Locale.ROOT).contains("music will resume shortly")) {
                             return true
                         }
                     }

@@ -1,11 +1,12 @@
 package ch.abertschi.adfree.detector
 
 import java.lang.IllegalStateException
+import java.util.Locale
 
 class BestEffortTextDetector : AbstractNotificationBundleAndroidTextDetector() {
 
     open override fun canHandle(payload: AdPayload): Boolean {
-        var key: String = payload?.statusbarNotification?.key?.toLowerCase() ?: return false
+        var key: String = payload?.statusbarNotification?.key?.toLowerCase(Locale.ROOT) ?: return false
         for (p in getPackageList()) {
             if (key.contains(p)) {
                 return true

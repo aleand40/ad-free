@@ -7,6 +7,7 @@ import org.jetbrains.anko.info
 import org.jetbrains.anko.warn
 import java.io.File
 import java.io.FileOutputStream
+import java.util.Locale
 
 abstract class AbstractDebugTracer(val storageFolder: File?) : AdDetectable, AnkoLogger {
 
@@ -19,7 +20,7 @@ abstract class AbstractDebugTracer(val storageFolder: File?) : AdDetectable, Ank
             return false
         }
 
-        if (payload?.statusbarNotification?.key?.toLowerCase()?.contains(getPackage()) == true) {
+        if (payload?.statusbarNotification?.key?.toLowerCase(Locale.ROOT)?.contains(getPackage()) == true) {
             recordNotification(payload.statusbarNotification!!)
         }
         return false

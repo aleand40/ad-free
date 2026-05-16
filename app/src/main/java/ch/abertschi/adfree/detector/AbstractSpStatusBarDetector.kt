@@ -7,6 +7,7 @@
 package ch.abertschi.adfree.detector
 
 import org.jetbrains.anko.AnkoLogger
+import java.util.Locale
 
 /**
  * Created by abertschi on 13.12.16.
@@ -18,7 +19,7 @@ abstract class AbstractSpStatusBarDetector : AdDetectable, AnkoLogger {
     }
 
     override fun canHandle(payload: AdPayload): Boolean {
-        return payload?.statusbarNotification?.key?.toLowerCase()?.contains(SPOTIFY_PACKAGE) ?: false
+        return payload?.statusbarNotification?.key?.toLowerCase(Locale.ROOT)?.contains(SPOTIFY_PACKAGE) ?: false
     }
 
 

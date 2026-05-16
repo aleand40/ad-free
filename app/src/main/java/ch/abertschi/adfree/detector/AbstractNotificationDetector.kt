@@ -1,6 +1,7 @@
 package ch.abertschi.adfree.detector
 
 import org.jetbrains.anko.AnkoLogger
+import java.util.Locale
 
 
 abstract class AbstractNotificationDetector : AdDetectable, AnkoLogger {
@@ -9,7 +10,7 @@ abstract class AbstractNotificationDetector : AdDetectable, AnkoLogger {
     abstract fun getPackageName(): String
 
     override fun canHandle(payload: AdPayload): Boolean {
-        return payload?.statusbarNotification?.key?.toLowerCase()?.contains(getPackageName())
+        return payload?.statusbarNotification?.key?.toLowerCase(Locale.ROOT)?.contains(getPackageName())
             ?: false
     }
 

@@ -4,6 +4,7 @@ import android.app.Notification
 import android.os.Bundle
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.warn
+import java.util.Locale
 
 class SpLiteTextEnglishDetector : AdDetectable, AnkoLogger, SpLiteTextDetector() {
 
@@ -18,7 +19,7 @@ class SpLiteTextEnglishDetector : AdDetectable, AnkoLogger, SpLiteTextDetector()
         if (!title.second) {
             return false
         }
-        return title.first != null && title.first!!.trim().toLowerCase().contains("advertisement")
+        return title.first != null && title.first!!.trim().toLowerCase(Locale.ROOT).contains("advertisement")
     }
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
