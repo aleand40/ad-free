@@ -126,7 +126,7 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
 
     fun setDelayValue(p: Int) {
         val view = delayLayout.findViewById<TextView>(R.id.unmutetext2)
-        val text = getString(R.string.mod_seconds_format, p)
+        val text = resources.getQuantityString(R.plurals.mod_seconds_format, p, p)
         view.text = text
 
         val seek = delayLayout.findViewById<SeekBar>(R.id.delay_unmute_seekbar)
