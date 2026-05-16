@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:scrollHorizontally="false"
             android:text="@string/debug_title"
-            android:textColor="#C4BCAF"
+            android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/title_text_size" />
     </LinearLayout>
 
@@ -42,7 +42,7 @@
             android:minHeight="48dp"
             android:scrollHorizontally="false"
             android:text="@string/debug_info_text"
-            android:textColor="#C4BCAF"
+            android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/normal_text_size" />
 
         <TextView

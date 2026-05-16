@@ -15,7 +15,7 @@
         android:layout_marginTop="30dp"
         android:scrollHorizontally="false"
         android:text="@string/detectors_mask_title"
-        android:textColor="#C4BCAF"
+        android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/title_text_size" />
 
     <android.support.v7.widget.RecyclerView

@@ -44,7 +44,7 @@
                 android:inputType="textMultiLine|textNoSuggestions"
                 android:minHeight="48dp"
                 android:scrollHorizontally="false"
-                android:textColor="#C4BCAF"
+                android:textColor="@color/textColorSecondary"
                 android:textSize="@dimen/normal_text_small"
                 tools:ignore="VisualLintTextFieldSize,VisualLintSystemWindow" />
         </LinearLayout>
@@ -58,7 +58,7 @@
             android:contentDescription="@string/desc_more_options"
             android:scaleType="fitEnd"
             android:src="@mipmap/dots_48"
-            android:textColor="#C4BCAF"
+            android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/title_text_size" />
 
     </LinearLayout>
@@ -69,6 +69,6 @@
         android:layout_height="1dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:background="#08C4BCAF" />
+        android:background="@color/textColorSecondaryTransparent" />
 
 </LinearLayout>

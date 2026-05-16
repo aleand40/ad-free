@@ -17,7 +17,7 @@
         android:scrollHorizontally="false"
         android:text="@string/enjoy"
         android:textAlignment="textStart"
-        android:textColor="#C4BCAF"
+        android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/title_text_size"
         android:textStyle="italic" />
 
@@ -31,7 +31,7 @@
         android:scrollHorizontally="false"
         android:text="@string/troubleshooting_text"
         android:textAlignment="textEnd"
-        android:textColor="#C4BCAF"
+        android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/normal_text_small"
         android:visibility="visible" />
 
@@ -45,7 +45,7 @@
         android:scrollHorizontally="false"
         android:text="@string/new_version_text"
         android:textAlignment="textEnd"
-        android:textColor="#C4BCAF"
+        android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/normal_text_small"
         android:visibility="gone" />
 

@@ -43,7 +43,7 @@
                 android:layout_height="wrap_content"
                 android:scrollHorizontally="false"
                 android:textAlignment="textStart"
-                android:textColor="#C4BCAF"
+                android:textColor="@color/textColorSecondary"
                 android:textSize="@dimen/title_text_size"
                 tools:text="Author" />
         </LinearLayout>

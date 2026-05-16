@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#252A2E</color>
-    <color name="colorPrimaryDark">#252A2E</color>
-    <color name="colorAccent">#252A2E</color>
-    <color name="colorBackground">#252A2E</color>
+    <color name="charcoal_dark">#252A2E</color>
+    <color name="sand_beige">#C4BCAF</color>
+    <color name="sand_beige_transparent">#08C4BCAF</color>
+
+    <color name="colorPrimary">@color/charcoal_dark</color>
+    <color name="colorPrimaryDark">@color/charcoal_dark</color>
+    <color name="colorAccent">@color/charcoal_dark</color>
+    <color name="colorBackground">@color/charcoal_dark</color>
+    <color name="textColorSecondary">@color/sand_beige</color>
+    <color name="textColorSecondaryTransparent">@color/sand_beige_transparent</color>
 </resources>

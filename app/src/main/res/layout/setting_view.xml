@@ -50,7 +50,7 @@
                     android:labelFor="@id/spinner"
                     android:scrollHorizontally="false"
                     android:text="@string/settings_title"
-                    android:textColor="#C4BCAF"
+                    android:textColor="@color/textColorSecondary"
                     android:textSize="@dimen/title_text_size" />
 
                 <Spinner

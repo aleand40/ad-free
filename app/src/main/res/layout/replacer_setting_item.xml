@@ -20,7 +20,7 @@
         android:minHeight="48dp"
         android:scrollHorizontally="false"
         android:text="@string/replacer_setting_item_name"
-        android:textColor="#C4BCAF"
+        android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/normal_text_size" />
 
 </LinearLayout>

@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="@string/choose_audio_dir_instruction"
-        android:textColor="#C4BCAF"
+        android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/normal_text_small" />
 
 </LinearLayout>

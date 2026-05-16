@@ -31,7 +31,7 @@
             android:layout_marginTop="@dimen/margin_title_subtitle"
             android:scrollHorizontally="false"
             android:text="@string/local_music_audio_volume_subtitle"
-            android:textColor="#C4BCAF"
+            android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/normal_text_small" />
     </LinearLayout>
 
@@ -40,7 +40,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:background="#08C4BCAF" />
+        android:background="@color/textColorSecondaryTransparent" />
 
     <LinearLayout
         android:id="@+id/layout_music_dir"
@@ -67,7 +67,7 @@
             android:layout_marginTop="@dimen/margin_title_subtitle"
             android:scrollHorizontally="false"
             android:text="@string/local_music_directory_subtitle"
-            android:textColor="#C4BCAF"
+            android:textColor="@color/textColorSecondary"
             android:textSize="@dimen/normal_text_small" />
     </LinearLayout>
 
@@ -76,7 +76,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:background="#08C4BCAF" />
+        android:background="@color/textColorSecondaryTransparent" />
 
     <LinearLayout
         android:id="@+id/layout_play_until_end"
@@ -110,7 +110,7 @@
                 android:layout_marginTop="@dimen/margin_title_subtitle"
                 android:scrollHorizontally="false"
                 android:text="@string/local_music_play_until_end_subtitle"
-                android:textColor="#C4BCAF"
+                android:textColor="@color/textColorSecondary"
                 android:textSize="@dimen/normal_text_small" />
         </LinearLayout>
 
@@ -128,7 +128,7 @@
         android:layout_height="1dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:background="#08C4BCAF" />
+        android:background="@color/textColorSecondaryTransparent" />
 
     <LinearLayout
         android:id="@+id/layout_loop"
@@ -162,7 +162,7 @@
                 android:layout_marginTop="@dimen/margin_title_subtitle"
                 android:scrollHorizontally="false"
                 android:text="@string/local_music_loop_subtitle"
-                android:textColor="#C4BCAF"
+                android:textColor="@color/textColorSecondary"
                 android:textSize="@dimen/normal_text_small" />
         </LinearLayout>
 

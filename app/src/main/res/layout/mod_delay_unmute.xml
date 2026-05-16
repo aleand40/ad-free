@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:text="@string/delay_unmute_description"
-        android:textColor="#C4BCAF"
+        android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/normal_text_small" />
 
     <android.support.v7.widget.AppCompatSeekBar
@@ -39,7 +39,7 @@
         android:scrollHorizontally="false"
         android:text="@string/delay_unmute_default_value"
         android:textAlignment="center"
-        android:textColor="#C4BCAF"
+        android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/normal_text_small" />
 
 </LinearLayout>
