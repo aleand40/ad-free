@@ -8,7 +8,6 @@ package ch.abertschi.adfree
 
 import android.app.Activity
 import android.app.Application
-import android.os.AsyncTask
 import ch.abertschi.adfree.ad.AdDetector
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.PluginHandler
@@ -42,7 +41,12 @@ class AdFreeApplication : Application(), AnkoLogger {
 
     override fun onCreate() {
         super.onCreate()
-        Thread.setDefaultUncaughtExceptionHandler(CrashExceptionHandler(this))
+
+        val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            CrashExceptionHandler(this).uncaughtException(thread, throwable)
+            defaultHandler?.uncaughtException(thread, throwable)
+        }
 
         prefs = PreferencesFactory(applicationContext)
         textRepository = TextRepository(this, prefs)
@@ -73,10 +77,10 @@ class AdFreeApplication : Application(), AnkoLogger {
 
         notificationStatus.restartNotificationListener()
 
-        AsyncTask.execute {
+        Thread {
             if (prefs.isAlwaysOnNotificationEnabled()) {
                 notificationStatus.forceTimedRestart()
             }
-        }
+        }.start()
     }
 }
