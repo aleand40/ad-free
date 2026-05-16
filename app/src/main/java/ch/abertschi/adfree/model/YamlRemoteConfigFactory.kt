@@ -10,60 +10,60 @@ import com.github.kittinunf.fuel.httpGet
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import org.yaml.snakeyaml.Yaml
+import org.yaml.snakeyaml.representer.Representer
 
 /**
  * Created by abertschi on 26.04.17.
  */
-class YamlRemoteConfigFactory<MODEL>(val downloadUrl: String,
-                                     val modelType: Class<MODEL>,
-                                     val preferences: PreferencesFactory) {
+class YamlRemoteConfigFactory<MODEL>(
+    val downloadUrl: String,
+    val modelType: Class<MODEL>,
+    val preferences: PreferencesFactory
+) {
 
-    private val SETTING_PERSISTENCE_LOCAL_KEY: String = "YAML_CONFIG_FACTORY_PERSISTENCE_"
+    private val settingPersistenceLocalKey = "YAML_CONFIG_FACTORY_PERSISTENCE_${modelType.canonicalName}"
 
-    init {
-        SETTING_PERSISTENCE_LOCAL_KEY + modelType.canonicalName
-    }
-
-    fun downloadObservable(): io.reactivex.Observable<Pair<MODEL, String>>
-            = Observable.create<Pair<MODEL, String>> { source ->
-
-        downloadUrl.httpGet().responseString { _, _, result ->
-            val (data, error) = result
-            if (error == null) {
-                try {
-                    val yaml = createYamlInstance()
-                    val model = yaml.loadAs(data, modelType)
-                    source.onNext(Pair<MODEL, String>(model, data ?: ""))
-                } catch (exception: Exception) {
-                    source.onError(exception)
+    fun downloadObservable(): Observable<Pair<MODEL, String>> =
+        Observable.create<Pair<MODEL, String>> { source ->
+            downloadUrl.httpGet().responseString { _, _, result ->
+                val (data, error) = result
+                if (error == null) {
+                    try {
+                        val yaml = createYamlInstance()
+                        val model = yaml.loadAs(data, modelType)
+                        source.onNext(Pair(model, data ?: ""))
+                    } catch (exception: Exception) {
+                        source.onError(exception)
+                    }
+                } else {
+                    source.onError(error)
                 }
-            } else {
-                source.onError(error)
+                source.onComplete()
             }
-            source.onComplete()
-        }
-    }.observeOn(Schedulers.io())
+        }.observeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+
 
     fun loadFromLocalStore(defaultReturn: MODEL? = null): MODEL? {
         val yaml = createYamlInstance()
-        val content = preferences.getPreferences().getString(SETTING_PERSISTENCE_LOCAL_KEY, null)
-        if (content == null) {
-            return defaultReturn
-        } else {
-            return yaml.loadAs(content, modelType)
-        }
+        val content = preferences.getPreferences().getString(settingPersistenceLocalKey, null)
+
+        return content?.let { yaml.loadAs(it, modelType) } ?: defaultReturn
     }
 
+    @Suppress("DEPRECATION")
     fun storeToLocalStore(model: MODEL) {
         val yaml = createYamlInstance()
         preferences.getPreferences()
-                .edit().putString(SETTING_PERSISTENCE_LOCAL_KEY, yaml.dump(model)).apply()
+            .edit()
+            .putString(settingPersistenceLocalKey, yaml.dump(model))
+            .apply()
     }
 
-    private fun createYamlInstance(): org.yaml.snakeyaml.Yaml {
-        val representer = org.yaml.snakeyaml.representer.Representer()
+    private fun createYamlInstance(): Yaml {
+        val representer = Representer()
         representer.propertyUtils.setSkipMissingProperties(true)
-        return org.yaml.snakeyaml.Yaml(representer)
+        return Yaml(representer)
     }
 }
