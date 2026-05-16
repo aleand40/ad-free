@@ -43,6 +43,8 @@
     <string name="desc_twitter">View Twitter profile</string>
     <string name="settings_title">what do you want to do while ads are being played</string>
     <string name="desc_try_plugin">Test plugin</string>
+    <string name="crash_title">ad-free crashed</string>
+    <string name="send_logs">crash_send_logs</string>
     <string-array name="test">
     </string-array>
 </resources>
