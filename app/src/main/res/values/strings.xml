@@ -51,6 +51,7 @@
     <string name="delay_unmute_default_value">0 seconds</string>
     <string name="detector_title_format">&gt; %s</string>
     <string name="category_subtitle_format">configure detectors for %s</string>
+    <string name="plugin_interdim_cable_volume_title">configure audio volume</string>
     <string-array name="test">
     </string-array>
 </resources>
