@@ -17,26 +17,17 @@ import ch.abertschi.adfree.R
 import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.AnkoLogger
 
-
 /**
  * Created by abertschi on 21.04.17.
  */
-
-class PluginSpinnerAdapter
-    : ArrayAdapter<String>, AnkoLogger {
-
-    private var objects: Array<String>
+class PluginSpinnerAdapter(
+    context: Context,
+    textViewResourceId: Int,
+    private var objects: Array<String>,
     private var spinner: Spinner
-    private var viewToClickOnToDismissPopup: View?
+) : ArrayAdapter<String>(context, textViewResourceId, objects), AnkoLogger {
 
-    constructor(context: Context, textViewResourceId: Int, objects: Array<String>, spinner: Spinner, viewToClickOnToDismissPopup: View? = null) : super(context, textViewResourceId, objects) {
-        this.objects = objects
-        this.spinner = spinner
-        this.viewToClickOnToDismissPopup = viewToClickOnToDismissPopup
-    }
-
-    override fun getDropDownView(position: Int, convertView: View?,
-                                 parent: ViewGroup): View {
+    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         return getCustomView(position, convertView, parent)
     }
 
@@ -44,44 +35,39 @@ class PluginSpinnerAdapter
         return getCustomView(position, convertView, parent)
     }
 
-    fun getCustomView(position: Int, convertView: View?, parent: ViewGroup): View {
-        val inflater: LayoutInflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.replacer_setting_item, parent, false)
-        val textView = view.findViewById(R.id.setting_spinner_item) as TextView
+    private fun getCustomView(position: Int, convertView: View?, parent: ViewGroup): View {
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+
+        val view = convertView ?: inflater.inflate(R.layout.replacer_setting_item, parent, false)
+
+        val textView = view.findViewById<TextView>(R.id.setting_spinner_item)
         textView.text = objects[position]
         textView.typeface = ViewSettings.instance(context).typeFace
-        view.setOnClickListener {
+
+        val clickListener = View.OnClickListener {
             spinner.performClick()
             spinner.setSelection(position)
             hideSpinnerDropDown(spinner)
         }
-        textView.setOnClickListener {
-            spinner.performClick()
-            spinner.setSelection(position)
-            hideSpinnerDropDown(spinner)
-        }
+
+        view.setOnClickListener(clickListener)
+        textView.setOnClickListener(clickListener)
 
         return view
     }
 
-    fun setModel(objects: Array<String>) {
-        this.objects = objects
-    }
-
     /*
-     * This is super ugly, but creating a custom spinner class got me into issues with default styling.
+     * This is hideous, but creating a custom spinner class got me into issues with default styling.
      * So this is the simplest workaround
      * http://stackoverflow.com/questions/17965611/how-to-hide-spinner-dropdown-android
      */
-    fun hideSpinnerDropDown(spinner: Spinner) {
+    private fun hideSpinnerDropDown(spinner: Spinner) {
         try {
             val method = Spinner::class.java.getDeclaredMethod("onDetachedFromWindow")
             method.isAccessible = true
             method.invoke(spinner)
         } catch (e: Exception) {
-            error("Can not hide spinner dialog, " + e)
+            error("Can not hide spinner dialog, $e")
         }
     }
 }
-
-
