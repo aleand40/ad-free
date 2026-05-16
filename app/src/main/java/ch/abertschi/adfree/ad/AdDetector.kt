@@ -6,13 +6,13 @@
 
 package ch.abertschi.adfree.ad
 
+import android.annotation.SuppressLint
 import ch.abertschi.adfree.detector.AdDetectable
 import ch.abertschi.adfree.detector.AdPayload
 import ch.abertschi.adfree.model.AdDetectableFactory
 import ch.abertschi.adfree.model.RemoteManager
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.debug
-import org.jetbrains.anko.info
 
 /**
  * Created by abertschi on 13.08.17.
@@ -45,20 +45,15 @@ class AdDetector(
             val flaggedAsMusicBy = ArrayList<AdDetectable>(activeDetectors.size)
 
             activeDetectors.filter { it.flagAsMusic(payload) }.forEach { detector ->
-                run {
-                    isMusic = true
-                    flaggedAsMusicBy.add(detector)
-                }
+                isMusic = true
+                flaggedAsMusicBy.add(detector)
             }
 
             if (!isMusic) {
-                activeDetectors.filter { it.flagAsAdvertisement(payload) }
-                    .forEach { detector ->
-                        run {
-                            isAd = true
-                            flaggedAsAdBy.add(detector)
-                        }
-                    }
+                activeDetectors.filter { it.flagAsAdvertisement(payload) }.forEach { detector ->
+                    isAd = true
+                    flaggedAsAdBy.add(detector)
+                }
             }
 
             if (!init) {
@@ -77,15 +72,14 @@ class AdDetector(
         }
 
         synchronized(this) {
-            if (_pendingEvent != null) {
-                val e = _pendingEvent
+            _pendingEvent?.let { e ->
                 _pendingEvent = null
-                notifyObservers(e!!)
+                notifyObservers(e)
             }
         }
-
     }
 
+    @SuppressLint("CheckResult")
     private fun fetchRemote() {
         remoteManager.getRemoteSettingsObservable()
             .subscribe { go = it.enabled }
@@ -118,5 +112,4 @@ class AdDetector(
     override fun deleteObserver(obs: AdObserver) {
         observers.remove(obs)
     }
-
 }

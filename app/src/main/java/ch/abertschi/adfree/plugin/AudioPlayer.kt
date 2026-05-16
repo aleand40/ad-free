@@ -6,6 +6,7 @@
 
 package ch.abertschi.adfree.plugin
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.media.AudioManager
 import android.media.MediaPlayer
@@ -18,20 +19,16 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import java.util.concurrent.TimeUnit
 
-/**
- * Created by abertschi on 28.08.17.
- */
-open class AudioPlayer(val context: Context,
-                       val prefs: PreferencesFactory,
-                       val audioController: AudioController) : AnkoLogger {
+open class AudioPlayer(
+    val context: Context,
+    val prefs: PreferencesFactory,
+    val audioController: AudioController
+) : AnkoLogger {
 
     private var isPlaying: Boolean = false
-    private var onStopCallables: ArrayList<() -> Unit> = ArrayList()
+    private var onStopCallables: MutableList<() -> Unit> = ArrayList()
     private var player: MediaPlayer? = null
 
-    /**
-     * a callable that is called when a track takes longer to load.
-     */
     var trackPreparationDelayCallable: (() -> Unit)? = null
 
     fun play(url: String, loop: Boolean = false) {
@@ -39,19 +36,18 @@ open class AudioPlayer(val context: Context,
     }
 
     fun playWithCachingProxy(url: String) {
-//        httpProxy = httpProxy ?: HttpProxyCacheServer(view)
-//        val proxyUrl = httpProxy!!.getProxyUrl(url)
         playAudio(url)
     }
 
+    @SuppressLint("CheckResult")
     private fun playAudio(url: String, loop: Boolean = false) {
-        initializeMediaPlayerObservable(context, url).subscribe { player ->
-            this.player = player
-            player.setOnErrorListener { _, what, _ ->
+        initializeMediaPlayerObservable(url).subscribe { initializedPlayer ->
+            this.player = initializedPlayer
+            initializedPlayer.setOnErrorListener { _, what, _ ->
                 throw RuntimeException("Problem with audio player, code: $what")
             }
-            player.isLooping = loop
-            player.start()
+            initializedPlayer.isLooping = loop
+            initializedPlayer.start()
             isPlaying = true
         }
     }
@@ -63,7 +59,7 @@ open class AudioPlayer(val context: Context,
 
     fun forceStop(onStoped: () -> Unit) {
         closePlayer()
-        onStoped?.invoke()
+        onStoped.invoke()
     }
 
     fun stop(onStoped: () -> Unit) {
@@ -73,41 +69,42 @@ open class AudioPlayer(val context: Context,
         }
     }
 
-    private fun initializeMediaPlayerObservable(context: Context, url: String): Observable<MediaPlayer>
-            = Observable.create<MediaPlayer> { source ->
-        player = MediaPlayer()
-        player?.setDataSource(url)
-        player?.setAudioStreamType(AudioManager.STREAM_VOICE_CALL)
+    @SuppressLint("CheckResult")
+    private fun initializeMediaPlayerObservable(url: String): Observable<MediaPlayer> =
+        Observable.create { source ->
+            player = MediaPlayer()
+            player?.setDataSource(url)
+            player?.setAudioStreamType(AudioManager.STREAM_VOICE_CALL)
 
-        var asyncPreparationDone = false
-        info { "$asyncPreparationDone / $trackPreparationDelayCallable" }
-        trackPreparationDelayCallable?.let {
-            info { "creating observable" }
-            Observable.just(true)
+            var asyncPreparationDone = false
+            info { "$asyncPreparationDone / $trackPreparationDelayCallable" }
+            trackPreparationDelayCallable?.let { callable ->
+                info { "creating observable" }
+                Observable.just(true)
                     .delay(500, TimeUnit.MILLISECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).subscribe {
-                info { "executing observable: $asyncPreparationDone" }
-                if (!asyncPreparationDone) {
-                    info { "invoking observable" }
-                    trackPreparationDelayCallable?.invoke()
+                        info { "executing observable: $asyncPreparationDone" }
+                        if (!asyncPreparationDone) {
+                            info { "invoking observable" }
+                            callable.invoke()
+                        }
+                    }
+            }
+            player?.prepareAsync()
+            player?.setOnPreparedListener {
+                asyncPreparationDone = true
+                audioController.showVoiceCallVolume()
+                player?.setOnCompletionListener {
+                    closePlayer()
+                    synchronized(onStopCallables) {
+                        onStopCallables.forEach { it() }
+                        onStopCallables.clear()
+                    }
                 }
+                source.onNext(player!!)
             }
         }
-        player?.prepareAsync()
-        player?.setOnPreparedListener {
-            asyncPreparationDone = true
-            audioController.showVoiceCallVolume()
-            player?.setOnCompletionListener {
-                closePlayer()
-                synchronized(onStopCallables) {
-                    onStopCallables?.forEach { it() }
-                    onStopCallables.clear()
-                }
-            }
-            source.onNext(player!!)
-        }
-    }
 
     private fun closePlayer() {
         isPlaying = false
@@ -115,13 +112,5 @@ open class AudioPlayer(val context: Context,
         player?.reset()
         player?.release()
         player = null
-//        httpProxy?.shutdown()
-//        httpProxy = null
     }
-
-    private fun storeAudioVolume(volume: Int)
-            = prefs.storeVoiceCallAudioVolume(volume)
-
-    private fun loadAudioVolume(): Int =
-            prefs.loadVoiceCallAudioVolume()
 }

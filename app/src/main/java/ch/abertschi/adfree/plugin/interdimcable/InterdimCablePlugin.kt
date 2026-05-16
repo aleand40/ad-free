@@ -6,6 +6,7 @@
 
 package ch.abertschi.adfree.plugin.interdimcable
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.View
 import ch.abertschi.adfree.AudioController
@@ -26,28 +27,26 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by abertschi on 21.04.17.
  */
-class InterdimCablePlugin(val prefs: PreferencesFactory,
-                          val audioController: AudioController,
-                          val globalContext: Context,
-                          val notificationChannel: NotificationChannel) : AdPlugin, AnkoLogger {
+class InterdimCablePlugin(
+    val prefs: PreferencesFactory,
+    val audioController: AudioController,
+    val globalContext: Context,
+    val notificationChannel: NotificationChannel
+) : AdPlugin, AnkoLogger {
 
-    private val GITHUB_RAW_SUFFIX: String = "?raw=true"
-    private val AD_FREE_RESOURCE_ADRESS: String
-            = "https://github.com/abertschi/ad-free-resources/blob/master/"
+    private val GITHUB_RAW_SUFFIX = "?raw=true"
+    private val AD_FREE_RESOURCE_ADRESS = "https://github.com/abertschi/ad-free-resources/blob/master/"
 
-    private val BASE_URL: String = AD_FREE_RESOURCE_ADRESS + "plugins/interdimensional-cable/"
-    private val PLUGIN_FILE_PATH: String = BASE_URL + "plugin.yaml" + GITHUB_RAW_SUFFIX
+    private val BASE_URL = AD_FREE_RESOURCE_ADRESS + "plugins/interdimensional-cable/"
+    private val PLUGIN_FILE_PATH = BASE_URL + "plugin.yaml" + GITHUB_RAW_SUFFIX
 
     private var configFactory: YamlRemoteConfigFactory<InterdimCableModel> =
-            YamlRemoteConfigFactory(PLUGIN_FILE_PATH, InterdimCableModel::class.java, prefs)
+        YamlRemoteConfigFactory(PLUGIN_FILE_PATH, InterdimCableModel::class.java, prefs)
 
     private var model: InterdimCableModel? = null
     private var interdimCableView: InterdimCableView? = InterdimCableView(globalContext)
 
     private var player: AudioPlayer = AudioPlayer(globalContext, prefs, audioController)
-
-    init {
-    }
 
     override fun title(): String = "interdimensional cable"
 
@@ -67,38 +66,40 @@ class InterdimCablePlugin(val prefs: PreferencesFactory,
     }
 
     override fun onPluginDeactivated() {
-        forceStop({})
+        forceStop {}
     }
 
     override fun stop(onStoped: () -> Unit) {
         player.stop(onStoped)
     }
 
+    @SuppressLint("CheckResult")
     private fun updatePluginSettings(callback: (() -> Unit)? = null) {
         configFactory.downloadObservable()
-                .subscribe(
-                        { pair ->
-                            model = pair.first
-                            info("Interdimensional cable plugin settings updated")
-                            info("downloaded meta data for " + model?.channels?.size + " channels")
-                            configFactory.storeToLocalStore(model!!)
-                            callback?.invoke()
-                        },
-                        { error ->
-                            interdimCableView?.showInternetError()
-                            callback?.invoke()
-                        }
-                )
+            .subscribe(
+                { pair ->
+                    model = pair.first
+                    info("Interdimensional cable plugin settings updated")
+                    info("downloaded meta data for ${model?.channels?.size} channels")
+                    configFactory.storeToLocalStore(model!!)
+                    callback?.invoke()
+                },
+                { _ ->
+                    interdimCableView?.showInternetError()
+                    callback?.invoke()
+                }
+            )
     }
 
     override fun play() {
-        if (model == null || model!!.channels == null || model!!.channels!!.isEmpty()) {
+        if (model?.channels.isNullOrEmpty()) {
             updatePluginSettings(this::doPlay)
             return
         }
         doPlay()
     }
 
+    @SuppressLint("CheckResult")
     private fun doPlay() {
         val list = model?.channels ?: listOf()
         if (list.isNotEmpty()) {
@@ -110,11 +111,10 @@ class InterdimCablePlugin(val prefs: PreferencesFactory,
                 val title = item.name ?: item.path?.split("/")?.last()
 
                 Observable.just(true).delay(1000, TimeUnit.MILLISECONDS)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread()).subscribe {
-                            notificationChannel.updateAdNotification(
-                                    title = title)
-                        }
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread()).subscribe {
+                        notificationChannel.updateAdNotification(title = title)
+                    }
             }
         } else {
             interdimCableView?.showNoChannelsError()
@@ -128,14 +128,14 @@ class InterdimCablePlugin(val prefs: PreferencesFactory,
     }
 
     override fun requestStop(onStoped: () -> Unit) {
-        runAndCatchException({ player.requestStop(onStoped) })
+        runAndCatchException { player.requestStop(onStoped) }
     }
 
     override fun forceStop(onStoped: () -> Unit) {
-        runAndCatchException({ player.forceStop(onStoped) })
+        runAndCatchException { player.forceStop(onStoped) }
     }
 
-    private fun runAndCatchException(function: () -> Unit): Unit {
+    private fun runAndCatchException(function: () -> Unit) {
         try {
             function()
         } catch (e: Throwable) {

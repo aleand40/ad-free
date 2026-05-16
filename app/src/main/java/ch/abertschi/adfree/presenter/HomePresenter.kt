@@ -6,45 +6,41 @@
 
 package ch.abertschi.adfree.presenter
 
-
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.provider.Settings
 import ch.abertschi.adfree.BuildConfig
-import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.model.RemoteManager
 import ch.abertschi.adfree.model.RemoteSetting
-
 import ch.abertschi.adfree.view.home.HomeView
-
-
-
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 
 /**
  * Created by abertschi on 15.04.17.
  */
-class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesFactory,
-                    val remoteManager: RemoteManager)
-    : AnkoLogger {
+class HomePresenter(
+    val homeView: HomeView,
+    val remoteManager: RemoteManager
+) : AnkoLogger {
 
     private var isInit: Boolean = false
     private var remoteSetting: RemoteSetting? = null
 
+    @SuppressLint("CheckResult")
     fun onCreate(context: Context) {
         isInit = true
         showPermissionRequiredIfNecessary(context)
         remoteManager.getRemoteSettingsObservable()
-                .subscribe { onRemoteSettingUpdate(it)}
+            .subscribe { onRemoteSettingUpdate(it) }
     }
 
     private fun onRemoteSettingUpdate(s: RemoteSetting) {
         remoteSetting = s
-        info { "current version code: " + BuildConfig.VERSION_CODE }
-        info { "setting version code: " + s.versionCode }
-//        info { s.toString() }
+        info { "current version code: ${BuildConfig.VERSION_CODE}" }
+        info { "setting version code: ${s.versionCode}" }
         if (s.versionCode > BuildConfig.VERSION_CODE && s.versionNotify) {
             info { "new version available. showing ui element to update" }
             homeView.showUpdateMessage(true)
@@ -56,13 +52,11 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
     }
 
     fun hasNotificationPermission(context: Context): Boolean {
-        val permission =
-                Settings.Secure.getString(context.contentResolver,
-                        "enabled_notification_listeners")
-        if (permission == null || !permission.contains(context.packageName)) {
-            return false
-        }
-        return true
+        val permission = Settings.Secure.getString(
+            context.contentResolver,
+            "enabled_notification_listeners"
+        )
+        return permission?.contains(context.packageName) == true
     }
 
     private fun showPermissionRequiredIfNecessary(context: Context) {
@@ -74,16 +68,13 @@ class HomePresenter(val homeView: HomeView, val preferencesFactory: PreferencesF
     }
 
     fun onUpdateMessageClicked() {
-        val browserIntent = Intent(Intent.ACTION_VIEW,
-                Uri.parse(remoteSetting?.versionUrl))
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(remoteSetting?.versionUrl))
         this.homeView.startActivity(browserIntent)
     }
 
     fun onTroubleshooting() {
         val url = "https://abertschi.github.io/ad-free/troubleshooting/troubleshooting.html"
-        val browserIntent = Intent(Intent.ACTION_VIEW,
-                Uri.parse(url))
+        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
         this.homeView.startActivity(browserIntent)
-
     }
 }
