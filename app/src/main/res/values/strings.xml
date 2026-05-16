@@ -39,6 +39,8 @@
     <string name="debug_send_logs_title"><![CDATA[> send logs]]></string>
     <string name="choose_audio_dir_instruction">android:text="In order to display directories on internal storage,
                           tap at the top right onto the three dots and select internal storage."</string>
+    <string name="desc_website">View website</string>
+    <string name="desc_twitter">View Twitter profile</string>
     <string-array name="test">
     </string-array>
 </resources>

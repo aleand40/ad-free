@@ -64,7 +64,7 @@ class AboutActivity : Fragment(), AboutView {
             this.context!!.startActivity(browserIntent)
         }
 
-        view.findViewById<ImageView>(R.id.moresettings).setOnClickListener {
+        view.findViewById<ImageView>(R.id.more_settings).setOnClickListener {
             presenter.showMoreSettings()
         }
 
