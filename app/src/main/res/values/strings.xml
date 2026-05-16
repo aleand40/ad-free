@@ -41,6 +41,8 @@
                           tap at the top right onto the three dots and select internal storage."</string>
     <string name="desc_website">View website</string>
     <string name="desc_twitter">View Twitter profile</string>
+    <string name="settings_title">what do you want to do while ads are being played</string>
+    <string name="desc_try_plugin">Test plugin</string>
     <string-array name="test">
     </string-array>
 </resources>
