@@ -44,21 +44,16 @@ class YamlRemoteConfigFactory<MODEL>(
         }.observeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
 
-
     fun loadFromLocalStore(defaultReturn: MODEL? = null): MODEL? {
         val yaml = createYamlInstance()
-        val content = preferences.getPreferences().getString(settingPersistenceLocalKey, null)
+        val content = preferences.getString(settingPersistenceLocalKey, null)
 
         return content?.let { yaml.loadAs(it, modelType) } ?: defaultReturn
     }
 
-    @Suppress("DEPRECATION")
     fun storeToLocalStore(model: MODEL) {
         val yaml = createYamlInstance()
-        preferences.getPreferences()
-            .edit()
-            .putString(settingPersistenceLocalKey, yaml.dump(model))
-            .apply()
+        preferences.storeString(settingPersistenceLocalKey, yaml.dump(model))
     }
 
     private fun createYamlInstance(): Yaml {
