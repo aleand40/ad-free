@@ -8,6 +8,7 @@ package ch.abertschi.adfree.view.home
 
 import android.content.Intent
 import android.graphics.Typeface
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.text.Html
@@ -21,54 +22,38 @@ import ch.abertschi.adfree.presenter.HomePresenter
 import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.AnkoLogger
 
-/**
- * Created by abertschi on 15.04.17.
- */
+class HomeActivity : Fragment(), HomeView, AnkoLogger {
 
-class HomeActivity() : Fragment(), HomeView, AnkoLogger {
     private lateinit var typeFace: Typeface
     private lateinit var enjoySloganText: TextView
     private lateinit var homePresenter: HomePresenter
     private lateinit var updateMessageInfo: TextView
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
-        return inflater?.inflate(R.layout.home_view, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.home_view, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         homePresenter = HomeModule(this.activity!!, this).provideSettingsPresenter()
-
-
         typeFace = ViewSettings.instance(this.context!!).typeFace
 
-        enjoySloganText = view.findViewById(R.id.enjoy) as TextView
-        updateMessageInfo =
-            view.findViewById(R.id.version_update_reminder) as TextView
+        enjoySloganText = view.findViewById(R.id.enjoy)
+        updateMessageInfo = view.findViewById(R.id.version_update_reminder)
 
         view.findViewById<TextView>(R.id.troubleshooting).setOnClickListener {
             homePresenter.onTroubleshooting()
         }
 
         homePresenter.onCreate(this.context!!)
-
-        // TODO: this is debug code
-//        val r: Random = Random()
-//        val c: AdFreeApplication = globalContext.applicationContext as AdFreeApplication
-//        view.onTouch { view, motionEvent ->
-//            info { "AdFree event created" }
-//            when (r.nextBoolean()) {
-//                true -> c.adDetector.notifyObservers(AdEvent(EventType.IS_AD))
-//                else -> c.adDetector.notifyObservers(AdEvent(EventType.NO_AD))
-//            }
-//            true
-//        }
     }
 
     override fun showUpdateMessage(show: Boolean) {
-        if (show ){
+        if (show) {
             updateMessageInfo.visibility = View.VISIBLE
             updateMessageInfo.setOnClickListener {
                 homePresenter.onUpdateMessageClicked()
@@ -76,7 +61,6 @@ class HomeActivity() : Fragment(), HomeView, AnkoLogger {
         } else {
             updateMessageInfo.visibility = View.GONE
         }
-
     }
 
     override fun onResume() {
@@ -85,8 +69,7 @@ class HomeActivity() : Fragment(), HomeView, AnkoLogger {
     }
 
     override fun showPermissionRequired() {
-        val text = "touch here to grant permission"
-        setSloganText(text)
+        setSloganText(getString(R.string.home_permission_required))
         enjoySloganText.setOnClickListener {
             showNotificationPermissionSettings()
         }
@@ -98,16 +81,17 @@ class HomeActivity() : Fragment(), HomeView, AnkoLogger {
 
     private fun setSloganText(text: String) {
         enjoySloganText.typeface = typeFace
-        enjoySloganText.text = Html.fromHtml(text)
+
+        enjoySloganText.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            @Suppress("DEPRECATION")
+            Html.fromHtml(text)
+        }
     }
 
     override fun showEnjoyAdFree() {
-        val text = "<font color=#FFFFFF>enjoy</font> your <font color=#FFFFFF>ad-free</font> music experience."
-        setSloganText(text)
+        setSloganText(getString(R.string.home_enjoy_adfree))
         enjoySloganText.setOnClickListener(null)
     }
-
-//    override fun setPowerState(state: Boolean) {
-//        powerButton.isChecked = state
-//    }
 }
