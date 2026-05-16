@@ -16,7 +16,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import ch.abertschi.adfree.R
-import ch.abertschi.adfree.di.HomeModul
+import ch.abertschi.adfree.di.HomeModule
 import ch.abertschi.adfree.presenter.HomePresenter
 import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.AnkoLogger
@@ -39,7 +39,7 @@ class HomeActivity() : Fragment(), HomeView, AnkoLogger {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        homePresenter = HomeModul(this.activity!!, this).provideSettingsPresenter()
+        homePresenter = HomeModule(this.activity!!, this).provideSettingsPresenter()
 
 
         typeFace = ViewSettings.instance(this.context!!).typeFace

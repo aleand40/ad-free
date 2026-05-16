@@ -8,7 +8,7 @@ package ch.abertschi.adfree.plugin
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.media.AudioManager
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import ch.abertschi.adfree.AudioController
 import ch.abertschi.adfree.model.PreferencesFactory
@@ -52,20 +52,20 @@ open class AudioPlayer(
         }
     }
 
-    fun requestStop(onStoped: () -> Unit) {
-        if (!isPlaying) onStoped()
-        else onStopCallables.add(onStoped)
+    fun requestStop(onStopped: () -> Unit) {
+        if (!isPlaying) onStopped()
+        else onStopCallables.add(onStopped)
     }
 
-    fun forceStop(onStoped: () -> Unit) {
+    fun forceStop(onStopped: () -> Unit) {
         closePlayer()
-        onStoped.invoke()
+        onStopped.invoke()
     }
 
-    fun stop(onStoped: () -> Unit) {
+    fun stop(onStopped: () -> Unit) {
         audioController.fadeOffVoiceCallVolume {
             closePlayer()
-            onStoped.invoke()
+            onStopped.invoke()
         }
     }
 
@@ -74,7 +74,12 @@ open class AudioPlayer(
         Observable.create { source ->
             player = MediaPlayer()
             player?.setDataSource(url)
-            player?.setAudioStreamType(AudioManager.STREAM_VOICE_CALL)
+
+            val audioAttributes = AudioAttributes.Builder()
+                .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                .setUsage(AudioAttributes.USAGE_VOICE_COMMUNICATION)
+                .build()
+            player?.setAudioAttributes(audioAttributes)
 
             var asyncPreparationDone = false
             info { "$asyncPreparationDone / $trackPreparationDelayCallable" }

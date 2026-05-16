@@ -14,12 +14,10 @@ import ch.abertschi.adfree.view.home.HomeView
 /**
  * Created by abertschi on 15.04.17.
  */
-
-class HomeModul(val context: Context, val homeView: HomeView) {
+class HomeModule(val context: Context, val homeView: HomeView) {
 
     fun provideSettingsPresenter(): HomePresenter {
         val adFree = context.applicationContext as AdFreeApplication
-        return HomePresenter(homeView, adFree.prefs, adFree.remoteManager)
+        return HomePresenter(homeView, adFree.remoteManager)
     }
-
 }
