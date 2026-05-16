@@ -70,7 +70,7 @@ class AdFreeApplication : Application(), AnkoLogger {
         notificationChannel = NotificationChannel(notificationUtils, prefs)
 
         adPlugins = listOf(
-            MutePlugin(), LocalMusicPlugin(applicationContext, prefs, audioManager, yesNoModel)
+            MutePlugin(), LocalMusicPlugin(applicationContext, prefs, audioManager)
 
             // XXX: We no longer support Interdimensional cable
 //                ,InterdimCablePlugin(prefs, audioManager, applicationContext, notificationChannel)
