@@ -3,101 +3,94 @@ package ch.abertschi.adfree.plugin.localmusic
 import android.provider.MediaStore
 import android.provider.DocumentsContract
 import android.content.ContentUris
-import android.os.Build
-import android.annotation.TargetApi
 import android.content.Context
-import android.database.Cursor
 import android.net.Uri
-import android.os.Environment
 
 // borrowed from
 // https://gist.github.com/asifmujteba/d89ba9074bc941de1eaa#file-asfurihelper
 
-@TargetApi(Build.VERSION_CODES.KITKAT)
 fun getPath(context: Context, uri: Uri): String? {
 
-    val isKitKat = Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
-    if (isKitKat && DocumentsContract.isDocumentUri(context, uri)) {
-        if (isExternalStorageDocument(uri)) {
-            val docId = DocumentsContract.getDocumentId(uri)
-            val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val type = split[0]
+    if (DocumentsContract.isDocumentUri(context, uri)) {
+        when {
+            isExternalStorageDocument(uri) -> {
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split = docId.split(":").toTypedArray()
+                if ("primary".equals(split[0], ignoreCase = true)) {
+                    val baseFolder = context.getExternalFilesDir(null)?.absolutePath
+                    val storageRoot = baseFolder?.substringBefore("/Android/data")
 
-            if ("primary".equals(type, ignoreCase = true)) {
-                return Environment.getExternalStorageDirectory().toString() + "/" + split[1]
+                    return if (storageRoot != null) "$storageRoot/${split[1]}" else null
+                }
+                // TODO handle non-primary volumes
             }
-
-            // TODO handle non-primary volumes
-        } else if (isDownloadsDocument(uri)) {
-
-            val id = DocumentsContract.getDocumentId(uri)
-            val contentUri = ContentUris.withAppendedId(
-                    Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id))
-
-            return getDataColumn(context, contentUri, null, null)
-        } else if (isMediaDocument(uri)) {
-            val docId = DocumentsContract.getDocumentId(uri)
-            val split = docId.split(":".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val type = split[0]
-
-            var contentUri: Uri? = null
-            if ("image" == type) {
-                contentUri = MediaStore.Images.Media.EXTERNAL_CONTENT_URI
-            } else if ("video" == type) {
-                contentUri = MediaStore.Video.Media.EXTERNAL_CONTENT_URI
-            } else if ("audio" == type) {
-                contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+            isDownloadsDocument(uri) -> {
+                val id = DocumentsContract.getDocumentId(uri)
+                val contentUri = ContentUris.withAppendedId(
+                    Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id)
+                )
+                return getDataColumn(context, contentUri, null, null)
             }
+            isMediaDocument(uri) -> {
+                val docId = DocumentsContract.getDocumentId(uri)
+                val split = docId.split(":").toTypedArray()
+                val type = split[0]
 
-            val selection = "_id=?"
-            val selectionArgs = arrayOf(split[1])
+                val contentUri = when (type) {
+                    "image" -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+                    "video" -> MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+                    "audio" -> MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
+                    else -> null
+                } ?: return null
 
-            return getDataColumn(context, contentUri, selection, selectionArgs)
+                val selection = "_id=?"
+                val selectionArgs = arrayOf(split[1])
+
+                return getDataColumn(context, contentUri, selection, selectionArgs)
+            }
         }
-
-    } else if ("content".equals(uri.scheme, ignoreCase = true)) {
-        return if (isGooglePhotosUri(uri)) uri.lastPathSegment
-        else getDataColumn(context, uri, null, null)
-
-    } else if ("file".equals(uri.scheme, ignoreCase = true)) {
-        return uri.path
+    } else when {
+        "content".equals(uri.scheme, ignoreCase = true) -> {
+            return if (isGooglePhotosUri(uri)) uri.lastPathSegment
+            else getDataColumn(context, uri, null, null)
+        }
+        "file".equals(uri.scheme, ignoreCase = true) -> {
+            return uri.path
+        }
     }
 
     return null
 }
 
-fun getDataColumn(context: Context, uri: Uri?, selection: String?,
-                  selectionArgs: Array<String>?): String? {
+fun getDataColumn(
+    context: Context, uri: Uri, selection: String?,
+    selectionArgs: Array<String>?
+): String? {
 
-    var cursor: Cursor? = null
     val column = "_data"
     val projection = arrayOf(column)
 
-    try {
-        cursor = context.contentResolver.query(uri, projection, selection, selectionArgs, null)
-        if (cursor != null && cursor!!.moveToFirst()) {
-            val index = cursor!!.getColumnIndexOrThrow(column)
-            return cursor!!.getString(index)
+    context.contentResolver.query(uri, projection, selection, selectionArgs, null).use { cursor ->
+        if (cursor != null && cursor.moveToFirst()) {
+            val index = cursor.getColumnIndexOrThrow(column)
+            return cursor.getString(index)
         }
-    } finally {
-        if (cursor != null)
-            cursor!!.close()
     }
     return null
 }
 
 fun isExternalStorageDocument(uri: Uri): Boolean {
-    return "com.android.externalstorage.documents" == uri.getAuthority()
+    return "com.android.externalstorage.documents" == uri.authority
 }
 
 fun isDownloadsDocument(uri: Uri): Boolean {
-    return "com.android.providers.downloads.documents" == uri.getAuthority()
+    return "com.android.providers.downloads.documents" == uri.authority
 }
 
 fun isMediaDocument(uri: Uri): Boolean {
-    return "com.android.providers.media.documents" == uri.getAuthority()
+    return "com.android.providers.media.documents" == uri.authority
 }
 
 fun isGooglePhotosUri(uri: Uri): Boolean {
-    return "com.google.android.apps.photos.content" == uri.getAuthority()
+    return "com.google.android.apps.photos.content" == uri.authority
 }
