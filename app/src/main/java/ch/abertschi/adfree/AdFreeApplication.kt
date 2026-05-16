@@ -8,25 +8,19 @@ package ch.abertschi.adfree
 
 import android.app.Activity
 import android.app.Application
-import android.content.Context
 import android.os.AsyncTask
 import ch.abertschi.adfree.ad.AdDetector
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.PluginHandler
-import ch.abertschi.adfree.plugin.interdimcable.InterdimCablePlugin
 import ch.abertschi.adfree.plugin.localmusic.LocalMusicPlugin
 import ch.abertschi.adfree.plugin.mute.MutePlugin
 import ch.abertschi.adfree.util.NotificationUtils
 import org.jetbrains.anko.AnkoLogger
 import ch.abertschi.adfree.crashhandler.CrashExceptionHandler
-import ch.abertschi.adfree.model.*
-import com.thoughtworks.xstream.mapper.Mapper
-import java.lang.NullPointerException
-
-
-/**
- * Created by abertschi on 21.04.17.
- */
+import ch.abertschi.adfree.model.PreferencesFactory
+import ch.abertschi.adfree.model.AdDetectableFactory
+import ch.abertschi.adfree.model.TextRepository
+import ch.abertschi.adfree.model.RemoteManager
 
 class AdFreeApplication : Application(), AnkoLogger {
 
@@ -39,7 +33,6 @@ class AdFreeApplication : Application(), AnkoLogger {
     lateinit var adStateController: AdStateController
     lateinit var notificationUtils: NotificationUtils
     lateinit var notificationChannel: NotificationChannel
-    lateinit var yesNoModel: YesNoModel
     lateinit var remoteManager: RemoteManager
     lateinit var notificationStatus: NotificationStatusManager
     lateinit var googleCast: GoogleCastManager
@@ -63,18 +56,12 @@ class AdFreeApplication : Application(), AnkoLogger {
         remoteManager = RemoteManager(prefs)
         adDetector = AdDetector(adDetectors, remoteManager)
 
-        yesNoModel = YesNoModel(this)
-        yesNoModel.getRandomYes()
-
         notificationUtils = NotificationUtils(applicationContext)
         notificationChannel = NotificationChannel(notificationUtils, prefs)
 
         adPlugins = listOf(
-            MutePlugin(), LocalMusicPlugin(applicationContext, prefs, audioManager)
-
-            // XXX: We no longer support Interdimensional cable
-//                ,InterdimCablePlugin(prefs, audioManager, applicationContext, notificationChannel)
-
+            MutePlugin(),
+            LocalMusicPlugin(applicationContext, prefs, audioManager)
         )
         pluginHandler = PluginHandler(prefs, adPlugins, adDetector)
 
