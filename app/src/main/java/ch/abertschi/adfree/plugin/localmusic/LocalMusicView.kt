@@ -6,8 +6,7 @@
 
 package ch.abertschi.adfree.plugin.localmusic
 
-import android.app.Activity
-import android.app.Application
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -16,16 +15,11 @@ import android.view.View
 import android.widget.TextView
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.plugin.PluginActivityAction
-
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.runOnUiThread
-
-import android.support.v7.app.AlertDialog
 import android.support.v7.widget.SwitchCompat
-import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.view.ViewSettings
-import org.jetbrains.anko.info
 
 /**
  * Created by abertschi on 29.08.17.
@@ -35,7 +29,8 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
 
     private lateinit var presenter: LocalMusicPlugin
 
-    fun onCreate(presenter: LocalMusicPlugin): View? {
+    @SuppressLint("InflateParams")
+    fun onCreate(presenter: LocalMusicPlugin): View {
         this.presenter = presenter
         val inflater = LayoutInflater.from(context)
         viewInstance = inflater.inflate(R.layout.plugin_localmusic, null, false)
@@ -134,12 +129,6 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
     fun showAudioError() {
         context.applicationContext.runOnUiThread {
             longToast("Whoops, there was an error with audio")
-        }
-    }
-
-    fun showNeedStoragePermissions() {
-        context.applicationContext.runOnUiThread {
-            longToast("Storage permissions needed")
         }
     }
 
