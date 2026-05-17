@@ -13,6 +13,7 @@ import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.graphics.Typeface
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentActivity
@@ -36,14 +37,13 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.warn
 
-
 /**
  * Created by abertschi on 21.04.17.
  */
 
 class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAction {
     override fun activity(): Activity {
-        var app = context!!.applicationContext as AdFreeApplication
+        val app = requireContext().applicationContext as AdFreeApplication
         return app.mainActivity
     }
 
@@ -64,7 +64,7 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater?.inflate(R.layout.setting_view, container, false)
+        return inflater.inflate(R.layout.setting_view, container, false)
     }
 
     override fun clearPluginView() {
@@ -77,7 +77,7 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
-        pluginViewContainer = rootView?.findViewById(R.id.setting_plugin_view) as LinearLayout
+        pluginViewContainer = rootView?.findViewById(R.id.setting_plugin_view)
         clearPluginView()
         pluginViewContainer?.addView(view)
     }
@@ -87,43 +87,45 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         super.onCreate(savedInstanceState)
         this.rootView = view
 
-        storedAppContext = activity?.applicationContext as AdFreeApplication
+        storedAppContext = requireActivity().applicationContext as AdFreeApplication
 
-        typeFace = ViewSettings.instance(this.tryActivity()!!).typeFace
-        settingsTitle = view?.findViewById(R.id.settingsTitle) as TextView
+        typeFace = ViewSettings.instance(tryActivity()).typeFace
+        settingsTitle = view.findViewById(R.id.settingsTitle)
         settingsTitle?.typeface = typeFace
 
-        settingPresenter = SettingsModul(this.tryActivity()!!, this).provideSettingsPresenter()
+        settingPresenter = SettingsModul(tryActivity(), this).provideSettingsPresenter()
 
         val text = "what do you want to do while <font color=#FFFFFF>ads </font>are " +
                 "<font color=#FFFFFF>being played ?</font>"
 
-        settingsTitle?.text = Html.fromHtml(text)
+        settingsTitle?.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            @Suppress("DEPRECATION")
+            Html.fromHtml(text)
+        }
 
-        spinner = view?.findViewById(R.id.spinner) as Spinner
+        spinner = view.findViewById(R.id.spinner)
         spinnerAdapter = PluginSpinnerAdapter(
-            this.tryActivity()!!, R.layout.replacer_setting_item,
-            settingPresenter.getStringEntriesOfModel(), spinner!!, view
+            tryActivity(), R.layout.replacer_setting_item,
+            settingPresenter.getStringEntriesOfModel(), spinner!!
         )
         spinner?.adapter = spinnerAdapter
 
-        // CORREGIT: Ús de l'OnItemSelectedListener natiu d'Android
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (init) settingPresenter.onPluginSelected(position)
                 spinnerAdapter?.notifyDataSetChanged()
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                // No fem res ací
-            }
+            override fun onNothingSelected(parent: AdapterView<*>?) {}
         }
 
         view.findViewById<ImageView>(R.id.try_plugin_button).setOnClickListener {
             settingPresenter.tryPlugin()
         }
         view.findViewById<LinearLayout>(R.id.setting_spinner_item_container)
-            ?.setOnTouchListener { v, event ->
+            ?.setOnTouchListener { _, _ ->
                 spinner?.performClick()
                 false
             }
@@ -149,19 +151,19 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
     override fun getContext(): Context = tryActivity()
 
     private fun tryActivity(): FragmentActivity {
-        // XXX: Workaround, issues with FragmentActivity
+        // TODO: Workaround, issues with FragmentActivity
         // At some point in life cycle, namely if we close main activity and relaunch,
-        // fragment is no longer attached to an activity and we fail with null pointer
+        // fragment is no longer attached to an activity, and we fail with null pointer
         // As a workaround we restart the application in these cases
         // Is there a solution for this? handling fragments is known to be cumbersome...
         if (this.activity == null || !this.isAdded) {
             val intent = Intent(storedAppContext, MainActivity::class.java)
             intent.addFlags(FLAG_ACTIVITY_NEW_TASK)
             storedAppContext.startActivity(intent)
-            warn { "Fragment not attached to Activity. subsequent calls will fail. we restart app" }
+            warn { "Fragment not attached to Activity. Subsequent calls will fail, so we restart the app." }
             Runtime.getRuntime().exit(0)
         }
-        return this.activity!!
+        return requireActivity()
     }
 
     override fun showSuggestNewPlugin() {
