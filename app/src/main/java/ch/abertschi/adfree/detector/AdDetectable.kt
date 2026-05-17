@@ -13,7 +13,7 @@ interface AdDetectable {
 
     fun getMeta(): AdDetectorMeta = AdDetectorMeta(javaClass.simpleName, "not available")
 
-    fun canHandle(p: AdPayload): Boolean
+    fun canHandle(payload: AdPayload): Boolean
 
     fun flagAsAdvertisement(payload: AdPayload): Boolean = false
 
