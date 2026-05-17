@@ -1,21 +1,16 @@
 package ch.abertschi.adfree.detector
 
-import android.service.notification.StatusBarNotification
-import com.thoughtworks.xstream.XStream
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.warn
 import java.io.File
-import java.io.FileOutputStream
 
 class ScNotificationDebugTracer(storageFolder: File?) : AdDetectable, AnkoLogger,
     AbstractDebugTracer(storageFolder) {
 
-    val SOUNDCLOUD_PACKAGE = "com.soundcloud.android"
-    val FILENAME = "adfree-soundcloud.txt"
+    val soundcloudPackageName = "com.soundcloud.android"
+    val fileName = "adfree-soundcloud.txt"
 
-    override fun getPackage() = SOUNDCLOUD_PACKAGE
-    override fun getFileName() = FILENAME
+    override fun getPackage() = soundcloudPackageName
+    override fun getFileName() = fileName
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
         "Soundcloud tracer",

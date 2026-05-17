@@ -15,11 +15,11 @@ import java.util.Locale
 abstract class AbstractSpStatusBarDetector : AdDetectable, AnkoLogger {
 
     companion object {
-        private val SPOTIFY_PACKAGE = "com.spotify"
+        private val spotifyPackageName = "com.spotify"
     }
 
     override fun canHandle(payload: AdPayload): Boolean {
-        return payload?.statusbarNotification?.key?.toLowerCase(Locale.ROOT)?.contains(SPOTIFY_PACKAGE) ?: false
+        return payload?.statusbarNotification?.key?.toLowerCase(Locale.ROOT)?.contains(spotifyPackageName) ?: false
     }
 
 

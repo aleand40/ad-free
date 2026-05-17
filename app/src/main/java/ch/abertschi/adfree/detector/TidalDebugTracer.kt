@@ -6,11 +6,11 @@ import java.io.File
 class TidalDebugTracer(storageFolder: File?) : AdDetectable, AnkoLogger,
     AbstractDebugTracer(storageFolder) {
 
-    private val PACKAGE = "com.aspiro.tidal"
-    private val FILENAME = "adfree-tidal.txt"
+    private val packageName = "com.aspiro.tidal"
+    private val fileName = "adfree-tidal.txt"
 
-    override fun getPackage() = PACKAGE
-    override fun getFileName() = FILENAME
+    override fun getPackage() = packageName
+    override fun getFileName() = fileName
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
         "Tidal tracer",

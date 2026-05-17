@@ -6,11 +6,11 @@ import java.io.File
 class SpotifyLiteDebugTracer(storageFolder: File?) : AdDetectable, AnkoLogger,
     AbstractDebugTracer(storageFolder) {
 
-    private val PACKAGE = "com.spotify.lite"
-    private val FILENAME = "adfree-spotify-lite.txt"
+    private val packageName = "com.spotify.lite"
+    private val fileName = "adfree-spotify-lite.txt"
 
-    override fun getPackage() = PACKAGE
-    override fun getFileName() = FILENAME
+    override fun getPackage() = packageName
+    override fun getFileName() = fileName
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
         "Spotify Lite tracer",
