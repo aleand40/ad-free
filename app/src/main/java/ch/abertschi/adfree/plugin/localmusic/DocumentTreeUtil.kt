@@ -43,7 +43,7 @@ fun getPath(context: Context, uri: Uri): String? {
                     else -> null
                 } ?: return null
 
-                val selection = "_id=?"
+                val selection = "id=?"
                 val selectionArgs = arrayOf(split[1])
 
                 return getDataColumn(context, contentUri, selection, selectionArgs)

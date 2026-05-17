@@ -11,7 +11,6 @@ import ch.abertschi.adfree.detector.AdPayload
 import com.thoughtworks.xstream.XStream
 import java.io.File
 import java.io.FileOutputStream
-import android.app.Service
 import android.content.Intent
 
 import org.jetbrains.anko.*
@@ -51,7 +50,7 @@ class NotificationsListeners : NotificationListenerService(), AnkoLogger {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         info { "Starting ad-free notificationsListener" }
-        return Service.START_STICKY
+        return START_STICKY
     }
 
     @Deprecated("for testing only")
@@ -62,16 +61,12 @@ class NotificationsListeners : NotificationListenerService(), AnkoLogger {
 
         warn { XStream().toXML(sbn) }
         val stream = FileOutputStream(file, true)
-        try {
+        stream.use { stream ->
             stream.write(XStream().toXML(sbn).toByteArray())
-        } finally {
-            stream.close()
         }
         val stream2 = FileOutputStream(ids, true)
-        try {
+        stream2.use { stream2 ->
             stream2.write((sbn.id.toString() + " / " + sbn.groupKey + "\n").toByteArray())
-        } finally {
-            stream2.close()
         }
     }
 }

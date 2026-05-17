@@ -41,10 +41,10 @@ class AdStateController(private val audioController: AudioController,
             onAd(observable)
         }
         if (activeState != EventType.NO_AD && event.eventType == EventType.NO_AD) {
-            onNoAd(observable)
+            onNoAd()
         }
         if (activeState != EventType.IGNORE_AD && event.eventType == EventType.IGNORE_AD) {
-            onIgnoreAd(observable)
+            onIgnoreAd()
         }
         if (event.eventType == EventType.SHOWCASE) {
             onShowCase(observable)
@@ -67,7 +67,7 @@ class AdStateController(private val audioController: AudioController,
         }
     }
 
-    fun onIgnoreAd(observable: AdObservable) {
+    fun onIgnoreAd() {
         info { "AdEvent Change: IGNORE_AD" }
         activeState = EventType.IGNORE_AD
 
@@ -78,7 +78,7 @@ class AdStateController(private val audioController: AudioController,
         }
     }
 
-    fun onNoAd(observable: AdObservable) {
+    fun onNoAd() {
         info { "AdEvent Change: NO_ADD" }
         activeState = EventType.NO_AD
 
@@ -96,7 +96,7 @@ class AdStateController(private val audioController: AudioController,
                     .delay(delay.toLong(), TimeUnit.SECONDS)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread()).map {
-                        info("delaying unmute by ${delay} seconds")
+                        info("delaying unmute by $delay seconds")
                         doUnmute()
                     }.subscribe()
         } else doUnmute()

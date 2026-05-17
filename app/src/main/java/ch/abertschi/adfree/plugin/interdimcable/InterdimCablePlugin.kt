@@ -67,8 +67,8 @@ class InterdimCablePlugin(
         forceStop {}
     }
 
-    override fun stop(onStoped: () -> Unit) {
-        player.stop(onStoped)
+    override fun stop(onStopped: () -> Unit) {
+        player.stop(onStopped)
     }
 
     @SuppressLint("CheckResult")
@@ -125,12 +125,12 @@ class InterdimCablePlugin(
         audioController.showVoiceCallVolume()
     }
 
-    override fun requestStop(onStoped: () -> Unit) {
-        runAndCatchException { player.requestStop(onStoped) }
+    override fun requestStop(onStopped: () -> Unit) {
+        runAndCatchException { player.requestStop(onStopped) }
     }
 
-    override fun forceStop(onStoped: () -> Unit) {
-        runAndCatchException { player.forceStop(onStoped) }
+    override fun forceStop(onStopped: () -> Unit) {
+        runAndCatchException { player.forceStop(onStopped) }
     }
 
     private fun runAndCatchException(function: () -> Unit) {

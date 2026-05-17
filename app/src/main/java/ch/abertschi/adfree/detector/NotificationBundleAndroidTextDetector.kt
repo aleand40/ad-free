@@ -22,12 +22,12 @@ class NotificationBundleAndroidTextDetector : AbstractSpStatusBarDetector(), Ank
 
     override fun flagAsAdvertisement(payload: AdPayload): Boolean {
         try {
-            val bundle = getNotificationBundle(payload!!.statusbarNotification!!.notification)
+            val bundle = getNotificationBundle(payload.statusbarNotification.notification)
             var flagAsAd = false
             bundle.let {
-                val androidText: CharSequence? = bundle?.get("android.text") as CharSequence?
+                val androidText: CharSequence? = bundle.get("android.text") as CharSequence?
                 flagAsAd = androidText == null
-                        && payload!!.statusbarNotification!!.notification!!
+                        && payload.statusbarNotification.notification!!
                     .tickerText?.isNotEmpty() ?: false
             }
             return flagAsAd
@@ -38,7 +38,7 @@ class NotificationBundleAndroidTextDetector : AbstractSpStatusBarDetector(), Ank
         return false
     }
 
-    private fun getNotificationBundle(notification: Notification): Bundle? {
+    private fun getNotificationBundle(notification: Notification): Bundle {
         try {
             //NoSuchFieldException
             val f = notification.javaClass.getDeclaredField("extras")

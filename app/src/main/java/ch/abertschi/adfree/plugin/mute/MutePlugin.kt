@@ -12,8 +12,8 @@ import ch.abertschi.adfree.plugin.AdPlugin
  * Created by abertschi on 21.04.17.
  */
 class MutePlugin : AdPlugin {
-    override fun stop(onStoped: () -> Unit) {
-        onStoped()
+    override fun stop(onStopped: () -> Unit) {
+        onStopped()
     }
 
     override fun onPluginLoaded() {
@@ -27,12 +27,12 @@ class MutePlugin : AdPlugin {
     override fun playTrial() {
     }
 
-    override fun requestStop(onStoped: () -> Unit) {
-        onStoped()
+    override fun requestStop(onStopped: () -> Unit) {
+        onStopped()
     }
 
-    override fun forceStop(onStoped: () -> Unit) {
-        onStoped()
+    override fun forceStop(onStopped: () -> Unit) {
+        onStopped()
     }
 
     override fun onPluginActivated() {

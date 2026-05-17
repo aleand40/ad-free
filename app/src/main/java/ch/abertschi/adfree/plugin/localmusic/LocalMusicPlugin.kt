@@ -48,7 +48,7 @@ class LocalMusicPlugin(
 
     override fun hasSettingsView(): Boolean = true
 
-    override fun settingsView(context: Context, activityActions: PluginActivityAction): View? {
+    override fun settingsView(context: Context, activityActions: PluginActivityAction): View {
         view = view ?: LocalMusicView(context, activityActions)
         val settingsView = view!!.onCreate(this)
         view?.showLoopEnabled(prefs.getLoopMusicPlayback())
@@ -87,15 +87,15 @@ class LocalMusicPlugin(
         play()
     }
 
-    override fun requestStop(onStoped: () -> Unit) {
+    override fun requestStop(onStopped: () -> Unit) {
         runAndCatchException {
-            player.requestStop(onStoped)
+            player.requestStop(onStopped)
         }
     }
 
-    override fun forceStop(onStoped: () -> Unit) {
+    override fun forceStop(onStopped: () -> Unit) {
         runAndCatchException {
-            player.forceStop(onStoped)
+            player.forceStop(onStopped)
         }
     }
 
@@ -107,12 +107,12 @@ class LocalMusicPlugin(
         forceStop {}
     }
 
-    override fun stop(onStoped: () -> Unit) {
+    override fun stop(onStopped: () -> Unit) {
         if (prefs.getPlayUntilEnd()) {
-            requestStop(onStoped)
+            requestStop(onStopped)
         } else {
             runAndCatchException {
-                player.stop(onStoped)
+                player.stop(onStopped)
             }
         }
     }

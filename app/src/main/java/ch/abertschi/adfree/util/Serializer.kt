@@ -12,12 +12,12 @@ package ch.abertschi.adfree.util
 class Serializer {
 
     private object Holder {
-        val INSTANCE = ch.abertschi.adfree.util.Serializer()
+        val INSTANCE = Serializer()
     }
 
     companion object {
-        val instance: ch.abertschi.adfree.util.Serializer
-                by lazy { ch.abertschi.adfree.util.Serializer.Holder.INSTANCE }
+        val instance: Serializer
+                by lazy { Holder.INSTANCE }
     }
 
     private val xstream: com.thoughtworks.xstream.XStream = com.thoughtworks.xstream.XStream()

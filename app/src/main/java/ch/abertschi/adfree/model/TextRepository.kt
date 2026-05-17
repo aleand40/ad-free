@@ -12,13 +12,13 @@ import kotlin.collections.HashSet
 
 data class TextRepositoryData(
     var packageName: String = "",
-    var content: List<String> = ArrayList<String>(),
+    var content: List<String> = ArrayList(),
     var subTitleNull: Boolean = false,
-    var _id: String = UUID.randomUUID().toString()
+    var id: String = UUID.randomUUID().toString()
 ) {
 
     fun serializeToString(): String {
-        return Companion.serializeToString(this)
+        return serializeToString(this)
     }
 
     companion object {
@@ -28,8 +28,8 @@ data class TextRepositoryData(
             return serial.toXML(data)
         }
 
-        fun deserialzeFromString(s: String?): TextRepositoryData {
-            return serial.fromXML(s) as TextRepositoryData;
+        fun deserializeFromString(s: String?): TextRepositoryData {
+            return serial.fromXML(s) as TextRepositoryData
         }
     }
 }
@@ -37,13 +37,12 @@ data class TextRepositoryData(
 
 class TextRepository : AnkoLogger {
     private val context: Context
-    private val ID_KEY: String = "k_"
-    private val ID_KEYS: String = "keys"
-    private val ID_USE_REFLECTION_FOR_MATCH = "_use_reflection"
+    private val idKey: String = "k_"
+    private val idKeys: String = "keys"
 
     private var dataEntries: ArrayList<TextRepositoryData>
 
-    private fun formatKey(id: String) = ID_KEY + "_" + id
+    private fun formatKey(id: String) = idKey + "_" + id
 
     private var sharedPreferences: SharedPreferences
 
@@ -54,20 +53,20 @@ class TextRepository : AnkoLogger {
     }
 
     private fun getKeys(): MutableSet<String> {
-        return sharedPreferences.getStringSet(ID_KEYS, HashSet<String>())
+        return sharedPreferences.getStringSet(idKeys, HashSet<String>())
     }
 
 
 
     private fun getEntryByFormattedKey(key: String): TextRepositoryData? {
-        var dataStr: String = sharedPreferences.getString(key, null) ?: return null
-        return TextRepositoryData.deserialzeFromString(dataStr)
+        val dataStr: String = sharedPreferences.getString(key, null) ?: return null
+        return TextRepositoryData.deserializeFromString(dataStr)
     }
 
     private fun deserializeAllEntries(): ArrayList<TextRepositoryData> {
-        var entries = ArrayList<TextRepositoryData>()
+        val entries = ArrayList<TextRepositoryData>()
         for (key in getKeys()) {
-            var entry: TextRepositoryData? = getEntryByFormattedKey(key)
+            val entry: TextRepositoryData? = getEntryByFormattedKey(key)
             if (entry != null) {
                 entries.add(entry)
             }
@@ -75,24 +74,12 @@ class TextRepository : AnkoLogger {
         return entries
     }
 
-    /*
-     * Boolean to indicate if a generic reflection based
-     * approach should be used to find a matching text entry in all fields of the payload
-     */
-    fun useReflectionForMatch(): Boolean {
-        return sharedPreferences.getBoolean(ID_USE_REFLECTION_FOR_MATCH, false)
-    }
-
-    fun setReflectionForMatch(useIt: Boolean) {
-        sharedPreferences.edit().putBoolean(ID_USE_REFLECTION_FOR_MATCH, useIt).apply()
-    }
-
     fun getAllEntries(): ArrayList<TextRepositoryData> {
         return ArrayList(dataEntries)
     }
 
     fun createNewEntry(): TextRepositoryData {
-        var d = TextRepositoryData()
+        val d = TextRepositoryData()
         dataEntries.add(d)
         return d
     }
@@ -101,11 +88,11 @@ class TextRepository : AnkoLogger {
         if (!dataEntries.contains(data)) {
             throw IllegalStateException("data entry not known")
         }
-        var key = formatKey(data._id)
-        info("storing text: " + key)
-        info("storing text: " + data)
+        val key = formatKey(data.id)
+        info("storing text: $key")
+        info("storing text: $data")
 
-        var keys = getKeys()
+        val keys = getKeys()
         keys.add(key)
         setAllKeys(keys)
         sharedPreferences.edit().putString(key, data.serializeToString()).apply()
@@ -117,7 +104,7 @@ class TextRepository : AnkoLogger {
         }
         dataEntries.remove(data)
 
-        var key = formatKey(data._id)
+        val key = formatKey(data.id)
         val keys = getKeys()
         keys.remove(key)
         setAllKeys(keys)
@@ -125,6 +112,6 @@ class TextRepository : AnkoLogger {
     }
 
     private fun setAllKeys(keys: Set<String>) {
-        sharedPreferences.edit().putStringSet(ID_KEYS, keys).apply()
+        sharedPreferences.edit().putStringSet(idKeys, keys).apply()
     }
 }

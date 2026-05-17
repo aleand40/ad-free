@@ -26,23 +26,23 @@ class SpotifyTitleDetector(val trackRepository: TrackRepository) :
             ,"Advertisement —")
 
     override fun canHandle(payload: AdPayload): Boolean {
-        getTitle(payload).let { payload.ignoreKeys.add(it!!) }
+        getTitle(payload).let { payload.ignoreKeys.add(it) }
         return super.canHandle(payload)
     }
 
     override fun flagAsAdvertisement(payload: AdPayload): Boolean
-            = getTitle(payload)?.toLowerCase(java.util.Locale.ROOT)?.trim()?.run {
-        var isAdd = false
-        for(k in keywords) {
-            isAdd = isAdd || k.toLowerCase(Locale.ROOT) == this
-        }
-        isAdd }?: false
+            = getTitle(payload).toLowerCase(Locale.ROOT).trim().run {
+                var isAdd = false
+                for(k in keywords) {
+                    isAdd = isAdd || k.toLowerCase(Locale.ROOT) == this
+                }
+                isAdd }
 
     override fun flagAsMusic(payload: AdPayload): Boolean
             = getTitle(payload).let { trackRepository.getAllTracks().contains(it) }
 
-    fun getTitle(payload: AdPayload): String?
-            = payload?.statusbarNotification?.notification?.tickerText?.toString() ?: ""
+    fun getTitle(payload: AdPayload): String
+            = payload.statusbarNotification.notification?.tickerText?.toString() ?: ""
 
     override fun getMeta(): AdDetectorMeta
             = AdDetectorMeta("Notification text", "spotify detector for text in notification", category = "Spotify")

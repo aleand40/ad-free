@@ -7,7 +7,7 @@ import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.model.TextRepository
 import ch.abertschi.adfree.model.TextRepositoryData
 
-class GenericTextDetectorPresenter(val ctx: Context, val view: GenericTextDetectorActivity) {
+class GenericTextDetectorPresenter(ctx: Context, val view: GenericTextDetectorActivity) {
     private var data: ArrayList<TextRepositoryData>
     private var textRepository: TextRepository
 
@@ -18,11 +18,11 @@ class GenericTextDetectorPresenter(val ctx: Context, val view: GenericTextDetect
     }
 
     fun getData(): List<TextRepositoryData> {
-        return data;
+        return data
     }
 
     fun addNewEntry(): TextRepositoryData {
-        var d = textRepository.createNewEntry()
+        val d = textRepository.createNewEntry()
         data.add(d)
         textRepository.updateEntry(d)
         view.insertData()
