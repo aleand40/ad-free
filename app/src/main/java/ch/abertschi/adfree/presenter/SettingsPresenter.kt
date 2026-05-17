@@ -85,7 +85,7 @@ class SettingsPresenter(val settingView: SettingsView,
     }
 
     fun getStringEntriesOfModel(): Array<String> {
-        var result: ArrayList<String> = ArrayList()
+        val result: ArrayList<String> = ArrayList()
         plugins.forEach { result.add(it.title()) }
         result.add("suggest something ...")
         return result.toTypedArray()

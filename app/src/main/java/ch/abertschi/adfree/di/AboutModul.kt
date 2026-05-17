@@ -18,7 +18,7 @@ import ch.abertschi.adfree.view.about.AboutView
 class AboutModul(val context: Context, val aboutView: AboutView) {
 
     fun provideAboutPresenter(): AboutPresenter {
-        val adFree = context.applicationContext as AdFreeApplication
+        context.applicationContext as AdFreeApplication
         return AboutPresenter(aboutView, context)
     }
 

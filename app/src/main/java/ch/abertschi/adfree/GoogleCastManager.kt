@@ -11,7 +11,7 @@ import java.lang.Exception
 class GoogleCastManager(val prefs: PreferencesFactory) : AnkoLogger {
 
     companion object {
-        private val ID = "com.google.android.gms|g:com.google.android.gms.cast.rcn.NOTIFICATIONS"
+        private const val ID = "com.google.android.gms|g:com.google.android.gms.cast.rcn.NOTIFICATIONS"
     }
 
     private var enabled: Boolean = false
