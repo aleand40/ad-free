@@ -6,11 +6,8 @@ import java.io.File
 class ScNotificationDebugTracer(storageFolder: File?) : AdDetectable, AnkoLogger,
     AbstractDebugTracer(storageFolder) {
 
-    val soundcloudPackageName = "com.soundcloud.android"
-    val fileName = "adfree-soundcloud.txt"
-
-    override fun getPackage() = soundcloudPackageName
-    override fun getFileName() = fileName
+    override fun getPackage() = "com.soundcloud.android"
+    override fun getFileName() = "adfree-soundcloud.txt"
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
         "Soundcloud tracer",

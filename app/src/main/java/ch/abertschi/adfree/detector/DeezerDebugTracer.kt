@@ -6,11 +6,8 @@ class DeezerDebugTracer(storageFolder: File?) : AdDetectable, AnkoLogger,
 
     AbstractDebugTracer(storageFolder) {
 
-    val packageName = "deezer.android"
-    val fileName = "adfree-deezer.txt"
-
-    override fun getPackage() = packageName
-    override fun getFileName() = fileName
+    override fun getPackage() = "deezer.android"
+    override fun getFileName() = "adfree-deezer.txt"
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
         "Deezer tracer",
