@@ -9,7 +9,6 @@ package ch.abertschi.adfree.model
 import android.content.Context
 import android.content.SharedPreferences
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 
 /**
  * Created by abertschi on 15.04.17.
@@ -17,7 +16,7 @@ import org.jetbrains.anko.info
 open class TrackRepository: AnkoLogger {
 
     private val context: Context
-    private val TRACKS: String = "tracks"
+    private val tracks: String = "tracks"
     private var sharedPreferences: SharedPreferences
 
     constructor(context: Context, sharedPreferences: PreferencesFactory) {
@@ -26,21 +25,7 @@ open class TrackRepository: AnkoLogger {
     }
 
     private fun getTracks(): MutableSet<String> {
-        return sharedPreferences.getStringSet(TRACKS, HashSet<String>())
-    }
-
-    open fun addTrack(content: String) {
-        info("storing track: " + content)
-
-        val tracks = getTracks()
-        tracks.add(content)
-        sharedPreferences.edit().putStringSet(TRACKS, tracks).apply()
-    }
-
-    open fun removeTrack(content: String) {
-        val tracks = getTracks()
-        tracks.remove(content)
-        sharedPreferences.edit().putStringSet(TRACKS, tracks).apply()
+        return sharedPreferences.getStringSet(tracks, HashSet<String>())
     }
 
     open fun getAllTracks(): Set<String> {
@@ -48,7 +33,4 @@ open class TrackRepository: AnkoLogger {
         return tracks
     }
 
-    open fun setAllTracks(tracks: Set<String>) {
-        sharedPreferences.edit().putStringSet(TRACKS, tracks).apply()
-    }
 }

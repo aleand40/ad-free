@@ -1,9 +1,6 @@
 package ch.abertschi.adfree.detector
 
-import android.app.Notification
-import android.os.Bundle
 import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.warn
 import java.util.Locale
 
 class SpLiteTextEnglishDetector : AdDetectable, AnkoLogger, SpLiteTextDetector() {

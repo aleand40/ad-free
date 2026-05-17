@@ -27,16 +27,8 @@ class YesNoModel(val context: Context) : AnkoLogger {
         no = loadJSONFromAsset("no.json")
     }
 
-    fun getRandomYes(): String {
-        return yes[(Math.random() * yes.size).toInt()]
-    }
-
-    fun getRandomNo(): String {
-        return no[(Math.random() * no.size).toInt()]
-    }
-
     fun loadJSONFromAsset(assetLocation: String): List<String> {
-        var json: String? = null
+        var json: String?
         try {
 
             val stream = context.assets.open(assetLocation)
@@ -46,7 +38,7 @@ class YesNoModel(val context: Context) : AnkoLogger {
             stream.close()
             json = buffer.toString(Charset.defaultCharset())
             val words = JSONArray(json)
-            var result = ArrayList<String>()
+            val result = ArrayList<String>()
             (0 until words.length()).mapTo(result) { words[it] as String }
             return result
         } catch (ex: IOException) {

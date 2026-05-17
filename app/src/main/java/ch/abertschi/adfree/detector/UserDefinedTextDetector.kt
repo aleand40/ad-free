@@ -3,7 +3,6 @@ package ch.abertschi.adfree.detector
 import android.app.Notification
 import android.os.Bundle
 import ch.abertschi.adfree.model.TextRepository
-import ch.abertschi.adfree.model.TextRepositoryData
 import com.thoughtworks.xstream.XStream
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.warn
@@ -12,18 +11,18 @@ import java.util.*
 class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, AnkoLogger {
 
     override fun canHandle(payload: AdPayload): Boolean {
-        var notificationKey: String? =
-            payload?.statusbarNotification?.key?.toLowerCase(Locale.ROOT) ?: return false
+        val notificationKey: String =
+            payload.statusbarNotification.key?.toLowerCase(Locale.ROOT) ?: return false
 
-        var canHandle = false;
+        var canHandle = false
         for (entry in repo.getAllEntries()) {
             val key = entry.packageName
             if (key.isEmpty() || key.isBlank()) {
                 continue
             }
-            if (notificationKey?.contains(key.toLowerCase(Locale.ROOT).trim()) == true) {
+            if (notificationKey.contains(key.toLowerCase(Locale.ROOT).trim())) {
                 payload.matchedTextDetectorEntries.add(entry)
-                canHandle = true;
+                canHandle = true
             }
         }
         return canHandle
@@ -54,16 +53,16 @@ class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, 
                 val matchSubtitle =
                     subTitle != null && subTitle.contains(entryLine.trim().toLowerCase(Locale.ROOT))
                 if (matchTitle || matchSubtitle) {
-                    return true;
+                    return true
                 }
             }
         }
-        return false;
+        return false
     }
 
     private fun flagAsAdvertisementDynamic(payload: AdPayload): Boolean {
         /*
-         * XXX: This implementation is inefficient but simple.
+         * TODO: This implementation is inefficient but simple.
          * Will a reflection approach be better?
          */
         val str = XStream().toXML(payload)!!.toLowerCase(Locale.ROOT)

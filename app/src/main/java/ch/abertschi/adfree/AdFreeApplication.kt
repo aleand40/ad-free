@@ -67,7 +67,7 @@ class AdFreeApplication : Application(), AnkoLogger {
             MutePlugin(),
             LocalMusicPlugin(applicationContext, prefs, audioManager)
         )
-        pluginHandler = PluginHandler(prefs, adPlugins, adDetector)
+        pluginHandler = PluginHandler(prefs, adPlugins)
 
         adStateController = AdStateController(
             audioManager,

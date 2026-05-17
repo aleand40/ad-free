@@ -14,18 +14,6 @@ import ch.abertschi.adfree.util.Serializer
  */
 class RemoteSetting {
 
-    var useGithubReleasesForUpdateReminder: Boolean = false
-    var showSeakbarOnUpdate: Boolean = true
-    var showNotificationOnUpdate: Boolean = false
-
-    var showMessageOnStart: Boolean = false
-    var messageOnStartTitle: String = ""
-    var messageOnStartContent: String = ""
-
-    var showMessageOnUse: Boolean = false
-    var messageOnUseTitle: String = ""
-    var messageOnUseContent: String = ""
-
     var enabled: Boolean = true
     var versionCode: Int = BuildConfig.VERSION_CODE
     var versionNotify = false

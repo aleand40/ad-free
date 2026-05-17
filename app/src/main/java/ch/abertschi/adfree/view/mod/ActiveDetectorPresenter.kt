@@ -8,7 +8,6 @@ import org.jetbrains.anko.AnkoLogger
 class ActiveDetectorPresenter(val view: ActiveDetectorActivity) : AnkoLogger {
 
     private val detectorFactory = (view.applicationContext as AdFreeApplication).adDetectors
-    private val prefs = (view.applicationContext as AdFreeApplication).prefs
 
     fun getDetectors(category: String) = detectorFactory.getDetectorsForCategory(category)
 
