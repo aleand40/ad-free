@@ -14,6 +14,5 @@ traffic on the download site is just a proxy. Nontheless, the rise in
 popularity made me decide to discontinue the interdimensional cable
 plugin as I do not own the rights to play interdimensional cable tracks.
 
-<img src=".github/19-11-17-traffic.png" width="900">
-
+<img src=".github/19-11-17-traffic.png" alt="Graph showing traffic spike on November 19, 2017" width="900"> 
 
