@@ -188,6 +188,4 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         callablesOnActivityResult.add(callable)
     }
 
-    override fun signalizeTryOut() {
-    }
 }
