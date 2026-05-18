@@ -99,10 +99,6 @@ class LocalMusicPlugin(
         }
     }
 
-    override fun onPluginLoaded() {}
-
-    override fun onPluginActivated() {}
-
     override fun onPluginDeactivated() {
         forceStop {}
     }

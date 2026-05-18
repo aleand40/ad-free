@@ -36,7 +36,5 @@ interface AdPlugin {
      */
     fun stop(onStopped: () -> Unit)
 
-    fun onPluginLoaded()
-    fun onPluginActivated()
     fun onPluginDeactivated()
 }

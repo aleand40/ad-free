@@ -76,7 +76,6 @@ class SettingsPresenter(val settingView: SettingsView,
             activePlugin?.onPluginDeactivated()
         }
         activePlugin = plugin
-        activePlugin?.onPluginActivated()
         activePluginIndex = index
         settingView.setActivePlugin(activePluginIndex)
         pluginHandler.setActivePlugin(activePlugin!!)

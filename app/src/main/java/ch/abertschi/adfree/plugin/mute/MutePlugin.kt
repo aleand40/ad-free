@@ -16,9 +16,6 @@ class MutePlugin : AdPlugin {
         onStopped()
     }
 
-    override fun onPluginLoaded() {
-    }
-
     override fun title() = "mute audio"
 
     override fun play() {
@@ -33,9 +30,6 @@ class MutePlugin : AdPlugin {
 
     override fun forceStop(onStopped: () -> Unit) {
         onStopped()
-    }
-
-    override fun onPluginActivated() {
     }
 
     override fun onPluginDeactivated() {
