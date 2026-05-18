@@ -1,16 +1,16 @@
-# ad-free <img src="design/ad-free_logo_dropshadow-padding.svg" width="40">
+# ad-free <img src="design/ad-free_logo_dropshadow-padding.svg" alt="ad-free logo" width="40">
 [![CI](https://github.com/abertschi/ad-free/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/abertschi/ad-free/actions/workflows/build.yml)
 [![Kotlin App](https://img.shields.io/badge/Android-Kotlin-green.svg?style=flat)]()
 [![codebeat badge](https://codebeat.co/badges/1fc357d9-4c2e-46f6-b847-d295e4de78eb)](https://codebeat.co/projects/github-com-abertschi-ad-free-master)
 
 ad-free is a research project attempting to show flaws in the way how audio
- advertisement is shown on Android. It is a proof-of-concept of a modularized
- audio ad blocker written in Kotlin with a modern and simplistic user interface.
+advertisement is shown on Android. It is a proof-of-concept of a modularized
+audio ad blocker written in Kotlin with a modern and simplistic user interface.
 
 Landing Page: https://adfree.abertschi.ch  
-Blog Post: https://abertschi.ch/blog/2022/building-adfree/ 
+Blog Post: https://abertschi.ch/blog/2022/building-adfree/
 
-<img src=".github/screens3.sized.png" width="900">
+<img src=".github/screens3.sized.png" alt="App screenshots" width="900">
 
 ## Features
 - Lower phone volume when advertisement is playing
@@ -21,9 +21,9 @@ Blog Post: https://abertschi.ch/blog/2022/building-adfree/
 - No root required
 
 ## Download
-[Download the latest release](https://f-droid.org/packages/ch.abertschi.adfree/) from the F-Droid store.  
+[Download the latest release](https://f-droid.org/packages/ch.abertschi.adfree/) from the F-Droid store.
 
-<a href='https://f-droid.org/packages/ch.abertschi.adfree/'><img src="./landing/get-it-on.png" width="220"/></a>
+<a href='https://f-droid.org/packages/ch.abertschi.adfree/'><img src="./landing/get-it-on.png" alt="Get it on F-Droid badge" width="220"/></a>
 
 ## Troubleshooting
 See [Troubleshooting](./troubleshooting/readme.org) section for help to get
@@ -32,7 +32,7 @@ ad-free up and running.
 ## Changelog
 See [Changelog](./CHANGELOG.md) for a list of implemented features
 in new releases.
-  
+
 ## Credits
 - Many thanks to Janis Bitta design(at)jbitta.de for creating the logo
 - The bird and website icons used in this app are made by <a
@@ -50,9 +50,8 @@ information provided by the Android runtime. It simply turns down phone volume w
 terms of services of music players. Muting commercials may not be supported and
 may result in a temporary ban. Use at your own risk.
 
-
 ## Licence
-This project is lisenced by the Apache Lisence 2.0
+This project is licensed by the Apache License 2.0
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
 ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
