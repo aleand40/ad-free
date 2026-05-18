@@ -6,7 +6,6 @@
 
 package ch.abertschi.adfree.presenter
 
-import android.content.Context
 import ch.abertschi.adfree.ad.AdObservable
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.PluginHandler
@@ -21,7 +20,6 @@ import org.jetbrains.anko.collections.forEachWithIndex
  */
 
 class SettingsPresenter(val settingView: SettingsView,
-                        val context: Context,
                         val pluginHandler: PluginHandler,
                         val adObserver: AdObservable) : AnkoLogger {
 

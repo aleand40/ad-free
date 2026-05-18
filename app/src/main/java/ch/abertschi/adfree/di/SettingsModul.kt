@@ -18,7 +18,7 @@ class SettingsModul(val context: Context, val settingsView: SettingsView) {
 
     fun provideSettingsPresenter(): SettingsPresenter {
         val adFree = context.applicationContext as AdFreeApplication
-        return SettingsPresenter(settingsView, context, adFree.pluginHandler, adFree.adDetector)
+        return SettingsPresenter(settingsView, adFree.pluginHandler, adFree.adDetector)
     }
 
 }
