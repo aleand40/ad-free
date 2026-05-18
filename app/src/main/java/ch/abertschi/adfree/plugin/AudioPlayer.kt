@@ -35,10 +35,6 @@ open class AudioPlayer(
         playAudio(url, loop)
     }
 
-    fun playWithCachingProxy(url: String) {
-        playAudio(url)
-    }
-
     @SuppressLint("CheckResult")
     private fun playAudio(url: String, loop: Boolean = false) {
         initializeMediaPlayerObservable(url).subscribe { initializedPlayer ->
