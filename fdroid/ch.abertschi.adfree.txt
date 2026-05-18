@@ -32,7 +32,7 @@ Build:0.0.4.3,17
     scandelete=asset/
 
 Maintainer Notes:
-The repository hosts asset files for the html landing page which are not
+The repository hosts asset files for the HTML landing page which are not
 part of the android build (asset/, landing/), so we scandelete them.
 .
 
