@@ -58,7 +58,6 @@ class BestEffortTextDetector : AbstractNotificationBundleAndroidTextDetector() {
     }
 
     override fun detectAsAdvertisement(
-        payload: AdPayload,
         title: Pair<String?, Boolean>,
         text: Pair<String?, Boolean>,
         subtext: Pair<String?, Boolean>

@@ -25,12 +25,11 @@ abstract class AbstractNotificationBundleAndroidTextDetector : AdDetectable, Ank
         val title = extractString(extras, "android.title")
         val text = extractString(extras, "android.text")
         val subtext = extractString(extras, "android.subText")
-        return detectAsAdvertisement(payload, title, text, subtext)
+        return detectAsAdvertisement(title, text, subtext)
     }
 
 
     abstract fun detectAsAdvertisement(
-        payload: AdPayload,
         title: Pair<String?, Boolean>,
         text: Pair<String?, Boolean>,
         subtext: Pair<String?, Boolean>

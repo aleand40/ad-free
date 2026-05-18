@@ -7,7 +7,6 @@ open class SpLiteTextDetector : AdDetectable, AnkoLogger, AbstractNotificationBu
     override fun getPackageName() = "com.spotify.lite"
 
     override fun detectAsAdvertisement(
-        payload: AdPayload,
         title: Pair<String?, Boolean>,
         text: Pair<String?, Boolean>,
         subtext: Pair<String?, Boolean>
