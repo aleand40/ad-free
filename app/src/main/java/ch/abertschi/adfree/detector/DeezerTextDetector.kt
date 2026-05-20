@@ -9,8 +9,8 @@ class DeezerTextDetector : AdDetectable, AnkoLogger {
     private val keyword: String = "deezer"
     private val pack = "deezer.android"
 
-    override fun canHandle(p: AdPayload): Boolean {
-        return p.statusbarNotification.key?.lowercase(Locale.ROOT)?.contains(pack) ?: false
+    override fun canHandle(payload: AdPayload): Boolean {
+        return payload.statusbarNotification.key?.lowercase(Locale.ROOT)?.contains(pack) ?: false
     }
 
 //    Format:

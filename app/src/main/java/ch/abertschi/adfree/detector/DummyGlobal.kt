@@ -11,7 +11,7 @@ import org.jetbrains.anko.AnkoLogger
 class DummyGlobal:
         AdDetectable, AnkoLogger {
 
-    override fun canHandle(p: AdPayload) = true
+    override fun canHandle(payload: AdPayload) = true
 
     override fun flagAsAdvertisement(payload: AdPayload) = true
 

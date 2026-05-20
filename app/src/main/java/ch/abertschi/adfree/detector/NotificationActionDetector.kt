@@ -14,7 +14,7 @@ package ch.abertschi.adfree.detector
 class NotificationActionDetector : AbstractSpStatusBarDetector() {
 
     override fun canHandle(payload: AdPayload): Boolean =
-        super.canHandle(payload) && payload?.statusbarNotification?.notification?.actions != null
+        super.canHandle(payload) && payload.statusbarNotification.notification?.actions != null
 
     override fun flagAsAdvertisement(payload: AdPayload): Boolean =
         payload.statusbarNotification.notification.actions.size <= 3

@@ -123,7 +123,7 @@ class LocalMusicPlugin(
         dirs.add(musicDir)
         while (!dirs.isEmpty()) {
             val d = dirs.poll()
-            val listFiles = d.listFiles() ?: continue
+            val listFiles = d?.listFiles() ?: continue
             for (f in listFiles) {
                 if (f.isDirectory) {
                     dirs.add(f)

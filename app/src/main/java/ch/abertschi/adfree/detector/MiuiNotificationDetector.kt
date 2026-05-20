@@ -12,23 +12,13 @@ import org.jetbrains.anko.warn
 class MiuiNotificationDetector : AbstractSpStatusBarDetector(), AnkoLogger {
 
     override fun canHandle(payload: AdPayload): Boolean =
-        super.canHandle(payload) && payload?.statusbarNotification?.notification != null
+        super.canHandle(payload) && payload.statusbarNotification.notification != null
 
 
     override fun flagAsAdvertisement(payload: AdPayload): Boolean {
         var flagAsAd = false
-        val bundle = getNotificationBundle(payload!!.statusbarNotification!!.notification)
+        val bundle = getNotificationBundle(payload.statusbarNotification.notification)
 
-        // Notification content:
-        //
-        // <string>android.title</string>
-        //   <android.text.SpannableString>
-        //   <mSpanCount>0</mSpanCount>
-        //   <mSpanData/>
-        //   <mSpans/>
-        //   <mText>Advertisement</mText>
-        // </android.text.SpannableString>
-        //
         try {
             bundle.let {
                 val sp: SpannableString? = bundle?.get("android.title") as SpannableString?
