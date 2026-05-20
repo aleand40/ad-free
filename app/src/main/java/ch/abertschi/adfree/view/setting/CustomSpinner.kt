@@ -8,7 +8,7 @@ package ch.abertschi.adfree.view.setting
 
 import android.content.Context
 import android.util.AttributeSet
-import android.support.v7.widget.AppCompatSpinner
+import androidx.appcompat.widget.AppCompatSpinner
 
 /**
  * Created by abertschi on 23.04.17.

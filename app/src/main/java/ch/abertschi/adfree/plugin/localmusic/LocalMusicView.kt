@@ -13,12 +13,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
+import androidx.appcompat.widget.SwitchCompat
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.plugin.PluginActivityAction
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.runOnUiThread
-import android.support.v7.widget.SwitchCompat
 import ch.abertschi.adfree.view.ViewSettings
 
 /**

@@ -1,9 +1,7 @@
 package ch.abertschi.adfree.view.mod
 
 import android.os.Bundle
-import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.RecyclerView
+import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
@@ -14,6 +12,9 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.model.TextRepositoryData
 import org.jetbrains.anko.*
@@ -58,7 +59,7 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
         }
 
         val recyclerView = findViewById<RecyclerView>(R.id.detector_recycle_view)
-        recyclerView.layoutManager = android.support.v7.widget.LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.adapter = viewAdapter
     }
 

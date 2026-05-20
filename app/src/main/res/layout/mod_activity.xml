@@ -69,7 +69,7 @@
                             android:textSize="@dimen/normal_text_small" />
                     </LinearLayout>
 
-                    <android.support.v7.widget.SwitchCompat
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/enableAdfreeSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -211,7 +211,7 @@
                             android:textSize="@dimen/normal_text_small" />
                     </LinearLayout>
 
-                    <android.support.v7.widget.SwitchCompat
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/always_on_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -270,7 +270,7 @@
                             android:textSize="@dimen/normal_text_small" />
                     </LinearLayout>
 
-                    <android.support.v7.widget.SwitchCompat
+                    <androidx.appcompat.widget.SwitchCompat
                         android:id="@+id/google_cast_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

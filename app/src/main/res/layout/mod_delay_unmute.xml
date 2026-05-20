@@ -22,7 +22,7 @@
         android:textColor="@color/textColorSecondary"
         android:textSize="@dimen/normal_text_small" />
 
-    <android.support.v7.widget.AppCompatSeekBar
+    <androidx.appcompat.widget.AppCompatSeekBar
         android:id="@+id/delay_unmute_seekbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

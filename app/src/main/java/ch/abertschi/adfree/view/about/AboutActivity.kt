@@ -12,13 +12,13 @@ import android.graphics.Typeface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.fragment.app.Fragment
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.di.AboutModul
 import ch.abertschi.adfree.presenter.AboutPresenter

@@ -114,7 +114,7 @@
                 android:textSize="@dimen/normal_text_small" />
         </LinearLayout>
 
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/local_music_play_until_end_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -166,7 +166,7 @@
                 android:textSize="@dimen/normal_text_small" />
         </LinearLayout>
 
-        <android.support.v7.widget.SwitchCompat
+        <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/local_music_loop_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
