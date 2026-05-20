@@ -9,7 +9,6 @@ package ch.abertschi.adfree.presenter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.provider.Settings
 import ch.abertschi.adfree.BuildConfig
 import ch.abertschi.adfree.model.RemoteManager
@@ -17,6 +16,7 @@ import ch.abertschi.adfree.model.RemoteSetting
 import ch.abertschi.adfree.view.home.HomeView
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
+import androidx.core.net.toUri
 
 /**
  * Created by abertschi on 15.04.17.
@@ -68,13 +68,13 @@ class HomePresenter(
     }
 
     fun onUpdateMessageClicked() {
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(remoteSetting?.versionUrl))
+        val browserIntent = Intent(Intent.ACTION_VIEW, remoteSetting?.versionUrl?.toUri())
         this.homeView.startActivity(browserIntent)
     }
 
     fun onTroubleshooting() {
         val url = "https://abertschi.github.io/ad-free/troubleshooting/troubleshooting.html"
-        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        val browserIntent = Intent(Intent.ACTION_VIEW, url.toUri())
         this.homeView.startActivity(browserIntent)
     }
 }

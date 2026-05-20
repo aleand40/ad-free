@@ -23,6 +23,7 @@ import ch.abertschi.adfree.R
 import ch.abertschi.adfree.di.AboutModul
 import ch.abertschi.adfree.presenter.AboutPresenter
 import ch.abertschi.adfree.view.ViewSettings
+import androidx.core.net.toUri
 
 /**
  * Created by abertschi on 21.04.17.
@@ -40,9 +41,9 @@ class AboutActivity : Fragment(), AboutView {
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        typeFace = ViewSettings.instance(this.context!!).typeFace
+        typeFace = ViewSettings.instance(this.requireContext()).typeFace
 
-        presenter = AboutModul(this.activity!!, this).provideAboutPresenter()
+        presenter = AboutModul(this.requireActivity(), this).provideAboutPresenter()
 
         val textView = view.findViewById<TextView>(R.id.authorTitle)
         textView.typeface = typeFace
@@ -59,14 +60,14 @@ class AboutActivity : Fragment(), AboutView {
 
         view.findViewById<ImageView>(R.id.twitter).setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW,
-                Uri.parse("https://twitter.com/andrinbertschi?rel=adfree"))
-            this.context!!.startActivity(browserIntent)
+                "https://twitter.com/andrinbertschi?rel=adfree".toUri())
+            this.requireContext().startActivity(browserIntent)
         }
 
         view.findViewById<ImageView>(R.id.website).setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW,
-                Uri.parse("http://abertschi.ch?rel=adfree"))
-            this.context!!.startActivity(browserIntent)
+                "http://abertschi.ch?rel=adfree".toUri())
+            this.requireContext().startActivity(browserIntent)
         }
 
         view.findViewById<ImageView>(R.id.more_settings).setOnClickListener {

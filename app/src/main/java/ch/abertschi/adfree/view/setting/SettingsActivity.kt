@@ -12,7 +12,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.FLAG_ACTIVITY_NEW_TASK
 import android.graphics.Typeface
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Html
@@ -36,6 +35,7 @@ import ch.abertschi.adfree.view.ViewSettings
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.toast
 import org.jetbrains.anko.warn
+import androidx.core.net.toUri
 
 /**
  * Created by abertschi on 21.04.17.
@@ -168,7 +168,7 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
 
     override fun showSuggestNewPlugin() {
         val browserIntent =
-            Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/abertschi/ad-free/issues"))
+            Intent(Intent.ACTION_VIEW, "https://github.com/abertschi/ad-free/issues".toUri())
         this.tryActivity().startActivity(browserIntent)
     }
 

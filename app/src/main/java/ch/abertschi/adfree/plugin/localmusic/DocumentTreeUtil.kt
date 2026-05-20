@@ -5,6 +5,7 @@ import android.provider.DocumentsContract
 import android.content.ContentUris
 import android.content.Context
 import android.net.Uri
+import androidx.core.net.toUri
 
 // borrowed from
 // https://gist.github.com/asifmujteba/d89ba9074bc941de1eaa#file-asfurihelper
@@ -27,7 +28,7 @@ fun getPath(context: Context, uri: Uri): String? {
             isDownloadsDocument(uri) -> {
                 val id = DocumentsContract.getDocumentId(uri)
                 val contentUri = ContentUris.withAppendedId(
-                    Uri.parse("content://downloads/public_downloads"), java.lang.Long.valueOf(id)
+                    "content://downloads/public_downloads".toUri(), java.lang.Long.valueOf(id)
                 )
                 return getDataColumn(context, contentUri, null, null)
             }

@@ -10,6 +10,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import ch.abertschi.adfree.detector.AdDetectable
 import org.jetbrains.anko.AnkoLogger
+import androidx.core.content.edit
 
 /**
  * Created by abertschi on 15.04.17.
@@ -36,27 +37,27 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     }
 
     fun setBlockingEnabled(enabled: Boolean) {
-        prefs.edit().putBoolean(prefIsEnabled, enabled).apply()
+        prefs.edit { putBoolean(prefIsEnabled, enabled) }
     }
 
     fun isGoogleCastEnabled(): Boolean = prefs.getBoolean(prefsGoogleCast, false)
 
-    fun setGoogleCastEnabled(e: Boolean) = prefs.edit().putBoolean(prefsGoogleCast, e).apply()
+    fun setGoogleCastEnabled(e: Boolean) = prefs.edit { putBoolean(prefsGoogleCast, e) }
 
     fun storeVoiceCallAudioVolume(volume: Int) =
-        prefs.edit().putInt(prefsAudioVolume, volume).apply()
+        prefs.edit { putInt(prefsAudioVolume, volume) }
 
     fun loadVoiceCallAudioVolume(): Int =
         prefs.getInt(prefsAudioVolume, 100)
 
     fun setPlayUntilEnd(flag: Boolean) =
-        prefs.edit().putBoolean(prefsPlayUntilEnd, flag).apply()
+        prefs.edit { putBoolean(prefsPlayUntilEnd, flag) }
 
     fun getPlayUntilEnd(): Boolean =
         prefs.getBoolean(prefsPlayUntilEnd, false)
 
     fun setLoopMusicPlayback(flag: Boolean) =
-        prefs.edit().putBoolean(prefsLoopPlayback, flag).apply()
+        prefs.edit { putBoolean(prefsLoopPlayback, flag) }
 
     fun getLoopMusicPlayback(): Boolean =
         prefs.getBoolean(prefsLoopPlayback, false)
@@ -65,7 +66,7 @@ class PreferencesFactory(context: Context) : AnkoLogger {
         prefs.getString(prefsLocalMusic, "not set yet")!!
 
     fun setLocalMusicDirectory(value: String) =
-        prefs.edit().putString(prefsLocalMusic, value).apply()
+        prefs.edit { putString(prefsLocalMusic, value) }
 
     @Deprecated("Don't use shared prefs outside this class anymore")
     fun getPreferences(): SharedPreferences = prefs
@@ -75,20 +76,20 @@ class PreferencesFactory(context: Context) : AnkoLogger {
     }
 
     fun setActivePlugin(plugin: String) {
-        prefs.edit().putString(prefsActivePlugin, plugin).apply()
+        prefs.edit { putString(prefsActivePlugin, plugin) }
     }
 
     fun isAlwaysOnNotificationEnabled() =
         prefs.getBoolean(prefsAlwaysOnNotification, false)
 
     fun setAlwaysOnNotification(enable: Boolean) =
-        prefs.edit().putBoolean(prefsAlwaysOnNotification, enable).apply()
+        prefs.edit { putBoolean(prefsAlwaysOnNotification, enable) }
 
     fun getDelaySeconds(): Int =
         prefs.getInt(prefsDelaySound, 0)
 
     fun setDelaySeconds(s: Int) =
-        prefs.edit().putInt(prefsDelaySound, s).apply()
+        prefs.edit { putInt(prefsDelaySound, s) }
 
     fun isAdDetectableEnabled(d: AdDetectable) =
         prefs.getBoolean(
@@ -97,17 +98,17 @@ class PreferencesFactory(context: Context) : AnkoLogger {
         )
 
     fun saveAdDetectableEnable(enable: Boolean, d: AdDetectable) {
-        prefs.edit().putBoolean(prefsAdDetectableMetaPrefix + d.javaClass.canonicalName, enable).apply()
+        prefs.edit { putBoolean(prefsAdDetectableMetaPrefix + d.javaClass.canonicalName, enable) }
     }
 
     fun isDeveloperModeEnabled() = prefs.getBoolean(prefsIsDebugDetectors, false)
 
     fun setDeveloperMode(isDebug: Boolean) =
-        prefs.edit().putBoolean(prefsIsDebugDetectors, isDebug).apply()
+        prefs.edit { putBoolean(prefsIsDebugDetectors, isDebug) }
 
     fun getString(key: String, defValue: String? = null): String? = prefs.getString(key, defValue)
 
     fun storeString(key: String, value: String) {
-        prefs.edit().putString(key, value).apply()
+        prefs.edit { putString(key, value) }
     }
 }

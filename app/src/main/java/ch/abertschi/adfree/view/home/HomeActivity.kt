@@ -39,8 +39,8 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        homePresenter = HomeModule(this.activity!!, this).provideSettingsPresenter()
-        typeFace = ViewSettings.instance(this.context!!).typeFace
+        homePresenter = HomeModule(this.requireActivity(), this).provideSettingsPresenter()
+        typeFace = ViewSettings.instance(this.requireContext()).typeFace
 
         enjoySloganText = view.findViewById(R.id.enjoy)
         updateMessageInfo = view.findViewById(R.id.version_update_reminder)
@@ -49,7 +49,7 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
             homePresenter.onTroubleshooting()
         }
 
-        homePresenter.onCreate(this.context!!)
+        homePresenter.onCreate(this.requireContext())
     }
 
     override fun showUpdateMessage(show: Boolean) {
@@ -64,7 +64,7 @@ class HomeActivity : Fragment(), HomeView, AnkoLogger {
     }
 
     override fun onResume() {
-        homePresenter.onResume(this.context!!)
+        homePresenter.onResume(this.requireContext())
         super.onResume()
     }
 

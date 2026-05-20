@@ -8,7 +8,6 @@ package ch.abertschi.adfree.view.mod
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -23,6 +22,7 @@ import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.BuildConfig
 import ch.abertschi.adfree.R
 import org.jetbrains.anko.*
+import androidx.core.net.toUri
 
 class ModActivity : AppCompatActivity(), AnkoLogger {
 
@@ -84,7 +84,7 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
 
         versionView.setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW,
-                Uri.parse("https://github.com/abertschi/ad-free/blob/master/CHANGELOG.md"))
+                "https://github.com/abertschi/ad-free/blob/master/CHANGELOG.md".toUri())
             this.startActivity(browserIntent)
         }
 
@@ -181,7 +181,7 @@ class ModActivity : AppCompatActivity(), AnkoLogger {
         findViewById<View>(R.id.google_cast_title).setOnClickListener { presenter.onGoogleCastToggle() }
         findViewById<View>(R.id.google_cast_subtitle).setOnClickListener {
             val browserIntent = Intent(Intent.ACTION_VIEW,
-                Uri.parse("https://support.google.com/chromecast/answer/7206638?hl=en"))
+                "https://support.google.com/chromecast/answer/7206638?hl=en".toUri())
             this.startActivity(browserIntent)
         }
         findViewById<View>(R.id.google_cast_switch).setOnClickListener { presenter.onGoogleCastToggle() }

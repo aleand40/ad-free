@@ -9,6 +9,7 @@ import java.lang.IllegalStateException
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
+import androidx.core.content.edit
 
 data class TextRepositoryData(
     var packageName: String = "",
@@ -95,7 +96,7 @@ class TextRepository : AnkoLogger {
         val keys = getKeys()
         keys.add(key)
         setAllKeys(keys)
-        sharedPreferences.edit().putString(key, data.serializeToString()).apply()
+        sharedPreferences.edit { putString(key, data.serializeToString()) }
     }
 
     fun removeEntry(data: TextRepositoryData) {
@@ -108,10 +109,10 @@ class TextRepository : AnkoLogger {
         val keys = getKeys()
         keys.remove(key)
         setAllKeys(keys)
-        sharedPreferences.edit().remove(key).apply()
+        sharedPreferences.edit { remove(key) }
     }
 
     private fun setAllKeys(keys: Set<String>) {
-        sharedPreferences.edit().putStringSet(idKeys, keys).apply()
+        sharedPreferences.edit { putStringSet(idKeys, keys) }
     }
 }

@@ -45,7 +45,7 @@
         <activity android:name=".view.mod.CategoriesActivity" />
         <activity android:name=".view.mod.ModActivity" />
 
-        <service android:name=".util.NotificationUtils$NotificationInteractionService"/>
+        <receiver android:name=".util.NotificationUtils$NotificationInteractionReceiver" android:exported="false" />
 
         <service
             android:name=".NotificationsListeners"

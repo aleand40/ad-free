@@ -2,10 +2,10 @@ package ch.abertschi.adfree.view.mod
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.model.TextRepository
 import ch.abertschi.adfree.model.TextRepositoryData
+import androidx.core.net.toUri
 
 class GenericTextDetectorPresenter(ctx: Context, val view: GenericTextDetectorActivity) {
     private var data: ArrayList<TextRepositoryData>
@@ -45,7 +45,7 @@ class GenericTextDetectorPresenter(ctx: Context, val view: GenericTextDetectorAc
     fun browseHelp() {
         val url = "https://abertschi.github.io/ad-free/troubleshooting/troubleshooting.html#generic-text-detector"
         val browserIntent = Intent(Intent.ACTION_VIEW,
-            Uri.parse(url))
+            url.toUri())
         this.view.startActivity(browserIntent)
     }
 

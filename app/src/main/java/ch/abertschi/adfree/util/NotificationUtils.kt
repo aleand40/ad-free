@@ -1,12 +1,8 @@
-/*
- * Ad Free
- * Copyright (c) 2017 by abertschi, www.abertschi.ch
- * See the file "LICENSE" for the full license governing this code.
- */
-
 package ch.abertschi.adfree.util
 
+import android.annotation.SuppressLint
 import android.app.*
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -18,18 +14,18 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 
 
-/**
- * Created by abertschi on 16.04.17.
- */
+@SuppressLint("MissingPermission")
 class NotificationUtils(val context: Context) : AnkoLogger {
 
     companion object {
         const val ACTION_DISMISS = "actionDismiss"
-        // Keeping these constants for potential future implementations of blocking notifications
+
+        // Keeping these constants for potential future implementations
         @Suppress("unused")
         const val BLOCKING_NOTIFICATION_ID = 1
         @Suppress("unused")
         const val TEXT_NOTIFICATION_ID = 2
+
         const val CHANNEL_ID = "ad_channel"
 
         private val actionDismissCallables: ArrayList<() -> Unit> = ArrayList()
@@ -54,21 +50,22 @@ class NotificationUtils(val context: Context) : AnkoLogger {
         }
     }
 
-
+    @SuppressLint("LaunchActivityFromNotification")
     fun showTextNotification(id: Int, title: String, content: String = "",
                              dismissCallable: () -> Unit = {},
                              priority: Int = NotificationCompat.PRIORITY_DEFAULT, notify: Boolean = true): Notification {
 
-        val dismissIntent = PendingIntent
-                .getService(context, 0, Intent(context
-                        , NotificationInteractionService::class.java).setAction(ACTION_DISMISS)
-                        , PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE)
+        val dismissIntent = PendingIntent.getBroadcast(
+            context, 0,
+            Intent(context, NotificationInteractionReceiver::class.java).setAction(ACTION_DISMISS),
+            PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
+        )
 
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-                .setContentTitle(title)
-                .setSmallIcon(R.mipmap.adfree_logo)
-                .setPriority(priority)
-                .setContentIntent(dismissIntent)
+            .setContentTitle(title)
+            .setSmallIcon(R.mipmap.adfree_logo)
+            .setPriority(priority)
+            .setContentIntent(dismissIntent)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             builder.setSmallIcon(R.drawable.ic_icon_logo)
@@ -77,14 +74,8 @@ class NotificationUtils(val context: Context) : AnkoLogger {
             builder.setContentText(content)
         }
 
-
         updateNotificationMap[id] = builder
         val notification = builder.build()
-//        notification.flags = notification.flags or (Notification.FLAG_NO_CLEAR or
-//                Notification.FLAG_ONGOING_EVENT)
-//            notification.flags = notification.flags or
-//                    Notification.FLAG_ONGOING_EVENT
-
 
         synchronized(actionDismissCallables) {
             actionDismissCallables.add(dismissCallable)
@@ -97,31 +88,6 @@ class NotificationUtils(val context: Context) : AnkoLogger {
         return notification
     }
 
-//    fun showBlockingNotification(dismissCallable: () -> Unit) {
-//        val dismissIntent = PendingIntent
-//                .getService(view, 0, Intent(view
-//                        , NotificationInteractionService::class.java).setAction(actionDismiss)
-//                        , PendingIntent.FLAG_ONE_SHOT)
-//
-//        val notification = NotificationCompat.Builder(view)
-//                .setContentTitle("Ad detected")
-//                .setContentText("Touch to unmute")
-//                .setSmallIcon(R.mipmap.icon)
-//                .setPriority(NotificationCompat.PRIORITY_HIGH)
-//                .setContentIntent(dismissIntent)
-//                .build()
-//
-//        notification.flags = notification.flags or (Notification.FLAG_NO_CLEAR or
-//                Notification.FLAG_ONGOING_EVENT)
-//
-//        synchronized(actionDismissCallables) {
-//            actionDismissCallables.add(dismissCallable)
-//        }
-//        val manager = NotificationManagerCompat.from(view)
-//        manager.notify(blockingNotificationId, notification)
-//    }
-
-
     fun hideNotification(id: Int) {
         val manager = NotificationManagerCompat.from(context)
         updateNotificationMap.remove(id)
@@ -131,41 +97,30 @@ class NotificationUtils(val context: Context) : AnkoLogger {
     @RequiresApi(Build.VERSION_CODES.O)
     private fun createChannel() {
         val notificationManager = context
-                .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        val id = CHANNEL_ID
-        val name = "Ad blocking"
-        val description = "Ad blocking notification"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(id, name, importance)
-        // Configure the notification channel.
-        channel.description = description
-//        channel.setShowBadge(false)
-        channel.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+            .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val channel = NotificationChannel(
+            CHANNEL_ID,
+            "Ad blocking",
+            NotificationManager.IMPORTANCE_DEFAULT
+        ).apply {
+            description = "Ad blocking notification"
+            lockscreenVisibility = Notification.VISIBILITY_PRIVATE
+        }
         notificationManager.createNotificationChannel(channel)
     }
 
-    class NotificationInteractionService :
-            IntentService(NotificationInteractionService::class.simpleName), AnkoLogger {
-        init {
-            info("NotificationInteractionService created")
-        }
-
-        override fun onHandleIntent(intent: Intent?) {
+    class NotificationInteractionReceiver : BroadcastReceiver(), AnkoLogger {
+        override fun onReceive(context: Context?, intent: Intent?) {
             if (intent == null || intent.action == null) {
                 return
             }
-            val actionKey: String? = intent.action
-            if (actionKey == ACTION_DISMISS) {
+            if (intent.action == ACTION_DISMISS) {
+                info("Notification dismissed via BroadcastReceiver")
                 synchronized(actionDismissCallables) {
-                    actionDismissCallables.forEach {
-                        it()
-                    }
+                    actionDismissCallables.forEach { it() }
                     actionDismissCallables.clear()
                 }
             }
         }
     }
-
 }
-
-
