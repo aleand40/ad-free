@@ -6,7 +6,7 @@ import java.util.Locale
 class BestEffortTextDetector : AbstractNotificationBundleAndroidTextDetector() {
 
     override fun canHandle(payload: AdPayload): Boolean {
-        val key: String = payload.statusbarNotification.key?.toLowerCase(Locale.ROOT) ?: return false
+        val key: String = payload.statusbarNotification.key?.lowercase(Locale.ROOT) ?: return false
         for (p in getPackageList()) {
             if (key.contains(p)) {
                 return true

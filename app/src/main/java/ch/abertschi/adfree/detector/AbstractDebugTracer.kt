@@ -20,7 +20,7 @@ abstract class AbstractDebugTracer(val storageFolder: File?) : AdDetectable, Ank
             return false
         }
 
-        if (payload?.statusbarNotification?.key?.toLowerCase(Locale.ROOT)?.contains(getPackage()) == true) {
+        if (payload?.statusbarNotification?.key?.lowercase(Locale.ROOT)?.contains(getPackage()) == true) {
             recordNotification(payload.statusbarNotification!!)
         }
         return false

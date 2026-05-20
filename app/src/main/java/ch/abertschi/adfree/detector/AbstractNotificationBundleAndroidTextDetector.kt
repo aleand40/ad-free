@@ -11,7 +11,7 @@ abstract class AbstractNotificationBundleAndroidTextDetector : AdDetectable, Ank
         return try {
             Pair(
                 (extras?.get(key) as CharSequence?)
-                    ?.toString()?.trim()?.toLowerCase(Locale.ROOT), true
+                    ?.toString()?.trim()?.lowercase(Locale.ROOT), true
             )
         } catch (e: Exception) {
             warn { e }

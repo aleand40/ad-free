@@ -10,12 +10,13 @@ class ScDetector : AdDetectable, AnkoLogger {
     private val pack = "com.soundcloud.android"
 
     override fun canHandle(payload: AdPayload): Boolean {
-        return payload.statusbarNotification.key?.toLowerCase(Locale.ROOT)?.contains(pack) ?: false
+        return payload.statusbarNotification.key?.lowercase(Locale.ROOT)?.contains(pack) ?: false
     }
 
     override fun flagAsAdvertisement(payload: AdPayload): Boolean {
         val extras = payload.statusbarNotification.notification?.extras
-        val title: String? = extras?.getString(Notification.EXTRA_TITLE)?.trim()?.toLowerCase(Locale.ROOT)
+        val title: String? =
+            extras?.getString(Notification.EXTRA_TITLE)?.trim()?.lowercase(Locale.ROOT)
         val subTitle: String? = extras?.getString(Notification.EXTRA_SUB_TEXT)
 
         return title != null && title == keyword

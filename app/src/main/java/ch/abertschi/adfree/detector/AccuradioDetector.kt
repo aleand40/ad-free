@@ -51,7 +51,8 @@ class AccuradioDetector : AdDetectable, AnkoLogger, AbstractNotificationDetector
                         if (value !is CharSequence) {
                             continue
                         }
-                        if (value.toString().trim().toLowerCase(Locale.ROOT).contains("music will resume shortly")) {
+                        if (value.toString().trim().lowercase(Locale.ROOT)
+                                .contains("music will resume shortly")) {
                             return true
                         }
                     }

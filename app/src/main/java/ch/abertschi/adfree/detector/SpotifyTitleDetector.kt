@@ -31,10 +31,10 @@ class SpotifyTitleDetector(val trackRepository: TrackRepository) :
     }
 
     override fun flagAsAdvertisement(payload: AdPayload): Boolean
-            = getTitle(payload).toLowerCase(Locale.ROOT).trim().run {
+            = getTitle(payload).lowercase(Locale.ROOT).trim().run {
                 var isAdd = false
                 for(k in keywords) {
-                    isAdd = isAdd || k.toLowerCase(Locale.ROOT) == this
+                    isAdd = isAdd || k.lowercase(Locale.ROOT) == this
                 }
                 isAdd }
 

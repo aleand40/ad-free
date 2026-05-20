@@ -15,7 +15,8 @@ class SpLiteTextEnglishDetector : AdDetectable, AnkoLogger, SpLiteTextDetector()
         if (!title.second) {
             return false
         }
-        return title.first != null && title.first!!.trim().toLowerCase(Locale.ROOT).contains("advertisement")
+        return title.first != null && title.first!!.trim().lowercase(Locale.ROOT)
+            .contains("advertisement")
     }
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(

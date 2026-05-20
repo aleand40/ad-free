@@ -12,7 +12,7 @@ class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, 
 
     override fun canHandle(payload: AdPayload): Boolean {
         val notificationKey: String =
-            payload.statusbarNotification.key?.toLowerCase(Locale.ROOT) ?: return false
+            payload.statusbarNotification.key?.lowercase(Locale.ROOT) ?: return false
 
         var canHandle = false
         for (entry in repo.getAllEntries()) {
@@ -20,7 +20,7 @@ class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, 
             if (key.isEmpty() || key.isBlank()) {
                 continue
             }
-            if (notificationKey.contains(key.toLowerCase(Locale.ROOT).trim())) {
+            if (notificationKey.contains(key.lowercase(Locale.ROOT).trim())) {
                 payload.matchedTextDetectorEntries.add(entry)
                 canHandle = true
             }
@@ -31,7 +31,7 @@ class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, 
     private fun extractString(extras: Bundle?, s: String): String? {
         return try {
             (extras?.get(s) as CharSequence?)
-                ?.toString()?.trim()?.toLowerCase(Locale.ROOT)
+                ?.toString()?.trim()?.lowercase(Locale.ROOT)
         } catch (e: Exception) {
             warn { e }
             null
@@ -49,9 +49,11 @@ class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, 
                 if (entryLine.trim().isEmpty()) {
                     continue
                 }
-                val matchTitle = title != null && title.contains(entryLine.trim().toLowerCase(Locale.ROOT))
+                val matchTitle = title != null && title.contains(
+                    entryLine.trim().lowercase(Locale.ROOT)
+                )
                 val matchSubtitle =
-                    subTitle != null && subTitle.contains(entryLine.trim().toLowerCase(Locale.ROOT))
+                    subTitle != null && subTitle.contains(entryLine.trim().lowercase(Locale.ROOT))
                 if (matchTitle || matchSubtitle) {
                     return true
                 }
@@ -65,13 +67,13 @@ class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, 
          * TODO: This implementation is inefficient but simple.
          * Will a reflection approach be better?
          */
-        val str = XStream().toXML(payload)!!.toLowerCase(Locale.ROOT)
+        val str = XStream().toXML(payload)!!.lowercase(Locale.ROOT)
         for (entry in payload.matchedTextDetectorEntries) {
             for (entryLine in entry.content) {
                 if (entryLine.trim().isEmpty()) {
                     continue
                 }
-                if (str.contains(entryLine.trim().toLowerCase(Locale.ROOT))) {
+                if (str.contains(entryLine.trim().lowercase(Locale.ROOT))) {
                     return true
                 }
             }

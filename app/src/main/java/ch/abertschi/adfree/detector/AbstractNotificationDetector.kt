@@ -10,7 +10,8 @@ abstract class AbstractNotificationDetector : AdDetectable, AnkoLogger {
     abstract fun getPackageName(): String
 
     override fun canHandle(payload: AdPayload): Boolean {
-        return payload?.statusbarNotification?.key?.toLowerCase(Locale.ROOT)?.contains(getPackageName())
+        return payload?.statusbarNotification?.key?.lowercase(Locale.ROOT)
+            ?.contains(getPackageName())
             ?: false
     }
 

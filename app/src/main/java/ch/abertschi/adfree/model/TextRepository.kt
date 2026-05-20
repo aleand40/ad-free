@@ -53,7 +53,7 @@ class TextRepository : AnkoLogger {
     }
 
     private fun getKeys(): MutableSet<String> {
-        return sharedPreferences.getStringSet(idKeys, HashSet<String>())
+        return sharedPreferences.getStringSet(idKeys, HashSet<String>())?.toMutableSet() ?: mutableSetOf()
     }
 
 

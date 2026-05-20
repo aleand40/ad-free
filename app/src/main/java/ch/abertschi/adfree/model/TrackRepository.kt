@@ -25,7 +25,7 @@ open class TrackRepository: AnkoLogger {
     }
 
     private fun getTracks(): MutableSet<String> {
-        return sharedPreferences.getStringSet(tracks, HashSet<String>())
+        return sharedPreferences.getStringSet(tracks, HashSet<String>())?.toMutableSet() ?: mutableSetOf()
     }
 
     open fun getAllTracks(): Set<String> {
