@@ -10,8 +10,8 @@ abstract class AbstractNotificationBundleAndroidTextDetector : AdDetectable, Ank
     open fun extractString(extras: Bundle?, key: String): Pair<String?, Boolean> {
         return try {
             Pair(
-                (extras?.get(key) as CharSequence?)
-                    ?.toString()?.trim()?.lowercase(Locale.ROOT), true
+                extras?.getCharSequence(key)?.toString()?.trim()?.lowercase(Locale.ROOT),
+                true
             )
         } catch (e: Exception) {
             warn { e }

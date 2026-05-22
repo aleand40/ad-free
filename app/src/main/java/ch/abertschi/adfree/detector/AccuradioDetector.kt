@@ -64,6 +64,7 @@ class AccuradioDetector : AdDetectable, AnkoLogger, AbstractNotificationDetector
         return false
     }
 
+    @Suppress("DEPRECATION")
     override fun flagAsAdvertisement(payload: AdPayload): Boolean {
         // TODO: Support old deprecated fields
         val contentView = payload.statusbarNotification.notification?.contentView

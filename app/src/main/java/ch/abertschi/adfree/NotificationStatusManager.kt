@@ -7,7 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.service.notification.ConditionProviderService
+import android.service.notification.NotificationListenerService
 import androidx.core.app.NotificationManagerCompat
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
@@ -61,7 +61,7 @@ class NotificationStatusManager(val context: Context) : AnkoLogger {
             val componentName = ComponentName(context.applicationContext,
                 NotificationsListeners::class.java
             )
-            ConditionProviderService.requestRebind(componentName)
+            NotificationListenerService.requestRebind(componentName)
         } else {
             warn { "restart notification listener is not supported for current v. of android" }
         }

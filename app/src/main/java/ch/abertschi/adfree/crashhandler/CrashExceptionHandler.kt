@@ -21,8 +21,8 @@ import kotlin.system.exitProcess
  */
 class CrashExceptionHandler(val context: Context) : Thread.UncaughtExceptionHandler {
 
-    override fun uncaughtException(t: Thread?, e: Throwable?) {
-        e?.printStackTrace() // Not all Android versions print the stack trace automatically
+    override fun uncaughtException(t: Thread, e: Throwable) {
+        e.printStackTrace() // Not all Android versions print the stack trace automatically
 
         val (summary, logcat) = generateReport(e)
         val filename = writeLogfile(logcat)
@@ -64,7 +64,8 @@ class CrashExceptionHandler(val context: Context) : Thread.UncaughtExceptionHand
 
         summary.append("Android version: ").append(Build.VERSION.SDK_INT).append("\n")
         summary.append("Device: ").append(model).append("\n")
-        summary.append("App version: ").append(info?.versionCode ?: "(null)").append("\n")
+        val version = info?.let { androidx.core.content.pm.PackageInfoCompat.getLongVersionCode(it) } ?: "(null)"
+        summary.append("App version: ").append(version).append("\n")
         summary.append("Time: ").append(time).append("\n")
         summary.append("Root cause: \n").append(Log.getStackTraceString(th))
 

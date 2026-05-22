@@ -69,10 +69,10 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
             .setTitle("Options")
             // Passing null is required here because the dialog window doesn't exist yet
             .setView(LayoutInflater.from(this).inflate(R.layout.delete_dialog, null))
-            .setPositiveButton(android.R.string.yes) { _, _ ->
+            .setPositiveButton(android.R.string.ok) { _, _ ->
                 presenter.deleteEntry(entry)
             }
-            .setNegativeButton(android.R.string.no) { dialog, _ ->
+            .setNegativeButton(android.R.string.cancel) { dialog, _ ->
                 dialog.dismiss()
             }
             .setOnDismissListener {
@@ -131,7 +131,7 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
 
             holder.more.setOnClickListener {
                 // Check the real position at the exact moment of the click
-                val currentPos = holder.adapterPosition
+                val currentPos = holder.bindingAdapterPosition
                 if (currentPos != RecyclerView.NO_POSITION) {
                     presenter.onMoreClicked(data[currentPos])
                 }
@@ -141,7 +141,7 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable) {
-                    val currentPos = holder.adapterPosition
+                    val currentPos = holder.bindingAdapterPosition
                     if (currentPos != RecyclerView.NO_POSITION) {
                         val currentEntry = data[currentPos]
                         currentEntry.packageName = s.toString()
@@ -154,7 +154,7 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
                 override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable) {
-                    val currentPos = holder.adapterPosition
+                    val currentPos = holder.bindingAdapterPosition
                     if (currentPos != RecyclerView.NO_POSITION) {
                         val currentEntry = data[currentPos]
                         currentEntry.content = s.toString().split("\n")

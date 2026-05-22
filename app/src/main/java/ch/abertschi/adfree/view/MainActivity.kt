@@ -10,19 +10,19 @@ import android.os.Bundle
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.viewpager.widget.PagerAdapter
-import androidx.viewpager.widget.ViewPager
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.view.home.HomeActivity
 import ch.abertschi.adfree.view.about.AboutActivity
 import ch.abertschi.adfree.view.setting.SettingsActivity
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 /**
  * Created by abertschi on 21.04.17.
+ * Migrated to ViewPager2
  */
 
 class MainActivity : FragmentActivity() {
@@ -31,29 +31,30 @@ class MainActivity : FragmentActivity() {
         private const val NUM_PAGES = 3
     }
 
-    private var mPager: ViewPager? = null
-    private var mPagerAdapter: PagerAdapter? = null
+    private var mPager: ViewPager2? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.main_activity)
 
         mPager = findViewById(R.id.pager)
-        mPagerAdapter = ScreenSlidePagerAdapter(supportFragmentManager)
-        mPager!!.adapter = mPagerAdapter
+        mPager!!.adapter = ScreenSlidePagerAdapter(this)
 
         val tabLayout = findViewById<TabLayout>(R.id.tabDots)
-        tabLayout.setupWithViewPager(mPager, true)
+
+        TabLayoutMediator(tabLayout, mPager!!) { _, _ ->
+        }.attach()
+
+        @Suppress("DEPRECATION")
         window.navigationBarColor = ContextCompat.getColor(this, R.color.colorBackground)
 
-        // XXX: Workaround, global access to activity to prevent detached fragments
         val app = applicationContext as AdFreeApplication
         app.mainActivity = this
     }
 
-    private class ScreenSlidePagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
+    private class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
 
-        override fun getItem(position: Int): Fragment {
+        override fun createFragment(position: Int): Fragment {
             return when (position) {
                 0 -> HomeActivity()
                 1 -> SettingsActivity()
@@ -61,7 +62,7 @@ class MainActivity : FragmentActivity() {
             }
         }
 
-        override fun getCount(): Int {
+        override fun getItemCount(): Int {
             return NUM_PAGES
         }
     }
