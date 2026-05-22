@@ -14,7 +14,7 @@ android {
         targetSdk 37
         versionCode 42
         versionName "3.2"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
 
@@ -35,9 +35,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestImplementation('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
 
     implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'com.google.android.material:material:1.14.0'
