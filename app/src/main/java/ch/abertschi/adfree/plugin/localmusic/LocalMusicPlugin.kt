@@ -24,13 +24,12 @@ import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.error
 import org.jetbrains.anko.info
 import java.io.File
-import java.util.*
 import java.util.concurrent.TimeUnit
 import android.provider.DocumentsContract
 import java.lang.Exception
-import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.content.pm.PackageManager
 import androidx.core.content.ContextCompat.checkSelfPermission
+import java.util.LinkedList
 
 class LocalMusicPlugin(
     val context: Context,
@@ -208,15 +207,25 @@ class LocalMusicPlugin(
         view?.showLoopEnabled(status)
     }
 
+    private fun getRequiredStoragePermission(): String {
+        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
+            android.Manifest.permission.READ_MEDIA_AUDIO // Android 13+
+        } else {
+            android.Manifest.permission.READ_EXTERNAL_STORAGE // Android 12 i inferior
+        }
+    }
+
     private fun hasStoragePermissions(): Boolean {
-        val isGranted = checkSelfPermission(context, READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
+        val permission = getRequiredStoragePermission()
+        val isGranted = checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
         if (!isGranted) {
-            info("Permission is revoked")
+            info("Permission $permission is revoked")
         }
         return isGranted
     }
 
     private fun requestStoragePermissions() {
-        view?.action!!.activity().requestPermissions(arrayOf(READ_EXTERNAL_STORAGE), 2)
+        val permission = getRequiredStoragePermission()
+        view?.action!!.activity().requestPermissions(arrayOf(permission), 2)
     }
 }
