@@ -47,6 +47,7 @@ class TextRepository : AnkoLogger {
 
     private var sharedPreferences: SharedPreferences
 
+    @Suppress("DEPRECATION")
     constructor(context: Context, sharedPreferences: PreferencesFactory) {
         this.context = context
         this.sharedPreferences = sharedPreferences.getPreferences()

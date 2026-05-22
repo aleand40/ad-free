@@ -19,6 +19,7 @@ open class TrackRepository: AnkoLogger {
     private val tracks: String = "tracks"
     private var sharedPreferences: SharedPreferences
 
+    @Suppress("DEPRECATION")
     constructor(context: Context, sharedPreferences: PreferencesFactory) {
         this.context = context
         this.sharedPreferences = sharedPreferences.getPreferences()

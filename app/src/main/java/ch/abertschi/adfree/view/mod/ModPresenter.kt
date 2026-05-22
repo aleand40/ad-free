@@ -7,7 +7,6 @@ import ch.abertschi.adfree.model.PreferencesFactory
 import org.jetbrains.anko.AnkoLogger
 import org.jetbrains.anko.info
 import org.jetbrains.anko.runOnUiThread
-import android.os.AsyncTask
 import ch.abertschi.adfree.*
 
 
@@ -50,9 +49,9 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory) : AnkoL
         showDetectorCount()
         showDeveloperMode()
 
-        AsyncTask.execute {
+        Thread {
             onStatusChanged(notificationStatusManager.getStatus())
-        }
+        }.start()
     }
 
     private fun showDeveloperMode() {

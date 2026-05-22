@@ -25,7 +25,7 @@ class NotificationBundleAndroidTextDetector : AbstractSpStatusBarDetector(), Ank
             val bundle = getNotificationBundle(payload.statusbarNotification.notification)
             var flagAsAd = false
             bundle.let {
-                val androidText: CharSequence? = bundle.get("android.text") as CharSequence?
+                val androidText: CharSequence? = bundle.getCharSequence("android.text")
                 flagAsAd = androidText == null
                         && payload.statusbarNotification.notification!!
                     .tickerText?.isNotEmpty() ?: false

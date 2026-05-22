@@ -41,6 +41,7 @@ import androidx.core.net.toUri
  * Created by abertschi on 21.04.17.
  */
 
+@Suppress("DEPRECATION")
 class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAction {
     override fun activity(): Activity {
         val app = requireContext().applicationContext as AdFreeApplication
@@ -176,6 +177,7 @@ class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAct
         this.tryActivity().toast("Trying out plugin")
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         callablesOnActivityResult.forEach { it(requestCode, resultCode, data) }

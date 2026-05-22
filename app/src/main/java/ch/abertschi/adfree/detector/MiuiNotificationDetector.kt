@@ -21,7 +21,7 @@ class MiuiNotificationDetector : AbstractSpStatusBarDetector(), AnkoLogger {
 
         try {
             bundle.let {
-                val sp: SpannableString? = bundle?.get("android.title") as SpannableString?
+                val sp: SpannableString? = bundle?.getCharSequence("android.title") as? SpannableString
                 sp?.run {
                     val count = getSpanCount(this)
                     flagAsAd = count != null && count == 0

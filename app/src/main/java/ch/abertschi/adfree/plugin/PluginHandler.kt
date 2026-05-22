@@ -50,6 +50,6 @@ class PluginHandler(val prefs: PreferencesFactory,
 
     fun forceStopPlugin(onStopped: () -> Unit) = activePlugin.forceStop(onStopped)
 
-    private fun serializeActivePluginId(plugin: AdPlugin): String
-            = plugin.javaClass.canonicalName
+    private fun serializeActivePluginId(plugin: AdPlugin): String =
+        plugin.javaClass.canonicalName ?: ""
 }

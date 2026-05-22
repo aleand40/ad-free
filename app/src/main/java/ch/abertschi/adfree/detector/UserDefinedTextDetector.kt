@@ -30,7 +30,7 @@ class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, 
 
     private fun extractString(extras: Bundle?, s: String): String? {
         return try {
-            (extras?.get(s) as CharSequence?)
+            extras?.getCharSequence(s)
                 ?.toString()?.trim()?.lowercase(Locale.ROOT)
         } catch (e: Exception) {
             warn { e }
