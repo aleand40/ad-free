@@ -18,8 +18,8 @@ import ch.abertschi.adfree.R
 import ch.abertschi.adfree.plugin.PluginActivityAction
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.longToast
-import org.jetbrains.anko.runOnUiThread
 import ch.abertschi.adfree.view.ViewSettings
+import ch.abertschi.adfree.util.runOnUiThread
 
 /**
  * Created by abertschi on 29.08.17.
@@ -115,20 +115,20 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
     }
 
     fun showErrorInChoosingDirectory(hint: String = "") {
-        context.applicationContext.runOnUiThread {
-            longToast("Whoops, error with chosen directory. Choose a different one. $hint")
+        runOnUiThread {
+            context.longToast("Whoops, error with chosen directory. Choose a different one. $hint")
         }
     }
 
     fun showNoAudioTracksFoundMessage() {
-        context.applicationContext.runOnUiThread {
-            longToast("Whoops, no music found in current audio directory")
+        runOnUiThread {
+            context.longToast("Whoops, no music found in current audio directory")
         }
     }
 
     fun showAudioError() {
-        context.applicationContext.runOnUiThread {
-            longToast("Whoops, there was an error with audio")
+        runOnUiThread {
+            context.longToast("Whoops, there was an error with audio")
         }
     }
 

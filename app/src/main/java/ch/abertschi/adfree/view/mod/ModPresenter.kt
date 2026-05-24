@@ -2,16 +2,20 @@ package ch.abertschi.adfree.view.mod
 
 import android.content.Context
 import android.content.Intent
+import ch.abertschi.adfree.AdFreeApplication
+import ch.abertschi.adfree.GoogleCastManager
+import ch.abertschi.adfree.ListenerStatus
+import ch.abertschi.adfree.NotificationStatusManager
+import ch.abertschi.adfree.NotificationStatusObserver
 import ch.abertschi.adfree.model.AdDetectableFactory
 import ch.abertschi.adfree.model.PreferencesFactory
-import org.jetbrains.anko.runOnUiThread
-import ch.abertschi.adfree.*
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.info
+import ch.abertschi.adfree.util.runOnUiThread
 
 
 class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory) : AppLogger,
-        NotificationStatusObserver {
+    NotificationStatusObserver {
 
     private lateinit var context: Context
     private lateinit var notificationStatusManager: NotificationStatusManager
@@ -20,7 +24,7 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory) : AppLo
 
 
     override fun onStatusChanged(status: ListenerStatus) {
-        context.runOnUiThread {
+        runOnUiThread {
             info { "notification listener changed status: $status" }
             if (status == ListenerStatus.CONNECTED) {
                 view.showNotificationListenerConnected()
