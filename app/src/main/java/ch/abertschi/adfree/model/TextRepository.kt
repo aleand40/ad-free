@@ -3,13 +3,13 @@ package ch.abertschi.adfree.model
 import android.content.Context
 import android.content.SharedPreferences
 import com.thoughtworks.xstream.XStream
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 import java.lang.IllegalStateException
 import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.collections.HashSet
 import androidx.core.content.edit
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
 
 data class TextRepositoryData(
     var packageName: String = "",
@@ -36,7 +36,7 @@ data class TextRepositoryData(
 }
 
 
-class TextRepository : AnkoLogger {
+class TextRepository : AppLogger {
     private val context: Context
     private val idKey: String = "k_"
     private val idKeys: String = "keys"

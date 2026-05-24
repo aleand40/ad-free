@@ -13,10 +13,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.detector.AdDetectable
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
 import org.jetbrains.anko.*
 import java.lang.IllegalStateException
 
-class ActiveDetectorActivity : AppCompatActivity(), AnkoLogger {
+class ActiveDetectorActivity : AppCompatActivity(), AppLogger {
 
     private lateinit var detectorRecyclerView: RecyclerView
     private lateinit var detectorViewAdapter: RecyclerView.Adapter<*>
@@ -60,7 +62,7 @@ class ActiveDetectorActivity : AppCompatActivity(), AnkoLogger {
 class DetectorAdapter(
     private val detectors: List<AdDetectable>,
     private val presenter: ActiveDetectorPresenter
-) : RecyclerView.Adapter<DetectorAdapter.MyViewHolder>(), AnkoLogger {
+) : RecyclerView.Adapter<DetectorAdapter.MyViewHolder>(), AppLogger {
 
     class MyViewHolder(
         val view: View,

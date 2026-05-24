@@ -4,13 +4,13 @@ import android.content.Context
 import android.content.Intent
 import ch.abertschi.adfree.model.AdDetectableFactory
 import ch.abertschi.adfree.model.PreferencesFactory
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 import org.jetbrains.anko.runOnUiThread
 import ch.abertschi.adfree.*
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
 
 
-class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory) : AnkoLogger,
+class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory) : AppLogger,
         NotificationStatusObserver {
 
     private lateinit var context: Context

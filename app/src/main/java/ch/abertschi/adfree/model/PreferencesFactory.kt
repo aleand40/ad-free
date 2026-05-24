@@ -9,13 +9,13 @@ package ch.abertschi.adfree.model
 import android.content.Context
 import android.content.SharedPreferences
 import ch.abertschi.adfree.detector.AdDetectable
-import org.jetbrains.anko.AnkoLogger
 import androidx.core.content.edit
+import ch.abertschi.adfree.util.AppLogger
 
 /**
  * Created by abertschi on 15.04.17.
  */
-class PreferencesFactory(context: Context) : AnkoLogger {
+class PreferencesFactory(context: Context) : AppLogger {
     private val prefsKey = "PREFS"
     private val prefIsEnabled = "IS_ENABLED"
     private val prefsAudioVolume: String = "AUDIO_KEY"

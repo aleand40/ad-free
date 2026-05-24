@@ -1,10 +1,10 @@
 package ch.abertschi.adfree.detector
 
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.*
 import java.util.Locale
 
 
-abstract class AbstractNotificationDetector : AdDetectable, AnkoLogger {
+abstract class AbstractNotificationDetector : AdDetectable, AppLogger {
 
     // get package lower case
     abstract fun getPackageName(): String

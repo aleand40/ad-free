@@ -6,13 +6,13 @@
 
 package ch.abertschi.adfree.detector
 
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.*
 import java.util.Locale
 
 /**
  * Created by abertschi on 13.12.16.
  */
-abstract class AbstractSpStatusBarDetector : AdDetectable, AnkoLogger {
+abstract class AbstractSpStatusBarDetector : AdDetectable, AppLogger {
 
     companion object {
         private const val SPOTIFY_PACKAGE_NAME = "com.spotify"

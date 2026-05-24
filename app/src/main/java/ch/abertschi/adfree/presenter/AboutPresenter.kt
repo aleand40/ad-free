@@ -8,16 +8,16 @@ package ch.abertschi.adfree.presenter
 
 import android.content.Context
 import ch.abertschi.adfree.view.about.AboutView
-import org.jetbrains.anko.AnkoLogger
 import android.content.Intent
 import ch.abertschi.adfree.view.mod.ModActivity
+import ch.abertschi.adfree.util.AppLogger
 
 
 /**
  * Created by abertschi on 02.09.17.
  */
 class AboutPresenter(val view: AboutView, val context: Context)
-    : AnkoLogger {
+    : AppLogger {
 
     private var isInit: Boolean = false
 

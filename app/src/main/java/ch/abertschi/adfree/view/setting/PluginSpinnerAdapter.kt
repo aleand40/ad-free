@@ -15,7 +15,8 @@ import android.widget.Spinner
 import android.widget.TextView
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.view.ViewSettings
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.error
 
 /**
  * Created by abertschi on 21.04.17.
@@ -25,7 +26,7 @@ class PluginSpinnerAdapter(
     textViewResourceId: Int,
     private var objects: Array<String>,
     private var spinner: Spinner
-) : ArrayAdapter<String>(context, textViewResourceId, objects), AnkoLogger {
+) : ArrayAdapter<String>(context, textViewResourceId, objects), AppLogger {
 
     override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
         return getCustomView(position, convertView, parent)

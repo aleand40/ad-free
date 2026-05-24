@@ -20,9 +20,9 @@ import ch.abertschi.adfree.R
 import ch.abertschi.adfree.di.HomeModule
 import ch.abertschi.adfree.presenter.HomePresenter
 import ch.abertschi.adfree.view.ViewSettings
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.AppLogger
 
-class HomeActivity : Fragment(), HomeView, AnkoLogger {
+class HomeActivity : Fragment(), HomeView, AppLogger {
 
     private lateinit var typeFace: Typeface
     private lateinit var enjoySloganText: TextView

@@ -3,12 +3,12 @@ package ch.abertschi.adfree
 import android.app.Notification
 import android.service.notification.StatusBarNotification
 import ch.abertschi.adfree.model.PreferencesFactory
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.warn
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
+import ch.abertschi.adfree.util.warn
 import java.lang.Exception
 
-class GoogleCastManager(val prefs: PreferencesFactory) : AnkoLogger {
+class GoogleCastManager(val prefs: PreferencesFactory) : AppLogger {
 
     companion object {
         private const val ID = "com.google.android.gms|g:com.google.android.gms.cast.rcn.NOTIFICATIONS"

@@ -1,15 +1,13 @@
 package ch.abertschi.adfree.detector
 
 import android.service.notification.StatusBarNotification
+import ch.abertschi.adfree.util.*
 import com.thoughtworks.xstream.XStream
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.warn
 import java.io.File
 import java.io.FileOutputStream
 import java.util.Locale
 
-abstract class AbstractDebugTracer(val storageFolder: File?) : AdDetectable, AnkoLogger {
+abstract class AbstractDebugTracer(val storageFolder: File?) : AdDetectable, AppLogger {
 
     abstract fun getPackage(): String
     abstract fun getFileName(): String

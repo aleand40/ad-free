@@ -6,14 +6,14 @@
 
 package ch.abertschi.adfree.model
 
+import ch.abertschi.adfree.util.AppLogger
 import android.content.Context
 import android.content.SharedPreferences
-import org.jetbrains.anko.AnkoLogger
 
 /**
  * Created by abertschi on 15.04.17.
  */
-open class TrackRepository: AnkoLogger {
+open class TrackRepository: AppLogger {
 
     private val context: Context
     private val tracks: String = "tracks"

@@ -3,12 +3,12 @@ package ch.abertschi.adfree.detector
 import android.app.Notification
 import android.os.Bundle
 import ch.abertschi.adfree.model.TextRepository
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.warn
 import com.thoughtworks.xstream.XStream
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.warn
 import java.util.*
 
-class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, AnkoLogger {
+class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, AppLogger {
 
     override fun canHandle(payload: AdPayload): Boolean {
         val notificationKey: String =

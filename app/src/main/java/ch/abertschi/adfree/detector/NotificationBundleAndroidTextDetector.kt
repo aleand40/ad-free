@@ -8,14 +8,15 @@ package ch.abertschi.adfree.detector
 
 import android.app.Notification
 import android.os.Bundle
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.warn
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.error
+import ch.abertschi.adfree.util.warn
 
 
 /**
  * Created by abertschi on 17.04.17.
  */
-class NotificationBundleAndroidTextDetector : AbstractSpStatusBarDetector(), AnkoLogger {
+class NotificationBundleAndroidTextDetector : AbstractSpStatusBarDetector(), AppLogger {
 
     override fun canHandle(payload: AdPayload): Boolean = super.canHandle(payload)
             && payload.statusbarNotification.notification != null
@@ -46,6 +47,7 @@ class NotificationBundleAndroidTextDetector : AbstractSpStatusBarDetector(), Ank
             return f.get(notification) as Bundle
         } catch (e: Exception) {
             error("Can not access notification bundle with reflection, $e")
+            throw e
         }
     }
 

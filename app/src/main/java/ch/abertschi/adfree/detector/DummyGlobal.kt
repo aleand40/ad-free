@@ -6,10 +6,11 @@
 
 package ch.abertschi.adfree.detector
 
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.*
+
 
 class DummyGlobal:
-        AdDetectable, AnkoLogger {
+        AdDetectable, AppLogger {
 
     override fun canHandle(payload: AdPayload) = true
 

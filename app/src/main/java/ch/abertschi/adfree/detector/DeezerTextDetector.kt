@@ -1,10 +1,10 @@
 package ch.abertschi.adfree.detector
 
 import android.app.Notification
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.*
 import java.util.Locale
 
-class DeezerTextDetector : AdDetectable, AnkoLogger {
+class DeezerTextDetector : AdDetectable, AppLogger {
 
     private val keyword: String = "deezer"
     private val pack = "deezer.android"

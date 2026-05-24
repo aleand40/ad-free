@@ -6,8 +6,8 @@
 
 package ch.abertschi.adfree.model
 
+import ch.abertschi.adfree.util.AppLogger
 import android.content.Context
-import org.jetbrains.anko.AnkoLogger
 import org.json.JSONArray
 import java.io.IOException
 import java.nio.charset.Charset
@@ -17,7 +17,7 @@ import java.nio.charset.Charset
  * Created by abertschi on 01.09.17.
  */
 @Deprecated("no longer needed")
-class YesNoModel(val context: Context) : AnkoLogger {
+class YesNoModel(val context: Context) : AppLogger {
 
     var yes: List<String> = listOf()
     var no: List<String> = listOf()

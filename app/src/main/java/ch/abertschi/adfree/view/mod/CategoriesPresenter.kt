@@ -2,9 +2,9 @@ package ch.abertschi.adfree.view.mod
 
 import android.content.Intent
 import ch.abertschi.adfree.AdFreeApplication
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.AppLogger
 
-class CategoriesPresenter(val view: CategoriesActivity) : AnkoLogger {
+class CategoriesPresenter(val view: CategoriesActivity) : AppLogger {
 
     companion object {
         const val BUNDLE_CATEGORY_KEY: String = "category"

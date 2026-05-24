@@ -8,15 +8,15 @@ package ch.abertschi.adfree.plugin
 
 import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.plugin.mute.MutePlugin
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
 
 /**
  * Created by abertschi on 21.04.17.
  */
 class PluginHandler(val prefs: PreferencesFactory,
                     val plugins: List<AdPlugin>
-) : AnkoLogger {
+) : AppLogger {
 
     private var activePlugin: AdPlugin = loadActivePlugin()
 

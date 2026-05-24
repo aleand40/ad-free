@@ -7,17 +7,17 @@
 package ch.abertschi.adfree.model
 
 import ch.abertschi.adfree.view.ViewSettings
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 
 /**
  * Created by abertschi on 28.04.17.
  */
 
-class RemoteManager(prefFactory: PreferencesFactory) : AnkoLogger {
+class RemoteManager(prefFactory: PreferencesFactory) : AppLogger {
 
     private val url: String = ViewSettings.AD_FREE_RESOURCE_ADDRESS +
             "settings.yaml" + ViewSettings.GITHUB_RAW_SUFFIX

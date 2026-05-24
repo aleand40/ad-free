@@ -1,8 +1,8 @@
 package ch.abertschi.adfree.detector
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.*
 import java.io.File
 
-class DeezerDebugTracer(storageFolder: File?) : AdDetectable, AnkoLogger,
+class DeezerDebugTracer(storageFolder: File?) : AdDetectable, AppLogger,
 
     AbstractDebugTracer(storageFolder) {
 

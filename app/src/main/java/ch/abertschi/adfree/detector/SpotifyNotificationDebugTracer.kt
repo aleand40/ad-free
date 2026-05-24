@@ -1,9 +1,9 @@
 package ch.abertschi.adfree.detector
 
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.AppLogger
 import java.io.File
 
-class SpotifyNotificationDebugTracer(storageFolder: File?) : AdDetectable, AnkoLogger,
+class SpotifyNotificationDebugTracer(storageFolder: File?) : AdDetectable, AppLogger,
     AbstractDebugTracer(storageFolder) {
 
     override fun getPackage() = "com.spotify"

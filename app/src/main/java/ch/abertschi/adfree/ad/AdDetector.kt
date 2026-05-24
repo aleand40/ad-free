@@ -11,8 +11,8 @@ import ch.abertschi.adfree.detector.AdDetectable
 import ch.abertschi.adfree.detector.AdPayload
 import ch.abertschi.adfree.model.AdDetectableFactory
 import ch.abertschi.adfree.model.RemoteManager
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.debug
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.debug
 
 /**
  * Created by abertschi on 13.08.17.
@@ -20,7 +20,7 @@ import org.jetbrains.anko.debug
 class AdDetector(
     val detectors: AdDetectableFactory,
     val remoteManager: RemoteManager
-) : AnkoLogger, AdObservable {
+) : AppLogger, AdObservable {
 
     private var observers: MutableList<AdObserver> = ArrayList()
 

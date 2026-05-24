@@ -9,13 +9,13 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.service.notification.NotificationListenerService
 import androidx.core.app.NotificationManagerCompat
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.warn
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
+import ch.abertschi.adfree.util.warn
 
 private const val TIMER_INTERVAL_MS: Long = 60 * 1000
 
-class NotificationStatusManager(val context: Context) : AnkoLogger {
+class NotificationStatusManager(val context: Context) : AppLogger {
 
     private var lastStatus: ListenerStatus = ListenerStatus.UNKNOWN
     private var observers: MutableList<NotificationStatusObserver> = ArrayList()

@@ -32,9 +32,9 @@ import ch.abertschi.adfree.plugin.PluginActivityAction
 import ch.abertschi.adfree.presenter.SettingsPresenter
 import ch.abertschi.adfree.view.MainActivity
 import ch.abertschi.adfree.view.ViewSettings
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.warn
 import org.jetbrains.anko.toast
-import org.jetbrains.anko.warn
 import androidx.core.net.toUri
 
 /**
@@ -42,7 +42,7 @@ import androidx.core.net.toUri
  */
 
 @Suppress("DEPRECATION")
-class SettingsActivity : Fragment(), SettingsView, AnkoLogger, PluginActivityAction {
+class SettingsActivity : Fragment(), SettingsView, AppLogger, PluginActivityAction {
     override fun activity(): Activity {
         val app = requireContext().applicationContext as AdFreeApplication
         return app.mainActivity

@@ -12,12 +12,12 @@ import ch.abertschi.adfree.ad.AdObserver
 import ch.abertschi.adfree.ad.EventType
 import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.plugin.PluginHandler
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 import java.util.concurrent.TimeUnit
 
 
@@ -29,7 +29,7 @@ class AdStateController(private val audioController: AudioController,
                         private val notificationChannel: NotificationChannel,
                         private val castManager: GoogleCastManager,
                         private val prefs: PreferencesFactory) :
-        AdObserver, AnkoLogger {
+        AdObserver, AppLogger {
 
     private var activeState: EventType? = EventType.NO_AD
     private val timeoutInMs: Long = 120_000

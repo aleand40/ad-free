@@ -10,12 +10,10 @@ import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import ch.abertschi.adfree.R
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 
 
 @SuppressLint("MissingPermission")
-class NotificationUtils(val context: Context) : AnkoLogger {
+class NotificationUtils(val context: Context) : AppLogger {
 
     companion object {
         const val ACTION_DISMISS = "actionDismiss"
@@ -109,7 +107,7 @@ class NotificationUtils(val context: Context) : AnkoLogger {
         notificationManager.createNotificationChannel(channel)
     }
 
-    class NotificationInteractionReceiver : BroadcastReceiver(), AnkoLogger {
+    class NotificationInteractionReceiver : BroadcastReceiver(), AppLogger {
         override fun onReceive(context: Context?, intent: Intent?) {
             if (intent == null || intent.action == null) {
                 return

@@ -14,9 +14,9 @@ import ch.abertschi.adfree.BuildConfig
 import ch.abertschi.adfree.model.RemoteManager
 import ch.abertschi.adfree.model.RemoteSetting
 import ch.abertschi.adfree.view.home.HomeView
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 import androidx.core.net.toUri
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
 
 /**
  * Created by abertschi on 15.04.17.
@@ -24,7 +24,7 @@ import androidx.core.net.toUri
 class HomePresenter(
     val homeView: HomeView,
     val remoteManager: RemoteManager
-) : AnkoLogger {
+) : AppLogger {
 
     private var isInit: Boolean = false
     private var remoteSetting: RemoteSetting? = null

@@ -1,9 +1,9 @@
 package ch.abertschi.adfree.detector
 
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.*
 import java.io.File
 
-class AccuRadioDebugTracer(storageFolder: File?) : AdDetectable, AnkoLogger,
+class AccuRadioDebugTracer(storageFolder: File?) : AdDetectable, AppLogger,
     AbstractDebugTracer(storageFolder) {
 
     private val packageName = "com.slipstream.accuradio"

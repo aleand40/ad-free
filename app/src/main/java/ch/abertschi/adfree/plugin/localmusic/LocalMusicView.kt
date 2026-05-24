@@ -16,7 +16,7 @@ import android.widget.TextView
 import androidx.appcompat.widget.SwitchCompat
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.plugin.PluginActivityAction
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.AppLogger
 import org.jetbrains.anko.longToast
 import org.jetbrains.anko.runOnUiThread
 import ch.abertschi.adfree.view.ViewSettings
@@ -24,7 +24,7 @@ import ch.abertschi.adfree.view.ViewSettings
 /**
  * Created by abertschi on 29.08.17.
  */
-class LocalMusicView(val context: Context, val action: PluginActivityAction) : AnkoLogger {
+class LocalMusicView(val context: Context, val action: PluginActivityAction) : AppLogger {
     private lateinit var viewInstance: View
 
     private lateinit var presenter: LocalMusicPlugin

@@ -1,10 +1,10 @@
 package ch.abertschi.adfree.detector
 
 import android.app.Notification
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.AppLogger
 import java.util.Locale
 
-class ScDetector : AdDetectable, AnkoLogger {
+class ScDetector : AdDetectable, AppLogger {
 
     private val keyword: String = "advertisement"
     private val pack = "com.soundcloud.android"

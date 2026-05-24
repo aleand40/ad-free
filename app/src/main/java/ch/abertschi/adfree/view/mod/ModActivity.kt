@@ -21,10 +21,12 @@ import androidx.appcompat.widget.SwitchCompat
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.BuildConfig
 import ch.abertschi.adfree.R
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
 import org.jetbrains.anko.*
 import androidx.core.net.toUri
 
-class ModActivity : AppCompatActivity(), AnkoLogger {
+class ModActivity : AppCompatActivity(), AppLogger {
 
     private lateinit var delayDialog: AlertDialog
     private lateinit var delayLayout: View

@@ -16,13 +16,11 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import ch.abertschi.adfree.R
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
-import org.jetbrains.anko.warn
+import ch.abertschi.adfree.util.*
 import java.io.File
 
 // TODO: refactor this into presenter and view
-class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AnkoLogger {
+class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AppLogger {
 
     companion object {
         const val EXTRA_LOGFILE = "ch.abertschi.adfree.extra.logfile"

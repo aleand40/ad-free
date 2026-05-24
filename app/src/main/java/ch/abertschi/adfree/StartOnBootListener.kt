@@ -3,10 +3,10 @@ package ch.abertschi.adfree
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
 
-class StartOnBootListener: BroadcastReceiver(), AnkoLogger {
+class StartOnBootListener: BroadcastReceiver(), AppLogger {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         // check that the action is really the one to boot the system

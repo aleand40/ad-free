@@ -17,12 +17,12 @@ import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.AudioPlayer
 import ch.abertschi.adfree.plugin.PluginActivityAction
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
+import ch.abertschi.adfree.util.error
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.error
-import org.jetbrains.anko.info
 import java.io.File
 import java.util.concurrent.TimeUnit
 import android.provider.DocumentsContract
@@ -35,7 +35,7 @@ class LocalMusicPlugin(
     val context: Context,
     val prefs: PreferencesFactory,
     val audioController: AudioController
-) : AdPlugin, AnkoLogger {
+) : AdPlugin, AppLogger {
 
     private val supportedFileExt = listOf(".mp3", ".wav", ".m4a", ".flac", ".ogg", ".opus")
     private var view: LocalMusicView? = null

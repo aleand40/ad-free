@@ -1,9 +1,9 @@
 package ch.abertschi.adfree.detector
 
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.AppLogger
 import java.util.Locale
 
-class SpLiteTextEnglishDetector : AdDetectable, AnkoLogger, SpLiteTextDetector() {
+class SpLiteTextEnglishDetector : AdDetectable, AppLogger, SpLiteTextDetector() {
 
     override fun getPackageName() = "com.spotify.lite"
 

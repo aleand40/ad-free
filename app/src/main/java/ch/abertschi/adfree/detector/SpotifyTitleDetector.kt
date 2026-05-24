@@ -7,7 +7,7 @@
 package ch.abertschi.adfree.detector
 
 import ch.abertschi.adfree.model.TrackRepository
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.AppLogger
 import java.util.Locale
 
 /**
@@ -19,7 +19,7 @@ import java.util.Locale
  */
 // TODO: add option to tag ads manually
 class SpotifyTitleDetector(val trackRepository: TrackRepository) :
-        AbstractSpStatusBarDetector(), AnkoLogger {
+        AbstractSpStatusBarDetector(), AppLogger {
 
     private val keywords = listOf(
             "Spotify —"

@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.model.TextRepositoryData
-import org.jetbrains.anko.*
+import ch.abertschi.adfree.util.AppLogger
 
 
-class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
+class GenericTextDetectorActivity : AppCompatActivity(), AppLogger {
     private lateinit var presenter: GenericTextDetectorPresenter
     private lateinit var viewAdapter: DetectorAdapter
 
@@ -96,7 +96,7 @@ class GenericTextDetectorActivity : AppCompatActivity(), AnkoLogger {
         private val data: List<TextRepositoryData>,
         private val presenter: GenericTextDetectorPresenter
     ) :
-        RecyclerView.Adapter<DetectorAdapter.MyViewHolder>(), AnkoLogger {
+        RecyclerView.Adapter<DetectorAdapter.MyViewHolder>(), AppLogger {
 
         class MyViewHolder(
             view: View,

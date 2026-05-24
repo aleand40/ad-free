@@ -12,9 +12,10 @@ import androidx.appcompat.widget.SwitchCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.abertschi.adfree.R
+import ch.abertschi.adfree.util.AppLogger
 import org.jetbrains.anko.*
 
-class CategoriesActivity : AppCompatActivity(), AnkoLogger {
+class CategoriesActivity : AppCompatActivity(), AppLogger {
     private lateinit var categoriesRecyclerView: RecyclerView
     private lateinit var categoriesViewAdapter: RecyclerView.Adapter<*>
     private lateinit var categoriesViewManager: RecyclerView.LayoutManager
@@ -67,7 +68,7 @@ class CategoriesActivity : AppCompatActivity(), AnkoLogger {
 class CategoryAdapter(
     private val categories: List<String>,
     private val presenter: CategoriesPresenter
-) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(), AnkoLogger {
+) : RecyclerView.Adapter<CategoryAdapter.CategoryViewHolder>(), AppLogger {
 
     class CategoryViewHolder(
         val view: View,

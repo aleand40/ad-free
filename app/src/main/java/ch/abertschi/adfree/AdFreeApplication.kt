@@ -14,14 +14,14 @@ import ch.abertschi.adfree.plugin.PluginHandler
 import ch.abertschi.adfree.plugin.localmusic.LocalMusicPlugin
 import ch.abertschi.adfree.plugin.mute.MutePlugin
 import ch.abertschi.adfree.util.NotificationUtils
-import org.jetbrains.anko.AnkoLogger
 import ch.abertschi.adfree.crashhandler.CrashExceptionHandler
 import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.model.AdDetectableFactory
 import ch.abertschi.adfree.model.TextRepository
 import ch.abertschi.adfree.model.RemoteManager
+import ch.abertschi.adfree.util.AppLogger
 
-class AdFreeApplication : Application(), AnkoLogger {
+class AdFreeApplication : Application(), AppLogger {
 
     lateinit var prefs: PreferencesFactory
     lateinit var adDetectors: AdDetectableFactory

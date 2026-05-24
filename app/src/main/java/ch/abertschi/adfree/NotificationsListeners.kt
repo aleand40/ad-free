@@ -12,13 +12,16 @@ import com.thoughtworks.xstream.XStream
 import java.io.File
 import java.io.FileOutputStream
 import android.content.Intent
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
+import ch.abertschi.adfree.util.warn
 
 import org.jetbrains.anko.*
 
 /**
  * Created by abertschi on 11.12.16.
  */
-class NotificationsListeners : NotificationListenerService(), AnkoLogger {
+class NotificationsListeners : NotificationListenerService(), AppLogger {
 
     override fun onNotificationPosted(sbn: StatusBarNotification) {
         val context = applicationContext as AdFreeApplication

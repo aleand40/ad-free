@@ -12,18 +12,18 @@ import android.media.AudioAttributes
 import android.media.MediaPlayer
 import ch.abertschi.adfree.AudioController
 import ch.abertschi.adfree.model.PreferencesFactory
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.info
 import java.util.concurrent.TimeUnit
 
 open class AudioPlayer(
     val context: Context,
     val prefs: PreferencesFactory,
     val audioController: AudioController
-) : AnkoLogger {
+) : AppLogger {
 
     private var isPlaying: Boolean = false
     private var onStopCallables: MutableList<() -> Unit> = ArrayList()

@@ -1,9 +1,9 @@
 package ch.abertschi.adfree.detector
 
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.AppLogger
 import java.io.File
 
-class TidalDebugTracer(storageFolder: File?) : AdDetectable, AnkoLogger,
+class TidalDebugTracer(storageFolder: File?) : AdDetectable, AppLogger,
     AbstractDebugTracer(storageFolder) {
 
     private val packageName = "com.aspiro.tidal"

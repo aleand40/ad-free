@@ -1,11 +1,10 @@
 package ch.abertschi.adfree.detector
 
 import android.widget.RemoteViews
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.warn
+import ch.abertschi.adfree.util.*
 import java.util.Locale
 
-class AccuradioDetector : AdDetectable, AnkoLogger, AbstractNotificationDetector() {
+class AccuradioDetector : AdDetectable, AppLogger, AbstractNotificationDetector() {
 
     override fun getPackageName(): String {
         return "com.slipstream.accuradio"

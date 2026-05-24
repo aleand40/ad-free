@@ -6,10 +6,11 @@
 
 package ch.abertschi.adfree.detector
 
-import org.jetbrains.anko.AnkoLogger
+import ch.abertschi.adfree.util.*
+
 
 class DummySpotifyDetector:
-        AbstractSpStatusBarDetector(), AnkoLogger {
+        AbstractSpStatusBarDetector(), AppLogger {
 
     override fun flagAsAdvertisement(payload: AdPayload) = true
 

@@ -3,13 +3,12 @@ package ch.abertschi.adfree.detector
 import android.app.Notification
 import android.os.Bundle
 import android.text.SpannableString
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.warn
+import ch.abertschi.adfree.util.*
 
 /**
  * Perform inspection of miui notification bundles
  */
-class MiuiNotificationDetector : AbstractSpStatusBarDetector(), AnkoLogger {
+class MiuiNotificationDetector : AbstractSpStatusBarDetector(), AppLogger {
 
     override fun canHandle(payload: AdPayload): Boolean =
         super.canHandle(payload) && payload.statusbarNotification.notification != null

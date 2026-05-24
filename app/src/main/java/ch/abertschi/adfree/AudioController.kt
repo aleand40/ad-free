@@ -10,24 +10,24 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.media.AudioManager
 import ch.abertschi.adfree.model.PreferencesFactory
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.debug
+import ch.abertschi.adfree.util.info
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.jetbrains.anko.AnkoLogger
-import org.jetbrains.anko.debug
-import org.jetbrains.anko.info
 import java.util.concurrent.TimeUnit
 
 /**
  * Created by abertschi on 16.04.17.
  */
-class AudioController(val context: Context, val prefs: PreferencesFactory) : AnkoLogger {
+class AudioController(val context: Context, val prefs: PreferencesFactory) : AppLogger {
 
     private var musicStreamVolume = 0
     private var musicStreamIsMuted = false
 
     fun muteMusicStream() {
-        debug("current volume $musicStreamVolume")
+        debug { "current volume $musicStreamVolume" }
         info("muting audio")
 
         if (musicStreamIsMuted) {
