@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 
 android {
-    namespace 'ch.abertschi.adfree'
+    namespace = 'ch.abertschi.adfree'
     compileSdk 37
 
     buildFeatures {
@@ -15,7 +15,7 @@ android {
         versionCode 42
         versionName "3.2"
         testInstrumentationRunner "com.androidx.test.runner.AndroidJUnitRunner"
-        multiDexEnabled true
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -29,7 +29,7 @@ android {
     }
 
     lintOptions {
-        abortOnError false
+        abortOnError = false
     }
 }
 
