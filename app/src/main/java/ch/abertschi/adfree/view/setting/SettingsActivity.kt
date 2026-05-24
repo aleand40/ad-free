@@ -34,7 +34,7 @@ import ch.abertschi.adfree.view.MainActivity
 import ch.abertschi.adfree.view.ViewSettings
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.warn
-import org.jetbrains.anko.toast
+import ch.abertschi.adfree.util.toast
 import androidx.core.net.toUri
 
 /**

@@ -15,8 +15,8 @@ import android.content.Intent
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.info
 import ch.abertschi.adfree.util.warn
+import org.jetbrains.anko.alarmManager
 
-import org.jetbrains.anko.*
 
 /**
  * Created by abertschi on 11.12.16.

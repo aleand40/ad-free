@@ -17,7 +17,7 @@ import androidx.appcompat.widget.SwitchCompat
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.plugin.PluginActivityAction
 import ch.abertschi.adfree.util.AppLogger
-import org.jetbrains.anko.longToast
+import ch.abertschi.adfree.util.longToast
 import org.jetbrains.anko.runOnUiThread
 import ch.abertschi.adfree.view.ViewSettings
 

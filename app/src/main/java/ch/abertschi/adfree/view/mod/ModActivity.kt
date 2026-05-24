@@ -23,8 +23,8 @@ import ch.abertschi.adfree.BuildConfig
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.info
-import org.jetbrains.anko.*
 import androidx.core.net.toUri
+import ch.abertschi.adfree.util.toast
 
 class ModActivity : AppCompatActivity(), AppLogger {
 

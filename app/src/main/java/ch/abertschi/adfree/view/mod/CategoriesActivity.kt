@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.util.AppLogger
-import org.jetbrains.anko.*
+import ch.abertschi.adfree.util.longToast
 
 class CategoriesActivity : AppCompatActivity(), AppLogger {
     private lateinit var categoriesRecyclerView: RecyclerView

@@ -15,7 +15,7 @@ import ch.abertschi.adfree.R
 import ch.abertschi.adfree.detector.AdDetectable
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.info
-import org.jetbrains.anko.*
+import ch.abertschi.adfree.util.longToast
 import java.lang.IllegalStateException
 
 class ActiveDetectorActivity : AppCompatActivity(), AppLogger {
