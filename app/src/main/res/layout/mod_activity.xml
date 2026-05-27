@@ -73,9 +73,9 @@
                         android:id="@+id/enableAdfreeSwitch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:contentDescription="@string/mod_adfree_title"
                         android:minWidth="48dp"
-                        android:minHeight="48dp"
-                        android:contentDescription="@string/mod_adfree_title" />
+                        android:minHeight="48dp" />
                 </LinearLayout>
 
                 <View
@@ -215,9 +215,9 @@
                         android:id="@+id/always_on_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:contentDescription="@string/mod_always_on_title"
                         android:minWidth="48dp"
-                        android:minHeight="48dp"
-                        android:contentDescription="@string/mod_always_on_title" />
+                        android:minHeight="48dp" />
                 </LinearLayout>
 
                 <View
@@ -274,9 +274,9 @@
                         android:id="@+id/google_cast_switch"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:contentDescription="@string/mod_google_cast_title"
                         android:minWidth="48dp"
-                        android:minHeight="48dp"
-                        android:contentDescription="@string/mod_google_cast_title" />
+                        android:minHeight="48dp" />
                 </LinearLayout>
 
                 <View

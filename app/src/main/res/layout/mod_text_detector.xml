@@ -24,8 +24,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin_right_subtitle_switch"
             android:layout_marginTop="40dp"
+            android:layout_marginEnd="@dimen/margin_right_subtitle_switch"
             android:orientation="vertical">
 
             <TextView
@@ -33,8 +33,8 @@
                 style="@style/AppTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="48dp"
                 android:gravity="center_vertical"
+                android:minHeight="48dp"
                 android:scrollHorizontally="false"
                 android:text="@string/det_add_entry_title"
                 android:textColor="#FFFFFF"
@@ -71,8 +71,8 @@
                 style="@style/AppTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="48dp"
                 android:gravity="center_vertical"
+                android:minHeight="48dp"
                 android:scrollHorizontally="false"
                 android:text="@string/det_browse_help_title"
                 android:textColor="#FFFFFF"

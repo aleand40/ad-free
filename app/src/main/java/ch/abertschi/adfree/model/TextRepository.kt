@@ -2,14 +2,11 @@ package ch.abertschi.adfree.model
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.thoughtworks.xstream.XStream
-import java.lang.IllegalStateException
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.collections.HashSet
 import androidx.core.content.edit
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.info
+import com.thoughtworks.xstream.XStream
+import java.util.UUID
 
 data class TextRepositoryData(
     var packageName: String = "",
@@ -55,9 +52,9 @@ class TextRepository : AppLogger {
     }
 
     private fun getKeys(): MutableSet<String> {
-        return sharedPreferences.getStringSet(idKeys, HashSet<String>())?.toMutableSet() ?: mutableSetOf()
+        return sharedPreferences.getStringSet(idKeys, HashSet<String>())?.toMutableSet()
+            ?: mutableSetOf()
     }
-
 
 
     private fun getEntryByFormattedKey(key: String): TextRepositoryData? {

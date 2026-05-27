@@ -3,7 +3,8 @@ package ch.abertschi.adfree.detector
 import android.app.Notification
 import android.os.Bundle
 import android.text.SpannableString
-import ch.abertschi.adfree.util.*
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.warn
 
 /**
  * Perform inspection of miui notification bundles
@@ -20,7 +21,8 @@ class MiuiNotificationDetector : AbstractSpStatusBarDetector(), AppLogger {
 
         try {
             bundle.let {
-                val sp: SpannableString? = bundle?.getCharSequence("android.title") as? SpannableString
+                val sp: SpannableString? =
+                    bundle?.getCharSequence("android.title") as? SpannableString
                 sp?.run {
                     val count = getSpanCount(this)
                     flagAsAd = count != null && count == 0

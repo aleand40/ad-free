@@ -6,7 +6,7 @@ import android.content.Intent
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.info
 
-class StartOnBootListener: BroadcastReceiver(), AppLogger {
+class StartOnBootListener : BroadcastReceiver(), AppLogger {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         // check that the action is really the one to boot the system

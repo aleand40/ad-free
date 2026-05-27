@@ -18,8 +18,8 @@ import ch.abertschi.adfree.R
 import ch.abertschi.adfree.plugin.PluginActivityAction
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.longToast
-import ch.abertschi.adfree.view.ViewSettings
 import ch.abertschi.adfree.util.runOnUiThread
+import ch.abertschi.adfree.view.ViewSettings
 
 /**
  * Created by abertschi on 29.08.17.
@@ -92,7 +92,8 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
     }
 
     fun showPlayUntilEndEnabled(e: Boolean) {
-        viewInstance.findViewById<SwitchCompat>(R.id.local_music_play_until_end_switch).isChecked = e
+        viewInstance.findViewById<SwitchCompat>(R.id.local_music_play_until_end_switch).isChecked =
+            e
     }
 
     fun showLoopEnabled(e: Boolean) {

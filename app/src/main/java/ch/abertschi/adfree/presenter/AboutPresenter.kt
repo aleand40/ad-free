@@ -7,17 +7,16 @@
 package ch.abertschi.adfree.presenter
 
 import android.content.Context
-import ch.abertschi.adfree.view.about.AboutView
 import android.content.Intent
-import ch.abertschi.adfree.view.mod.ModActivity
 import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.view.about.AboutView
+import ch.abertschi.adfree.view.mod.ModActivity
 
 
 /**
  * Created by abertschi on 02.09.17.
  */
-class AboutPresenter(val view: AboutView, val context: Context)
-    : AppLogger {
+class AboutPresenter(val view: AboutView, val context: Context) : AppLogger {
 
     private var isInit: Boolean = false
 
@@ -31,5 +30,5 @@ class AboutPresenter(val view: AboutView, val context: Context)
         this.context.startActivity(myIntent)
 
     }
-    
+
 }

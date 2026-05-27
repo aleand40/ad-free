@@ -12,7 +12,8 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 import kotlin.system.exitProcess
 
 /**
@@ -27,7 +28,7 @@ class CrashExceptionHandler(val context: Context) : Thread.UncaughtExceptionHand
         val (summary, logcat) = generateReport(e)
         val filename = writeLogfile(logcat)
 
-                val i = Intent(context, SendCrashReportActivity::class.java)
+        val i = Intent(context, SendCrashReportActivity::class.java)
         i.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         i.putExtra(SendCrashReportActivity.EXTRA_LOGFILE, filename)
         i.putExtra(SendCrashReportActivity.EXTRA_SUMMARY, summary)
@@ -64,7 +65,9 @@ class CrashExceptionHandler(val context: Context) : Thread.UncaughtExceptionHand
 
         summary.append("Android version: ").append(Build.VERSION.SDK_INT).append("\n")
         summary.append("Device: ").append(model).append("\n")
-        val version = info?.let { androidx.core.content.pm.PackageInfoCompat.getLongVersionCode(it) } ?: "(null)"
+        val version =
+            info?.let { androidx.core.content.pm.PackageInfoCompat.getLongVersionCode(it) }
+                ?: "(null)"
         summary.append("App version: ").append(version).append("\n")
         summary.append("Time: ").append(time).append("\n")
         summary.append("Root cause: \n").append(Log.getStackTraceString(th))

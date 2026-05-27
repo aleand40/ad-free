@@ -1,10 +1,10 @@
 package ch.abertschi.adfree.plugin.localmusic
 
-import android.provider.MediaStore
-import android.provider.DocumentsContract
 import android.content.ContentUris
 import android.content.Context
 import android.net.Uri
+import android.provider.DocumentsContract
+import android.provider.MediaStore
 import androidx.core.net.toUri
 
 // borrowed from
@@ -25,6 +25,7 @@ fun getPath(context: Context, uri: Uri): String? {
                 }
                 // TODO handle non-primary volumes
             }
+
             isDownloadsDocument(uri) -> {
                 val id = DocumentsContract.getDocumentId(uri)
                 val contentUri = ContentUris.withAppendedId(
@@ -32,6 +33,7 @@ fun getPath(context: Context, uri: Uri): String? {
                 )
                 return getDataColumn(context, contentUri, null, null)
             }
+
             isMediaDocument(uri) -> {
                 val docId = DocumentsContract.getDocumentId(uri)
                 val split = docId.split(":").toTypedArray()
@@ -55,6 +57,7 @@ fun getPath(context: Context, uri: Uri): String? {
             return if (isGooglePhotosUri(uri)) uri.lastPathSegment
             else getDataColumn(context, uri, null, null)
         }
+
         "file".equals(uri.scheme, ignoreCase = true) -> {
             return uri.path
         }

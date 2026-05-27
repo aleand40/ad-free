@@ -19,8 +19,8 @@ import androidx.fragment.app.Fragment
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.di.HomeModule
 import ch.abertschi.adfree.presenter.HomePresenter
-import ch.abertschi.adfree.view.ViewSettings
 import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.view.ViewSettings
 
 class HomeActivity : Fragment(), HomeView, AppLogger {
 

@@ -24,12 +24,14 @@ import java.util.concurrent.TimeUnit
 /**
  * Created by abertschi on 14.08.17.
  */
-class AdStateController(private val audioController: AudioController,
-                        private val adPluginHandler: PluginHandler,
-                        private val notificationChannel: NotificationChannel,
-                        private val castManager: GoogleCastManager,
-                        private val prefs: PreferencesFactory) :
-        AdObserver, AppLogger {
+class AdStateController(
+    private val audioController: AudioController,
+    private val adPluginHandler: PluginHandler,
+    private val notificationChannel: NotificationChannel,
+    private val castManager: GoogleCastManager,
+    private val prefs: PreferencesFactory
+) :
+    AdObserver, AppLogger {
 
     private var activeState: EventType? = EventType.NO_AD
     private val timeoutInMs: Long = 120_000
@@ -93,12 +95,12 @@ class AdStateController(private val audioController: AudioController,
         val delay = prefs.getDelaySeconds()
         if (delay > 0) {
             Observable.just(true)
-                    .delay(delay.toLong(), TimeUnit.SECONDS)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread()).map {
-                        info("delaying unmute by $delay seconds")
-                        doUnmute()
-                    }.subscribe()
+                .delay(delay.toLong(), TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread()).map {
+                    info("delaying unmute by $delay seconds")
+                    doUnmute()
+                }.subscribe()
         } else doUnmute()
     }
 
@@ -118,11 +120,11 @@ class AdStateController(private val audioController: AudioController,
 
     private fun startTimeout(callable: () -> Unit) {
         timeoutDisposable = Observable.just(true)
-                .delay(timeoutInMs, TimeUnit.MILLISECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).map {
-                    callable()
-                }.subscribe()
+            .delay(timeoutInMs, TimeUnit.MILLISECONDS)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread()).map {
+                callable()
+            }.subscribe()
     }
 
     private fun resetTimeout() {

@@ -6,12 +6,12 @@ import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.info
 import ch.abertschi.adfree.util.warn
-import java.lang.Exception
 
 class GoogleCastManager(val prefs: PreferencesFactory) : AppLogger {
 
     companion object {
-        private const val ID = "com.google.android.gms|g:com.google.android.gms.cast.rcn.NOTIFICATIONS"
+        private const val ID =
+            "com.google.android.gms|g:com.google.android.gms.cast.rcn.NOTIFICATIONS"
     }
 
     private var enabled: Boolean = false
@@ -46,7 +46,7 @@ class GoogleCastManager(val prefs: PreferencesFactory) : AppLogger {
             info { sbn.groupKey }
             if (sbn.notification?.actions?.size == 4) {
                 val act = sbn.notification.actions[1]
-                info { "updating action for chromecast manager"}
+                info { "updating action for chromecast manager" }
                 info { act.title }
                 info { act }
                 action = act

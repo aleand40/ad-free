@@ -1,7 +1,8 @@
 package ch.abertschi.adfree.detector
 
 import android.widget.RemoteViews
-import ch.abertschi.adfree.util.*
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.warn
 import java.util.Locale
 
 class AccuradioDetector : AdDetectable, AppLogger, AbstractNotificationDetector() {
@@ -51,7 +52,8 @@ class AccuradioDetector : AdDetectable, AppLogger, AbstractNotificationDetector(
                             continue
                         }
                         if (value.toString().trim().lowercase(Locale.ROOT)
-                                .contains("music will resume shortly")) {
+                                .contains("music will resume shortly")
+                        ) {
                             return true
                         }
                     }

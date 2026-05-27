@@ -10,13 +10,15 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Html
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import ch.abertschi.adfree.R
-import ch.abertschi.adfree.util.*
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
+import ch.abertschi.adfree.util.warn
 import java.io.File
 
 // TODO: refactor this into presenter and view
@@ -102,8 +104,9 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AppLo
         subtitle.typeface = typeFace
         subtitle.setOnClickListener(this)
 
-        val subtitleText = "<font color=#FFFFFF>ad-free</font> crashed. be courageous and continue. " +
-                "send the <font color=#FFFFFF>crash report </font>. tab here, choose your mail application and send the report.</font>"
+        val subtitleText =
+            "<font color=#FFFFFF>ad-free</font> crashed. be courageous and continue. " +
+                    "send the <font color=#FFFFFF>crash report </font>. tab here, choose your mail application and send the report.</font>"
 
         subtitle.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(subtitleText, Html.FROM_HTML_MODE_LEGACY)

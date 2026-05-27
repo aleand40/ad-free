@@ -14,8 +14,8 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.R
-import ch.abertschi.adfree.view.home.HomeActivity
 import ch.abertschi.adfree.view.about.AboutActivity
+import ch.abertschi.adfree.view.home.HomeActivity
 import ch.abertschi.adfree.view.setting.SettingsActivity
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator

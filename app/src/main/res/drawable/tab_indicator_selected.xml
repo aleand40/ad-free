@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- http://stackoverflow.com/questions/20586619/android-viewpager-with-bottom-dots -->
+<?xml version="1.0" encoding="utf-8"?><!-- http://stackoverflow.com/questions/20586619/android-viewpager-with-bottom-dots -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape
@@ -7,7 +6,7 @@
             android:shape="ring"
             android:thickness="4dp"
             android:useLevel="false">
-            <solid android:color="#FFFFFF"/>
+            <solid android:color="#FFFFFF" />
         </shape>
     </item>
 </layer-list>

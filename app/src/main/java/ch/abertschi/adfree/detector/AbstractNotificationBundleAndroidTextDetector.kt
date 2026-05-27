@@ -1,10 +1,12 @@
 package ch.abertschi.adfree.detector
 
 import android.os.Bundle
-import ch.abertschi.adfree.util.*
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.warn
 import java.util.Locale
 
-abstract class AbstractNotificationBundleAndroidTextDetector : AdDetectable, AppLogger, AbstractNotificationDetector() {
+abstract class AbstractNotificationBundleAndroidTextDetector : AdDetectable, AppLogger,
+    AbstractNotificationDetector() {
 
     open fun extractString(extras: Bundle?, key: String): Pair<String?, Boolean> {
         return try {

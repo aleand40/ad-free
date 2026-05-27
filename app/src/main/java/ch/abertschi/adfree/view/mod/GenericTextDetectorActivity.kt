@@ -1,7 +1,6 @@
 package ch.abertschi.adfree.view.mod
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
@@ -13,6 +12,7 @@ import android.widget.ImageView
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.abertschi.adfree.R
@@ -138,7 +138,14 @@ class GenericTextDetectorActivity : AppCompatActivity(), AppLogger {
             }
 
             holder.title.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable) {
                     val currentPos = holder.bindingAdapterPosition
@@ -151,7 +158,14 @@ class GenericTextDetectorActivity : AppCompatActivity(), AppLogger {
             })
 
             holder.subtitle.addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun beforeTextChanged(
+                    s: CharSequence?,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
                 override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable) {
                     val currentPos = holder.bindingAdapterPosition

@@ -10,7 +10,10 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.provider.DocumentsContract
 import android.view.View
+import androidx.core.content.ContextCompat.checkSelfPermission
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.AudioController
 import ch.abertschi.adfree.model.PreferencesFactory
@@ -18,18 +21,14 @@ import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.AudioPlayer
 import ch.abertschi.adfree.plugin.PluginActivityAction
 import ch.abertschi.adfree.util.AppLogger
-import ch.abertschi.adfree.util.info
 import ch.abertschi.adfree.util.error
+import ch.abertschi.adfree.util.info
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.io.File
-import java.util.concurrent.TimeUnit
-import android.provider.DocumentsContract
-import java.lang.Exception
-import android.content.pm.PackageManager
-import androidx.core.content.ContextCompat.checkSelfPermission
 import java.util.LinkedList
+import java.util.concurrent.TimeUnit
 
 class LocalMusicPlugin(
     val context: Context,
@@ -217,7 +216,8 @@ class LocalMusicPlugin(
 
     private fun hasStoragePermissions(): Boolean {
         val permission = getRequiredStoragePermission()
-        val isGranted = checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
+        val isGranted =
+            checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
         if (!isGranted) {
             info("Permission $permission is revoked")
         }

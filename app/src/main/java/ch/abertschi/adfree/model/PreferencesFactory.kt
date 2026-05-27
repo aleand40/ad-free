@@ -8,8 +8,8 @@ package ch.abertschi.adfree.model
 
 import android.content.Context
 import android.content.SharedPreferences
-import ch.abertschi.adfree.detector.AdDetectable
 import androidx.core.content.edit
+import ch.abertschi.adfree.detector.AdDetectable
 import ch.abertschi.adfree.util.AppLogger
 
 /**
@@ -30,7 +30,8 @@ class PreferencesFactory(context: Context) : AppLogger {
     private val prefsGoogleCast = "CAST_ENABLED"
     private val prefsLoopPlayback: String = "location_local_music_loop"
 
-    private val prefs: SharedPreferences = context.getSharedPreferences(prefsKey, Context.MODE_PRIVATE)
+    private val prefs: SharedPreferences =
+        context.getSharedPreferences(prefsKey, Context.MODE_PRIVATE)
 
     fun isBlockingEnabled(): Boolean {
         return prefs.getBoolean(prefIsEnabled, true)

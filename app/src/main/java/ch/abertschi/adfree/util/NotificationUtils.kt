@@ -1,7 +1,10 @@
 package ch.abertschi.adfree.util
 
 import android.annotation.SuppressLint
-import android.app.*
+import android.app.Notification
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -21,6 +24,7 @@ class NotificationUtils(val context: Context) : AppLogger {
         // Keeping these constants for potential future implementations
         @Suppress("unused")
         const val BLOCKING_NOTIFICATION_ID = 1
+
         @Suppress("unused")
         const val TEXT_NOTIFICATION_ID = 2
 
@@ -49,9 +53,11 @@ class NotificationUtils(val context: Context) : AppLogger {
     }
 
     @SuppressLint("LaunchActivityFromNotification")
-    fun showTextNotification(id: Int, title: String, content: String = "",
-                             dismissCallable: () -> Unit = {},
-                             priority: Int = NotificationCompat.PRIORITY_DEFAULT, notify: Boolean = true): Notification {
+    fun showTextNotification(
+        id: Int, title: String, content: String = "",
+        dismissCallable: () -> Unit = {},
+        priority: Int = NotificationCompat.PRIORITY_DEFAULT, notify: Boolean = true
+    ): Notification {
 
         val dismissIntent = PendingIntent.getBroadcast(
             context, 0,

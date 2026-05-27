@@ -6,7 +6,7 @@ import ch.abertschi.adfree.model.TextRepository
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.warn
 import com.thoughtworks.xstream.XStream
-import java.util.*
+import java.util.Locale
 
 class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, AppLogger {
 
@@ -80,7 +80,8 @@ class UserDefinedTextDetector(private val repo: TextRepository) : AdDetectable, 
         }
         return false
     }
-    override fun flagAsAdvertisement(payload: AdPayload)  =
+
+    override fun flagAsAdvertisement(payload: AdPayload) =
         flagAsAdvertisementFixed(payload) || flagAsAdvertisementDynamic(payload)
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(

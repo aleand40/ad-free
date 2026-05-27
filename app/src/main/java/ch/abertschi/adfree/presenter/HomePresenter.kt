@@ -10,13 +10,13 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
+import androidx.core.net.toUri
 import ch.abertschi.adfree.BuildConfig
 import ch.abertschi.adfree.model.RemoteManager
 import ch.abertschi.adfree.model.RemoteSetting
-import ch.abertschi.adfree.view.home.HomeView
-import androidx.core.net.toUri
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.info
+import ch.abertschi.adfree.view.home.HomeView
 
 /**
  * Created by abertschi on 15.04.17.

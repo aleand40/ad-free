@@ -23,6 +23,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import ch.abertschi.adfree.AdFreeApplication
@@ -30,12 +31,11 @@ import ch.abertschi.adfree.R
 import ch.abertschi.adfree.di.SettingsModul
 import ch.abertschi.adfree.plugin.PluginActivityAction
 import ch.abertschi.adfree.presenter.SettingsPresenter
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.toast
+import ch.abertschi.adfree.util.warn
 import ch.abertschi.adfree.view.MainActivity
 import ch.abertschi.adfree.view.ViewSettings
-import ch.abertschi.adfree.util.AppLogger
-import ch.abertschi.adfree.util.warn
-import ch.abertschi.adfree.util.toast
-import androidx.core.net.toUri
 
 /**
  * Created by abertschi on 21.04.17.
@@ -114,7 +114,12 @@ class SettingsActivity : Fragment(), SettingsView, AppLogger, PluginActivityActi
         spinner?.adapter = spinnerAdapter
 
         spinner?.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+            override fun onItemSelected(
+                parent: AdapterView<*>?,
+                view: View?,
+                position: Int,
+                id: Long
+            ) {
                 if (init) settingPresenter.onPluginSelected(position)
                 spinnerAdapter?.notifyDataSetChanged()
             }

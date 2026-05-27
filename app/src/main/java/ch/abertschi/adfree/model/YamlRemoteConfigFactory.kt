@@ -22,7 +22,8 @@ class YamlRemoteConfigFactory<MODEL>(
     val preferences: PreferencesFactory
 ) {
 
-    private val settingPersistenceLocalKey = "YAML_CONFIG_FACTORY_PERSISTENCE_${modelType.canonicalName}"
+    private val settingPersistenceLocalKey =
+        "YAML_CONFIG_FACTORY_PERSISTENCE_${modelType.canonicalName}"
 
     fun downloadObservable(): Observable<Pair<MODEL, String>> =
         Observable.create<Pair<MODEL, String>> { source ->

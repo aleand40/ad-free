@@ -2,7 +2,9 @@ package ch.abertschi.adfree.view.mod
 
 import android.content.Intent
 import ch.abertschi.adfree.AdFreeApplication
-import ch.abertschi.adfree.detector.*
+import ch.abertschi.adfree.detector.AbstractDebugTracer
+import ch.abertschi.adfree.detector.AdDetectable
+import ch.abertschi.adfree.detector.UserDefinedTextDetector
 import ch.abertschi.adfree.util.AppLogger
 
 class ActiveDetectorPresenter(val view: ActiveDetectorActivity) : AppLogger {
@@ -21,7 +23,10 @@ class ActiveDetectorPresenter(val view: ActiveDetectorActivity) : AppLogger {
 
     fun showAdditionalInfoFor(d: AdDetectable, enable: Boolean) {
         if (d is AbstractDebugTracer && enable) {
-            view.showInfo("recording to " + (d.storageFolder?.absolutePath ?: "not available, check permissions"))
+            view.showInfo(
+                "recording to " + (d.storageFolder?.absolutePath
+                    ?: "not available, check permissions")
+            )
         }
 
         if (d is UserDefinedTextDetector && enable) {

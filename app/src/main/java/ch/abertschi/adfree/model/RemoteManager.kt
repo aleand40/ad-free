@@ -6,9 +6,9 @@
 
 package ch.abertschi.adfree.model
 
-import ch.abertschi.adfree.view.ViewSettings
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.info
+import ch.abertschi.adfree.view.ViewSettings
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -38,7 +38,8 @@ class RemoteManager(prefFactory: PreferencesFactory) : AppLogger {
                     remoteSettings = it
                     configFactory.storeToLocalStore(it) // Persist state locally
                 }
-                .subscribe({ _ -> source.onNext(remoteSettings!!) },
+                .subscribe(
+                    { _ -> source.onNext(remoteSettings!!) },
                     { err ->
                         info(err)
                     })

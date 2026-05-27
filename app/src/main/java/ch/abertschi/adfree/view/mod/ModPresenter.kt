@@ -70,8 +70,10 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory) : AppLo
         val enabled = detectorFactory.getEnabledDetectors().size
         val visible = detectorFactory.getVisibleDetectors().size
         val total = detectorFactory.getAllDetectors().size
-        view.showDetectorCount(enabled,
-                if (enabled <= visible) visible else total)
+        view.showDetectorCount(
+            enabled,
+            if (enabled <= visible) visible else total
+        )
     }
 
     fun onToggleAlwaysOnChanged() {
@@ -81,7 +83,7 @@ class ModPresenter(val view: ModActivity, val prefs: PreferencesFactory) : AppLo
         notificationStatusManager.restartNotificationListener()
         if (!newVal) {
             (view.applicationContext as AdFreeApplication)
-                    .notificationChannel.hideAlwaysOnNotification()
+                .notificationChannel.hideAlwaysOnNotification()
         }
     }
 

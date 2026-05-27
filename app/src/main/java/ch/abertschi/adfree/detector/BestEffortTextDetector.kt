@@ -1,6 +1,5 @@
 package ch.abertschi.adfree.detector
 
-import java.lang.IllegalStateException
 import java.util.Locale
 
 class BestEffortTextDetector : AbstractNotificationBundleAndroidTextDetector() {

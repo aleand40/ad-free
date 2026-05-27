@@ -2,7 +2,26 @@ package ch.abertschi.adfree.model
 
 import android.content.Context
 import ch.abertschi.adfree.AdFreeApplication
-import ch.abertschi.adfree.detector.*
+import ch.abertschi.adfree.detector.AccuRadioDebugTracer
+import ch.abertschi.adfree.detector.AccuradioDetector
+import ch.abertschi.adfree.detector.AdDetectable
+import ch.abertschi.adfree.detector.BestEffortTextDetector
+import ch.abertschi.adfree.detector.DeezerDebugTracer
+import ch.abertschi.adfree.detector.DeezerTextDetector
+import ch.abertschi.adfree.detector.DummyGlobal
+import ch.abertschi.adfree.detector.DummySpotifyDetector
+import ch.abertschi.adfree.detector.MiuiNotificationDetector
+import ch.abertschi.adfree.detector.NotificationActionDetector
+import ch.abertschi.adfree.detector.NotificationBundleAndroidTextDetector
+import ch.abertschi.adfree.detector.ScDetector
+import ch.abertschi.adfree.detector.ScNotificationDebugTracer
+import ch.abertschi.adfree.detector.SpLiteTextDetector
+import ch.abertschi.adfree.detector.SpLiteTextEnglishDetector
+import ch.abertschi.adfree.detector.SpotifyLiteDebugTracer
+import ch.abertschi.adfree.detector.SpotifyNotificationDebugTracer
+import ch.abertschi.adfree.detector.SpotifyTitleDetector
+import ch.abertschi.adfree.detector.TidalDebugTracer
+import ch.abertschi.adfree.detector.UserDefinedTextDetector
 
 class AdDetectableFactory(
     var context: Context,

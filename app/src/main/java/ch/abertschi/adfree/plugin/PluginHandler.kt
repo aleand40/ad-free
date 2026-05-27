@@ -14,8 +14,9 @@ import ch.abertschi.adfree.util.info
 /**
  * Created by abertschi on 21.04.17.
  */
-class PluginHandler(val prefs: PreferencesFactory,
-                    val plugins: List<AdPlugin>
+class PluginHandler(
+    val prefs: PreferencesFactory,
+    val plugins: List<AdPlugin>
 ) : AppLogger {
 
     private var activePlugin: AdPlugin = loadActivePlugin()

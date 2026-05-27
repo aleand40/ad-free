@@ -9,17 +9,17 @@ package ch.abertschi.adfree
 import android.app.Activity
 import android.app.Application
 import ch.abertschi.adfree.ad.AdDetector
+import ch.abertschi.adfree.crashhandler.CrashExceptionHandler
+import ch.abertschi.adfree.model.AdDetectableFactory
+import ch.abertschi.adfree.model.PreferencesFactory
+import ch.abertschi.adfree.model.RemoteManager
+import ch.abertschi.adfree.model.TextRepository
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.PluginHandler
 import ch.abertschi.adfree.plugin.localmusic.LocalMusicPlugin
 import ch.abertschi.adfree.plugin.mute.MutePlugin
-import ch.abertschi.adfree.util.NotificationUtils
-import ch.abertschi.adfree.crashhandler.CrashExceptionHandler
-import ch.abertschi.adfree.model.PreferencesFactory
-import ch.abertschi.adfree.model.AdDetectableFactory
-import ch.abertschi.adfree.model.TextRepository
-import ch.abertschi.adfree.model.RemoteManager
 import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.NotificationUtils
 
 class AdFreeApplication : Application(), AppLogger {
 

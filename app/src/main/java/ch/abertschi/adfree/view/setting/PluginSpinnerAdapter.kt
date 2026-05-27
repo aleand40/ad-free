@@ -14,9 +14,9 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.TextView
 import ch.abertschi.adfree.R
-import ch.abertschi.adfree.view.ViewSettings
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.error
+import ch.abertschi.adfree.view.ViewSettings
 
 /**
  * Created by abertschi on 21.04.17.

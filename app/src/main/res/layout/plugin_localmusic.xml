@@ -118,9 +118,9 @@
             android:id="@+id/local_music_play_until_end_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/local_music_play_until_end_title"
             android:minWidth="48dp"
-            android:minHeight="48dp"
-            android:contentDescription="@string/local_music_play_until_end_title" />
+            android:minHeight="48dp" />
     </LinearLayout>
 
     <View
@@ -170,9 +170,9 @@
             android:id="@+id/local_music_loop_switch"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:contentDescription="@string/local_music_loop_title"
             android:minWidth="48dp"
-            android:minHeight="48dp"
-            android:contentDescription="@string/local_music_loop_title" />
+            android:minHeight="48dp" />
     </LinearLayout>
 
 </LinearLayout>

@@ -5,17 +5,18 @@
  */
 
 package ch.abertschi.adfree
+
+import android.content.Intent
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import ch.abertschi.adfree.detector.AdPayload
-import com.thoughtworks.xstream.XStream
-import java.io.File
-import java.io.FileOutputStream
-import android.content.Intent
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.alarmManager
 import ch.abertschi.adfree.util.info
 import ch.abertschi.adfree.util.warn
+import com.thoughtworks.xstream.XStream
+import java.io.File
+import java.io.FileOutputStream
 
 
 /**

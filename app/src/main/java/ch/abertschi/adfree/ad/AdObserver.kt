@@ -16,9 +16,11 @@ interface AdObserver {
     fun onAdEvent(event: AdEvent, observable: AdObservable)
 }
 
-data class AdEvent(val eventType: EventType,
-                   val flaggedAsAdBy: List<AdDetectable> = listOf(),
-                   val flaggedAsMusicBy: List<AdDetectable> = listOf())
+data class AdEvent(
+    val eventType: EventType,
+    val flaggedAsAdBy: List<AdDetectable> = listOf(),
+    val flaggedAsMusicBy: List<AdDetectable> = listOf()
+)
 
 enum class EventType {
     IS_AD, NO_AD, IGNORE_AD, SHOWCASE

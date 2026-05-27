@@ -1,7 +1,9 @@
 package ch.abertschi.adfree.detector
 
 import android.service.notification.StatusBarNotification
-import ch.abertschi.adfree.util.*
+import ch.abertschi.adfree.util.AppLogger
+import ch.abertschi.adfree.util.info
+import ch.abertschi.adfree.util.warn
 import com.thoughtworks.xstream.XStream
 import java.io.File
 import java.io.FileOutputStream
@@ -18,7 +20,9 @@ abstract class AbstractDebugTracer(val storageFolder: File?) : AdDetectable, App
             return false
         }
 
-        if (payload.statusbarNotification.key?.lowercase(Locale.ROOT)?.contains(getPackage()) == true) {
+        if (payload.statusbarNotification.key?.lowercase(Locale.ROOT)
+                ?.contains(getPackage()) == true
+        ) {
             recordNotification(payload.statusbarNotification)
         }
         return false

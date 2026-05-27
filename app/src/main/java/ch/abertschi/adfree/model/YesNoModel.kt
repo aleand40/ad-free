@@ -6,8 +6,8 @@
 
 package ch.abertschi.adfree.model
 
-import ch.abertschi.adfree.util.AppLogger
 import android.content.Context
+import ch.abertschi.adfree.util.AppLogger
 import org.json.JSONArray
 import java.io.IOException
 import java.nio.charset.Charset

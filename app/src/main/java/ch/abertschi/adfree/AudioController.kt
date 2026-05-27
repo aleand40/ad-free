@@ -53,7 +53,11 @@ class AudioController(val context: Context, val prefs: PreferencesFactory) : App
     @SuppressLint("CheckResult")
     fun showVoiceCallVolume() {
         val am = context.applicationContext.getSystemService(Context.AUDIO_SERVICE) as AudioManager
-        am.setStreamVolume(AudioManager.STREAM_VOICE_CALL, prefs.loadVoiceCallAudioVolume(), AudioManager.FLAG_SHOW_UI)
+        am.setStreamVolume(
+            AudioManager.STREAM_VOICE_CALL,
+            prefs.loadVoiceCallAudioVolume(),
+            AudioManager.FLAG_SHOW_UI
+        )
         Observable.just(true)
             .delay(8000, TimeUnit.MILLISECONDS)
             .subscribeOn(Schedulers.io())
@@ -76,9 +80,17 @@ class AudioController(val context: Context, val prefs: PreferencesFactory) : App
             .subscribe {
                 info { counter }
                 if (counter < times - 1) {
-                    am.adjustStreamVolume(AudioManager.STREAM_VOICE_CALL, AudioManager.ADJUST_LOWER, 0)
+                    am.adjustStreamVolume(
+                        AudioManager.STREAM_VOICE_CALL,
+                        AudioManager.ADJUST_LOWER,
+                        0
+                    )
                 } else {
-                    am.adjustStreamVolume(AudioManager.STREAM_VOICE_CALL, AudioManager.ADJUST_MUTE, 0)
+                    am.adjustStreamVolume(
+                        AudioManager.STREAM_VOICE_CALL,
+                        AudioManager.ADJUST_MUTE,
+                        0
+                    )
                     callback?.invoke()
                 }
                 counter += 1

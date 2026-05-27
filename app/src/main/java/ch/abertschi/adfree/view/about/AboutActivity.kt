@@ -17,12 +17,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.di.AboutModul
 import ch.abertschi.adfree.presenter.AboutPresenter
 import ch.abertschi.adfree.view.ViewSettings
-import androidx.core.net.toUri
 
 /**
  * Created by abertschi on 21.04.17.
@@ -32,8 +32,10 @@ class AboutActivity : Fragment(), AboutView {
     lateinit var typeFace: Typeface
     lateinit var presenter: AboutPresenter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.about_view, container, false)
     }
 
@@ -58,14 +60,18 @@ class AboutActivity : Fragment(), AboutView {
         }
 
         view.findViewById<ImageView>(R.id.twitter).setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW,
-                "https://twitter.com/andrinbertschi?rel=adfree".toUri())
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW,
+                "https://twitter.com/andrinbertschi?rel=adfree".toUri()
+            )
             this.requireContext().startActivity(browserIntent)
         }
 
         view.findViewById<ImageView>(R.id.website).setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW,
-                "http://abertschi.ch?rel=adfree".toUri())
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW,
+                "http://abertschi.ch?rel=adfree".toUri()
+            )
             this.requireContext().startActivity(browserIntent)
         }
 

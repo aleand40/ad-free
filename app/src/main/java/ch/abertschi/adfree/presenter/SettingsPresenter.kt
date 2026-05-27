@@ -9,18 +9,19 @@ package ch.abertschi.adfree.presenter
 import ch.abertschi.adfree.ad.AdObservable
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.PluginHandler
-import ch.abertschi.adfree.view.setting.SettingsView
 import ch.abertschi.adfree.util.AppLogger
-
+import ch.abertschi.adfree.view.setting.SettingsView
 
 
 /**
  * Created by abertschi on 21.04.17.
  */
 
-class SettingsPresenter(val settingView: SettingsView,
-                        val pluginHandler: PluginHandler,
-                        val adObserver: AdObservable) : AppLogger {
+class SettingsPresenter(
+    val settingView: SettingsView,
+    val pluginHandler: PluginHandler,
+    val adObserver: AdObservable
+) : AppLogger {
 
 
     private val plugins: List<AdPlugin> = pluginHandler.plugins
@@ -43,8 +44,9 @@ class SettingsPresenter(val settingView: SettingsView,
     private fun setPluginView() {
         settingView.clearPluginView()
         if (activePlugin?.hasSettingsView() == true) {
-            settingView.setPluginView(activePlugin?.
-                    settingsView(settingView.getContext(), settingView)!!)
+            settingView.setPluginView(
+                activePlugin?.settingsView(settingView.getContext(), settingView)!!
+            )
         }
     }
 

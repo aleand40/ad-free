@@ -2,7 +2,8 @@ package ch.abertschi.adfree.detector
 
 import ch.abertschi.adfree.util.AppLogger
 
-open class SpLiteTextDetector : AdDetectable, AppLogger, AbstractNotificationBundleAndroidTextDetector() {
+open class SpLiteTextDetector : AdDetectable, AppLogger,
+    AbstractNotificationBundleAndroidTextDetector() {
 
     override fun getPackageName() = "com.spotify.lite"
 

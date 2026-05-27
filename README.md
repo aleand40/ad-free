@@ -1,4 +1,5 @@
 # ad-free <img src="design/ad-free_logo_dropshadow-padding.svg" alt="ad-free logo" width="40">
+
 [![CI](https://github.com/abertschi/ad-free/actions/workflows/build.yml/badge.svg?branch=develop)](https://github.com/abertschi/ad-free/actions/workflows/build.yml)
 [![Kotlin App](https://img.shields.io/badge/Android-Kotlin-green.svg?style=flat)]()
 [![codebeat badge](https://codebeat.co/badges/1fc357d9-4c2e-46f6-b847-d295e4de78eb)](https://codebeat.co/projects/github-com-abertschi-ad-free-master)
@@ -13,6 +14,7 @@ Blog Post: https://abertschi.ch/blog/2022/building-adfree/
 <img src=".github/screens3.sized.png" alt="App screenshots" width="900">
 
 ## Features
+
 - Lower phone volume when advertisement is playing
 - Play other audio when advertisement is playing
 - Support for Spotify, Spotify Lite, Soundcloud, Deezer, Accuradio
@@ -21,19 +23,24 @@ Blog Post: https://abertschi.ch/blog/2022/building-adfree/
 - No root required
 
 ## Download
-[Download the latest release](https://f-droid.org/packages/ch.abertschi.adfree/) from the F-Droid store.
+
+[Download the latest release](https://f-droid.org/packages/ch.abertschi.adfree/) from the F-Droid
+store.
 
 <a href='https://f-droid.org/packages/ch.abertschi.adfree/'><img src="./landing/get-it-on.png" alt="Get it on F-Droid badge" width="220"/></a>
 
 ## Troubleshooting
+
 See [Troubleshooting](./troubleshooting/readme.org) section for help to get
 ad-free up and running.
 
 ## Changelog
+
 See [Changelog](./CHANGELOG.md) for a list of implemented features
 in new releases.
 
 ## Credits
+
 - Many thanks to Janis Bitta design(at)jbitta.de for creating the logo
 - The bird and website icons used in this app are made by <a
   href="http://www.freepik.com" title="Freepik">Freepik</a> from <a
@@ -42,15 +49,18 @@ in new releases.
   title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a>.
 
 ## Legality
+
 This app is free and open-source and does not seek a commercial interest. It
 does not collect user data. It is a proof-of-concept for research purposes to show flaws in the way
 how audio advertisement is often implemented on Android. It does not alter or
 "hack" protection measures of music players, and only gathers context
-information provided by the Android runtime. It simply turns down phone volume when it detects advertisements. Nonetheless, ad-free may be against
+information provided by the Android runtime. It simply turns down phone volume when it detects
+advertisements. Nonetheless, ad-free may be against
 terms of services of music players. Muting commercials may not be supported and
 may result in a temporary ban. Use at your own risk.
 
 ## Licence
+
 This project is licensed by the Apache License 2.0
 
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND

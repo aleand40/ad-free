@@ -45,12 +45,19 @@ class NotificationStatusManager(val context: Context) : AppLogger {
     fun forceTimedRestart() {
         // TODO: option to remove timer once enabled?
         val serviceIntent = Intent(this.context, NotificationsListeners::class.java)
-        val pendingIntent = PendingIntent.getService(this.context, 0, serviceIntent,
-            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE)
+        val pendingIntent = PendingIntent.getService(
+            this.context, 0, serviceIntent,
+            PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
         val alarm = this.context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
 
         alarm.cancel(pendingIntent)
-        alarm.setRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), TIMER_INTERVAL_MS, pendingIntent)
+        alarm.setRepeating(
+            AlarmManager.RTC_WAKEUP,
+            System.currentTimeMillis(),
+            TIMER_INTERVAL_MS,
+            pendingIntent
+        )
         info { "Setting wakeup with alarm manager every $TIMER_INTERVAL_MS ms" }
     }
 
@@ -58,7 +65,8 @@ class NotificationStatusManager(val context: Context) : AppLogger {
         info { "restarting notification listener" }
         restartComponentService()
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val componentName = ComponentName(context.applicationContext,
+            val componentName = ComponentName(
+                context.applicationContext,
                 NotificationsListeners::class.java
             )
             NotificationListenerService.requestRebind(componentName)
@@ -69,13 +77,19 @@ class NotificationStatusManager(val context: Context) : AppLogger {
 
     private fun restartComponentService() {
         val pm = context.packageManager
-        pm.setComponentEnabledSetting(ComponentName(this.context,
-            NotificationsListeners::class.java
-        ), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP)
+        pm.setComponentEnabledSetting(
+            ComponentName(
+                this.context,
+                NotificationsListeners::class.java
+            ), PackageManager.COMPONENT_ENABLED_STATE_DISABLED, PackageManager.DONT_KILL_APP
+        )
 
-        pm.setComponentEnabledSetting(ComponentName(this.context,
-            NotificationsListeners::class.java
-        ), PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP)
+        pm.setComponentEnabledSetting(
+            ComponentName(
+                this.context,
+                NotificationsListeners::class.java
+            ), PackageManager.COMPONENT_ENABLED_STATE_ENABLED, PackageManager.DONT_KILL_APP
+        )
     }
 }
 

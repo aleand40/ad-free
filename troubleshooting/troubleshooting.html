@@ -1,465 +1,499 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2022-08-15 Mon 15:39 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Troubleshooting ad-free</title>
-<meta name="author" content="Andrin Bertschi" />
-<meta name="generator" content="Org Mode" />
-<style>
-  #content { max-width: 60em; margin: auto; }
-  .title  { text-align: center;
-             margin-bottom: .2em; }
-  .subtitle { text-align: center;
-              font-size: medium;
-              font-weight: bold;
-              margin-top:0; }
-  .todo   { font-family: monospace; color: red; }
-  .done   { font-family: monospace; color: green; }
-  .priority { font-family: monospace; color: orange; }
-  .tag    { background-color: #eee; font-family: monospace;
-            padding: 2px; font-size: 80%; font-weight: normal; }
-  .timestamp { color: #bebebe; }
-  .timestamp-kwd { color: #5f9ea0; }
-  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
-  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
-  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
-  .underline { text-decoration: underline; }
-  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
-  p.verse { margin-left: 3%; }
-  pre {
-    border: 1px solid #e6e6e6;
-    border-radius: 3px;
-    background-color: #f2f2f2;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: auto;
-    margin: 1.2em;
-  }
-  pre.src {
-    position: relative;
-    overflow: auto;
-  }
-  pre.src:before {
-    display: none;
-    position: absolute;
-    top: -8px;
-    right: 12px;
-    padding: 3px;
-    color: #555;
-    background-color: #f2f2f299;
-  }
-  pre.src:hover:before { display: inline; margin-top: 14px;}
-  /* Languages per Org manual */
-  pre.src-asymptote:before { content: 'Asymptote'; }
-  pre.src-awk:before { content: 'Awk'; }
-  pre.src-authinfo::before { content: 'Authinfo'; }
-  pre.src-C:before { content: 'C'; }
-  /* pre.src-C++ doesn't work in CSS */
-  pre.src-clojure:before { content: 'Clojure'; }
-  pre.src-css:before { content: 'CSS'; }
-  pre.src-D:before { content: 'D'; }
-  pre.src-ditaa:before { content: 'ditaa'; }
-  pre.src-dot:before { content: 'Graphviz'; }
-  pre.src-calc:before { content: 'Emacs Calc'; }
-  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-  pre.src-fortran:before { content: 'Fortran'; }
-  pre.src-gnuplot:before { content: 'gnuplot'; }
-  pre.src-haskell:before { content: 'Haskell'; }
-  pre.src-hledger:before { content: 'hledger'; }
-  pre.src-java:before { content: 'Java'; }
-  pre.src-js:before { content: 'Javascript'; }
-  pre.src-latex:before { content: 'LaTeX'; }
-  pre.src-ledger:before { content: 'Ledger'; }
-  pre.src-lisp:before { content: 'Lisp'; }
-  pre.src-lilypond:before { content: 'Lilypond'; }
-  pre.src-lua:before { content: 'Lua'; }
-  pre.src-matlab:before { content: 'MATLAB'; }
-  pre.src-mscgen:before { content: 'Mscgen'; }
-  pre.src-ocaml:before { content: 'Objective Caml'; }
-  pre.src-octave:before { content: 'Octave'; }
-  pre.src-org:before { content: 'Org mode'; }
-  pre.src-oz:before { content: 'OZ'; }
-  pre.src-plantuml:before { content: 'Plantuml'; }
-  pre.src-processing:before { content: 'Processing.js'; }
-  pre.src-python:before { content: 'Python'; }
-  pre.src-R:before { content: 'R'; }
-  pre.src-ruby:before { content: 'Ruby'; }
-  pre.src-sass:before { content: 'Sass'; }
-  pre.src-scheme:before { content: 'Scheme'; }
-  pre.src-screen:before { content: 'Gnu Screen'; }
-  pre.src-sed:before { content: 'Sed'; }
-  pre.src-sh:before { content: 'shell'; }
-  pre.src-sql:before { content: 'SQL'; }
-  pre.src-sqlite:before { content: 'SQLite'; }
-  /* additional languages in org.el's org-babel-load-languages alist */
-  pre.src-forth:before { content: 'Forth'; }
-  pre.src-io:before { content: 'IO'; }
-  pre.src-J:before { content: 'J'; }
-  pre.src-makefile:before { content: 'Makefile'; }
-  pre.src-maxima:before { content: 'Maxima'; }
-  pre.src-perl:before { content: 'Perl'; }
-  pre.src-picolisp:before { content: 'Pico Lisp'; }
-  pre.src-scala:before { content: 'Scala'; }
-  pre.src-shell:before { content: 'Shell Script'; }
-  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-  /* additional language identifiers per "defun org-babel-execute"
-       in ob-*.el */
-  pre.src-cpp:before  { content: 'C++'; }
-  pre.src-abc:before  { content: 'ABC'; }
-  pre.src-coq:before  { content: 'Coq'; }
-  pre.src-groovy:before  { content: 'Groovy'; }
-  /* additional language identifiers from org-babel-shell-names in
-     ob-shell.el: ob-shell is the only babel language using a lambda to put
-     the execution function name together. */
-  pre.src-bash:before  { content: 'bash'; }
-  pre.src-csh:before  { content: 'csh'; }
-  pre.src-ash:before  { content: 'ash'; }
-  pre.src-dash:before  { content: 'dash'; }
-  pre.src-ksh:before  { content: 'ksh'; }
-  pre.src-mksh:before  { content: 'mksh'; }
-  pre.src-posh:before  { content: 'posh'; }
-  /* Additional Emacs modes also supported by the LaTeX listings package */
-  pre.src-ada:before { content: 'Ada'; }
-  pre.src-asm:before { content: 'Assembler'; }
-  pre.src-caml:before { content: 'Caml'; }
-  pre.src-delphi:before { content: 'Delphi'; }
-  pre.src-html:before { content: 'HTML'; }
-  pre.src-idl:before { content: 'IDL'; }
-  pre.src-mercury:before { content: 'Mercury'; }
-  pre.src-metapost:before { content: 'MetaPost'; }
-  pre.src-modula-2:before { content: 'Modula-2'; }
-  pre.src-pascal:before { content: 'Pascal'; }
-  pre.src-ps:before { content: 'PostScript'; }
-  pre.src-prolog:before { content: 'Prolog'; }
-  pre.src-simula:before { content: 'Simula'; }
-  pre.src-tcl:before { content: 'tcl'; }
-  pre.src-tex:before { content: 'TeX'; }
-  pre.src-plain-tex:before { content: 'Plain TeX'; }
-  pre.src-verilog:before { content: 'Verilog'; }
-  pre.src-vhdl:before { content: 'VHDL'; }
-  pre.src-xml:before { content: 'XML'; }
-  pre.src-nxml:before { content: 'XML'; }
-  /* add a generic configuration mode; LaTeX export needs an additional
-     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
-  pre.src-conf:before { content: 'Configuration File'; }
+    <!-- 2022-08-15 Mon 15:39 -->
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type"/>
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
+    <title>Troubleshooting ad-free</title>
+    <meta content="Andrin Bertschi" name="author"/>
+    <meta content="Org Mode" name="generator"/>
+    <style>
+        #content { max-width: 60em; margin: auto; }
+        .title  { text-align: center;
+                   margin-bottom: .2em; }
+        .subtitle { text-align: center;
+                    font-size: medium;
+                    font-weight: bold;
+                    margin-top:0; }
+        .todo   { font-family: monospace; color: red; }
+        .done   { font-family: monospace; color: green; }
+        .priority { font-family: monospace; color: orange; }
+        .tag    { background-color: #eee; font-family: monospace;
+                  padding: 2px; font-size: 80%; font-weight: normal; }
+        .timestamp { color: #bebebe; }
+        .timestamp-kwd { color: #5f9ea0; }
+        .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+        .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+        .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+        .underline { text-decoration: underline; }
+        #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+        p.verse { margin-left: 3%; }
+        pre {
+          border: 1px solid #e6e6e6;
+          border-radius: 3px;
+          background-color: #f2f2f2;
+          padding: 8pt;
+          font-family: monospace;
+          overflow: auto;
+          margin: 1.2em;
+        }
+        pre.src {
+          position: relative;
+          overflow: auto;
+        }
+        pre.src:before {
+          display: none;
+          position: absolute;
+          top: -8px;
+          right: 12px;
+          padding: 3px;
+          color: #555;
+          background-color: #f2f2f299;
+        }
+        pre.src:hover:before { display: inline; margin-top: 14px;}
+        /* Languages per Org manual */
+        pre.src-asymptote:before { content: 'Asymptote'; }
+        pre.src-awk:before { content: 'Awk'; }
+        pre.src-authinfo::before { content: 'Authinfo'; }
+        pre.src-C:before { content: 'C'; }
+        /* pre.src-C++ doesn't work in CSS */
+        pre.src-clojure:before { content: 'Clojure'; }
+        pre.src-css:before { content: 'CSS'; }
+        pre.src-D:before { content: 'D'; }
+        pre.src-ditaa:before { content: 'ditaa'; }
+        pre.src-dot:before { content: 'Graphviz'; }
+        pre.src-calc:before { content: 'Emacs Calc'; }
+        pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+        pre.src-fortran:before { content: 'Fortran'; }
+        pre.src-gnuplot:before { content: 'gnuplot'; }
+        pre.src-haskell:before { content: 'Haskell'; }
+        pre.src-hledger:before { content: 'hledger'; }
+        pre.src-java:before { content: 'Java'; }
+        pre.src-js:before { content: 'Javascript'; }
+        pre.src-latex:before { content: 'LaTeX'; }
+        pre.src-ledger:before { content: 'Ledger'; }
+        pre.src-lisp:before { content: 'Lisp'; }
+        pre.src-lilypond:before { content: 'Lilypond'; }
+        pre.src-lua:before { content: 'Lua'; }
+        pre.src-matlab:before { content: 'MATLAB'; }
+        pre.src-mscgen:before { content: 'Mscgen'; }
+        pre.src-ocaml:before { content: 'Objective Caml'; }
+        pre.src-octave:before { content: 'Octave'; }
+        pre.src-org:before { content: 'Org mode'; }
+        pre.src-oz:before { content: 'OZ'; }
+        pre.src-plantuml:before { content: 'Plantuml'; }
+        pre.src-processing:before { content: 'Processing.js'; }
+        pre.src-python:before { content: 'Python'; }
+        pre.src-R:before { content: 'R'; }
+        pre.src-ruby:before { content: 'Ruby'; }
+        pre.src-sass:before { content: 'Sass'; }
+        pre.src-scheme:before { content: 'Scheme'; }
+        pre.src-screen:before { content: 'Gnu Screen'; }
+        pre.src-sed:before { content: 'Sed'; }
+        pre.src-sh:before { content: 'shell'; }
+        pre.src-sql:before { content: 'SQL'; }
+        pre.src-sqlite:before { content: 'SQLite'; }
+        /* additional languages in org.el's org-babel-load-languages alist */
+        pre.src-forth:before { content: 'Forth'; }
+        pre.src-io:before { content: 'IO'; }
+        pre.src-J:before { content: 'J'; }
+        pre.src-makefile:before { content: 'Makefile'; }
+        pre.src-maxima:before { content: 'Maxima'; }
+        pre.src-perl:before { content: 'Perl'; }
+        pre.src-picolisp:before { content: 'Pico Lisp'; }
+        pre.src-scala:before { content: 'Scala'; }
+        pre.src-shell:before { content: 'Shell Script'; }
+        pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+        /* additional language identifiers per "defun org-babel-execute"
+             in ob-*.el */
+        pre.src-cpp:before  { content: 'C++'; }
+        pre.src-abc:before  { content: 'ABC'; }
+        pre.src-coq:before  { content: 'Coq'; }
+        pre.src-groovy:before  { content: 'Groovy'; }
+        /* additional language identifiers from org-babel-shell-names in
+           ob-shell.el: ob-shell is the only babel language using a lambda to put
+           the execution function name together. */
+        pre.src-bash:before  { content: 'bash'; }
+        pre.src-csh:before  { content: 'csh'; }
+        pre.src-ash:before  { content: 'ash'; }
+        pre.src-dash:before  { content: 'dash'; }
+        pre.src-ksh:before  { content: 'ksh'; }
+        pre.src-mksh:before  { content: 'mksh'; }
+        pre.src-posh:before  { content: 'posh'; }
+        /* Additional Emacs modes also supported by the LaTeX listings package */
+        pre.src-ada:before { content: 'Ada'; }
+        pre.src-asm:before { content: 'Assembler'; }
+        pre.src-caml:before { content: 'Caml'; }
+        pre.src-delphi:before { content: 'Delphi'; }
+        pre.src-html:before { content: 'HTML'; }
+        pre.src-idl:before { content: 'IDL'; }
+        pre.src-mercury:before { content: 'Mercury'; }
+        pre.src-metapost:before { content: 'MetaPost'; }
+        pre.src-modula-2:before { content: 'Modula-2'; }
+        pre.src-pascal:before { content: 'Pascal'; }
+        pre.src-ps:before { content: 'PostScript'; }
+        pre.src-prolog:before { content: 'Prolog'; }
+        pre.src-simula:before { content: 'Simula'; }
+        pre.src-tcl:before { content: 'tcl'; }
+        pre.src-tex:before { content: 'TeX'; }
+        pre.src-plain-tex:before { content: 'Plain TeX'; }
+        pre.src-verilog:before { content: 'Verilog'; }
+        pre.src-vhdl:before { content: 'VHDL'; }
+        pre.src-xml:before { content: 'XML'; }
+        pre.src-nxml:before { content: 'XML'; }
+        /* add a generic configuration mode; LaTeX export needs an additional
+           (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+        pre.src-conf:before { content: 'Configuration File'; }
 
-  table { border-collapse:collapse; }
-  caption.t-above { caption-side: top; }
-  caption.t-bottom { caption-side: bottom; }
-  td, th { vertical-align:top;  }
-  th.org-right  { text-align: center;  }
-  th.org-left   { text-align: center;   }
-  th.org-center { text-align: center; }
-  td.org-right  { text-align: right;  }
-  td.org-left   { text-align: left;   }
-  td.org-center { text-align: center; }
-  dt { font-weight: bold; }
-  .footpara { display: inline; }
-  .footdef  { margin-bottom: 1em; }
-  .figure { padding: 1em; }
-  .figure p { text-align: center; }
-  .equation-container {
-    display: table;
-    text-align: center;
-    width: 100%;
-  }
-  .equation {
-    vertical-align: middle;
-  }
-  .equation-label {
-    display: table-cell;
-    text-align: right;
-    vertical-align: middle;
-  }
-  .inlinetask {
-    padding: 10px;
-    border: 2px solid gray;
-    margin: 10px;
-    background: #ffffcc;
-  }
-  #org-div-home-and-up
-   { text-align: right; font-size: 70%; white-space: nowrap; }
-  textarea { overflow-x: auto; }
-  .linenr { font-size: smaller }
-  .code-highlighted { background-color: #ffff00; }
-  .org-info-js_info-navigation { border-style: none; }
-  #org-info-js_console-label
-    { font-size: 10px; font-weight: bold; white-space: nowrap; }
-  .org-info-js_search-highlight
-    { background-color: #ffff00; color: #000000; font-weight: bold; }
-  .org-svg { }
-</style>
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-63061525-5"></script>
-<script> window.dataLayer = window.dataLayer || [];
+        table { border-collapse:collapse; }
+        caption.t-above { caption-side: top; }
+        caption.t-bottom { caption-side: bottom; }
+        td, th { vertical-align:top;  }
+        th.org-right  { text-align: center;  }
+        th.org-left   { text-align: center;   }
+        th.org-center { text-align: center; }
+        td.org-right  { text-align: right;  }
+        td.org-left   { text-align: left;   }
+        td.org-center { text-align: center; }
+        dt { font-weight: bold; }
+        .footpara { display: inline; }
+        .footdef  { margin-bottom: 1em; }
+        .figure { padding: 1em; }
+        .figure p { text-align: center; }
+        .equation-container {
+          display: table;
+          text-align: center;
+          width: 100%;
+        }
+        .equation {
+          vertical-align: middle;
+        }
+        .equation-label {
+          display: table-cell;
+          text-align: right;
+          vertical-align: middle;
+        }
+        .inlinetask {
+          padding: 10px;
+          border: 2px solid gray;
+          margin: 10px;
+          background: #ffffcc;
+        }
+        #org-div-home-and-up
+         { text-align: right; font-size: 70%; white-space: nowrap; }
+        textarea { overflow-x: auto; }
+        .linenr { font-size: smaller }
+        .code-highlighted { background-color: #ffff00; }
+        .org-info-js_info-navigation { border-style: none; }
+        #org-info-js_console-label
+          { font-size: 10px; font-weight: bold; white-space: nowrap; }
+        .org-info-js_search-highlight
+          { background-color: #ffff00; color: #000000; font-weight: bold; }
+        .org-svg { }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-63061525-5"></script>
+    <script> window.dataLayer = window.dataLayer || [];
 function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'UA-63061525-5');
-</script>
+    </script>
 </head>
 <body>
-<div id="content" class="content">
-<h1 class="title">Troubleshooting ad-free</h1>
-<div id="table-of-contents" role="doc-toc">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents" role="doc-toc">
-<ul>
-<li><a href="#orgabf4d5a">1. About</a></li>
-<li><a href="#orge95e69e">2. Reinstall ad-free</a></li>
-<li><a href="#org559fbaa">3. Enable autostart</a></li>
-<li><a href="#orgc91a44d">4. Disable battery saver</a></li>
-<li><a href="#org9b6a701">5. Enable always-on notifications</a></li>
-<li><a href="#org5efa5dd">6. Avoiding false-positives</a></li>
-<li><a href="#org383d013">7. Ad-Detectors</a>
-<ul>
-<li><a href="#generic-text-detector">7.1. Generic Text Detector (experimental)</a></li>
-</ul>
-</li>
-<li><a href="#orgd520073">8. Advanced steps</a>
-<ul>
-<li><a href="#org4206ffd">8.1. Enable Developer Mode</a></li>
-<li><a href="#org61b11c1">8.2. Check if notification listener works</a></li>
-<li><a href="#org4d393d1">8.3. Record notifications for a new detector.</a></li>
-</ul>
-</li>
-<li><a href="#org1c2017a">9. Miscellaneous</a>
-<ul>
-<li><a href="#orgf8b4577">9.1. Issues with Bluetooth Headphones</a></li>
-</ul>
-</li>
-</ul>
+<div class="content" id="content">
+    <h1 class="title">Troubleshooting ad-free</h1>
+    <div id="table-of-contents" role="doc-toc">
+        <h2>Table of Contents</h2>
+        <div id="text-table-of-contents" role="doc-toc">
+            <ul>
+                <li><a href="#orgabf4d5a">1. About</a></li>
+                <li><a href="#orge95e69e">2. Reinstall ad-free</a></li>
+                <li><a href="#org559fbaa">3. Enable autostart</a></li>
+                <li><a href="#orgc91a44d">4. Disable battery saver</a></li>
+                <li><a href="#org9b6a701">5. Enable always-on notifications</a></li>
+                <li><a href="#org5efa5dd">6. Avoiding false-positives</a></li>
+                <li><a href="#org383d013">7. Ad-Detectors</a>
+                    <ul>
+                        <li><a href="#generic-text-detector">7.1. Generic Text Detector
+                            (experimental)</a></li>
+                    </ul>
+                </li>
+                <li><a href="#orgd520073">8. Advanced steps</a>
+                    <ul>
+                        <li><a href="#org4206ffd">8.1. Enable Developer Mode</a></li>
+                        <li><a href="#org61b11c1">8.2. Check if notification listener works</a></li>
+                        <li><a href="#org4d393d1">8.3. Record notifications for a new detector.</a>
+                        </li>
+                    </ul>
+                </li>
+                <li><a href="#org1c2017a">9. Miscellaneous</a>
+                    <ul>
+                        <li><a href="#orgf8b4577">9.1. Issues with Bluetooth Headphones</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="outline-2" id="outline-container-orgabf4d5a">
+        <h2 id="orgabf4d5a"><span class="section-number-2">1.</span> About</h2>
+        <div class="outline-text-2" id="text-1">
+            <p>
+                This page describes common steps how to troubleshoot ad-free in case
+                ad blocking does not work.
+            </p>
+
+            <ul class="org-ul">
+                <li>Pictures below are based on version v2.0. They may slightly change in later
+                    versions.
+                </li>
+
+                <li>Landing page: <a
+                        href="https://adfree.abertschi.ch">https://adfree.abertschi.ch</a></li>
+
+                <li>Sourcecode: <a href="https://github.com/abertschi/ad-free">https://github.com/abertschi/ad-free</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="outline-2" id="outline-container-orge95e69e">
+        <h2 id="orge95e69e"><span class="section-number-2">2.</span> Reinstall ad-free</h2>
+        <div class="outline-text-2" id="text-2">
+            <p>
+                Remove and reinstall ad-free. Upon first usage you are asked to grant
+                notification access. Whether the notification service successfully
+                connected can be seen in settings (three dots in about fragment) in
+                the version segment. You can touch the <span class="underline">notification service is
+connected</span> / <span class="underline">notification service is disconnected</span> text to
+                launch
+                notification access settings to re-grant access.
+            </p>
+
+
+            <div class="figure" id="orge47403f">
+                <p><img alt="img-not-service-conn.jpg" src="./res/img-not-service-conn.jpg"
+                        width="300"/>
+                </p>
+                <p><span class="figure-number">Figure 1: </span>Notification service status</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="outline-2" id="outline-container-org559fbaa">
+        <h2 id="org559fbaa"><span class="section-number-2">3.</span> Enable autostart</h2>
+        <div class="outline-text-2" id="text-3">
+            <p>
+                Some flavors of Android support an autostart option. Go to Android app info
+                and enable auto start.
+            </p>
+
+
+            <div class="figure" id="org21b6b8b">
+                <p><img alt="app-info-autostart.jpg" height="600"
+                        src="./res/app-info-autostart.jpg"/>
+                </p>
+                <p><span class="figure-number">Figure 2: </span>App info activity</p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="outline-2" id="outline-container-orgc91a44d">
+        <h2 id="orgc91a44d"><span class="section-number-2">4.</span> Disable battery saver</h2>
+        <div class="outline-text-2" id="text-4">
+            <p>
+                Remove ad-free from the list of battery saved apps. This option can be
+                found in Android app info.
+            </p>
+
+
+            <div class="figure" id="org14cea2d">
+                <p><img alt="app-info-battery-saver.jpg" height="600"
+                        src="./res/app-info-battery-saver.jpg"/>
+                </p>
+                <p><span class="figure-number">Figure 3: </span>Battery saver options</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="outline-2" id="outline-container-org9b6a701">
+        <h2 id="org9b6a701"><span class="section-number-2">5.</span> Enable always-on notifications
+        </h2>
+        <div class="outline-text-2" id="text-5">
+            <p>
+                On some flavors of Android ad-free is being killed if the activity
+                runs in background. Go to ad-free settings (three dots in about
+                fragment) and enable always-on option. A foreground notification
+                should now appear in the notification drawer. This notification
+                appears as soon as the notification listener is connected and running.
+            </p>
+
+
+            <div class="figure" id="org199eae7">
+                <p><img alt="notification-always-on.jpg" height="400"
+                        src="./res/notification-always-on.jpg"/>
+                </p>
+                <p><span class="figure-number">Figure 4: </span>Always On Notification</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="outline-2" id="outline-container-org5efa5dd">
+        <h2 id="org5efa5dd"><span class="section-number-2">6.</span> Avoiding false-positives</h2>
+        <div class="outline-text-2" id="text-6">
+            <p>
+                A false-positive may be resolved with a new ad-detector. You can try to
+                screenshot the Spotify notification which caused the false-positive and file an
+                issue on GitHub.
+            </p>
+
+            <p>
+                Alternatively, we recommend to disable non-playback related notifications in the
+                Android app settings for Spotify.
+            </p>
+
+
+            <div class="figure" id="org999f8f5">
+                <p><img alt="spotify-notifications.jpg" height="700"
+                        src="./res/spotify-notifications.jpg"/>
+                </p>
+                <p><span class="figure-number">Figure 5: </span>Disable non-playback related
+                    notifications</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="outline-2" id="outline-container-org383d013">
+        <h2 id="org383d013"><span class="section-number-2">7.</span> Ad-Detectors</h2>
+        <div class="outline-text-2" id="text-7">
+        </div>
+        <div class="outline-3" id="outline-container-generic-text-detector">
+            <h3 id="generic-text-detector"><span class="section-number-3">7.1.</span> Generic Text
+                Detector (experimental)</h3>
+            <div class="outline-text-3" id="text-generic-text-detector">
+                <p>
+                    The generic text detector flags a notification based on the presence of some
+                    user defined text.
+                </p>
+
+
+                <div class="figure" id="org9e82976">
+                    <p><img alt="generic-text-detector.jpg" height="700"
+                            src="./res/generic-text-detector.jpg"/>
+                    </p>
+                    <p><span class="figure-number">Figure 6: </span>UI of generic text detector</p>
+                </div>
+
+
+                <p>
+                    With <span class="underline">Add Entry</span>, a new entry is created. The
+                    package name corresponds to the name of the android package of the music player.
+                    The package name is typically found in the <span
+                        class="underline">App Info</span> activity of the Home screen launcher.
+                    Everything <b>containing</b> the entered package name will trigger the detector.
+                </p>
+
+
+                <div class="figure" id="org8da34e9">
+                    <p><img alt="package.jpg" height="700" src="./res/package.jpg"/>
+                    </p>
+                    <p><span class="figure-number">Figure 7: </span>Find out package name of music
+                        player</p>
+                </div>
+
+                <p>
+                    The second text field contains a list of line-separated strings, which are
+                    matched against the notification. The example in the image above will match
+                    every text found in the notification of packages containing <span
+                        class="underline">com.spotify</span> which <b>contain</b> either <span
+                        class="underline">Advertisement</span> or <span
+                        class="underline">Werbung</span>.
+                </p>
+
+                <p>
+                    If you found new matching rules, please share it for others in the issue <a
+                        href="https://github.com/abertschi/ad-free/issues/83">https://github.com/abertschi/ad-free/issues/83</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="outline-2" id="outline-container-orgd520073">
+        <h2 id="orgd520073"><span class="section-number-2">8.</span> Advanced steps</h2>
+        <div class="outline-text-2" id="text-8">
+        </div>
+        <div class="outline-3" id="outline-container-org4206ffd">
+            <h3 id="org4206ffd"><span class="section-number-3">8.1.</span> Enable Developer Mode
+            </h3>
+            <div class="outline-text-3" id="text-8-1">
+                <p>
+                    Ad-free supports a developer mode to test experimental features. Enable
+                    developer mode in ad-free by clicking multiple times on the title in the ad
+                    detectors screen. Go to ad-free settings (three dots) / ad detectors.
+                </p>
+
+
+                <div class="figure" id="orgc4bb964">
+                    <p><img alt="dev-mode.jpg" height="700" src="./res/dev-mode.jpg"/>
+                    </p>
+                    <p><span class="figure-number">Figure 8: </span>Enable developer mode</p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="outline-3" id="outline-container-org61b11c1">
+            <h3 id="org61b11c1"><span class="section-number-3">8.2.</span> Check if notification
+                listener works</h3>
+            <div class="outline-text-3" id="text-8-2">
+                <p>
+                    Enable developer mode in ad-free by clicking multiple times on the
+                    title in the ad detectors screen. Go to ad-free settings (three dots)
+                    / ad detectors. Enable the detector <span class="underline">Dummy global</span>
+                    which flags each
+                    incoming notification as advertisement. If audio is not being blocked
+                    then there is an issue with the notification listener. File an issue
+                    on GitHub; <a href="https://github.com/abertschi/ad-free/issues">https://github.com/abertschi/ad-free/issues</a>.
+                </p>
+            </div>
+        </div>
+
+        <div class="outline-3" id="outline-container-org4d393d1">
+            <h3 id="org4d393d1"><span class="section-number-3">8.3.</span> Record notifications for
+                a new detector.</h3>
+            <div class="outline-text-3" id="text-8-3">
+                <p>
+                    Unlock developer mode as described above. Enable Spotify tracer and
+                    submit the recording file as an issue on GitHub. The notification dump
+                    can help adding support for new devices.
+                </p>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="outline-2" id="outline-container-org1c2017a">
+        <h2 id="org1c2017a"><span class="section-number-2">9.</span> Miscellaneous</h2>
+        <div class="outline-text-2" id="text-9">
+        </div>
+        <div class="outline-3" id="outline-container-orgf8b4577">
+            <h3 id="orgf8b4577"><span class="section-number-3">9.1.</span> Issues with Bluetooth
+                Headphones</h3>
+            <div class="outline-text-3" id="text-9-1">
+                <p>
+                    See <a href="https://github.com/abertschi/ad-free/issues/64">https://github.com/abertschi/ad-free/issues/64</a>
+                    for troubleshooting steps.
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
-</div>
-
-
-<div id="outline-container-orgabf4d5a" class="outline-2">
-<h2 id="orgabf4d5a"><span class="section-number-2">1.</span> About</h2>
-<div class="outline-text-2" id="text-1">
-<p>
-This page describes common steps how to troubleshoot ad-free in case
-ad blocking does not work.
-</p>
-
-<ul class="org-ul">
-<li>Pictures below are based on version v2.0. They may slightly change in later versions.</li>
-
-<li>Landing page: <a href="https://adfree.abertschi.ch">https://adfree.abertschi.ch</a></li>
-
-<li>Sourcecode: <a href="https://github.com/abertschi/ad-free">https://github.com/abertschi/ad-free</a></li>
-</ul>
-</div>
-</div>
-
-
-
-<div id="outline-container-orge95e69e" class="outline-2">
-<h2 id="orge95e69e"><span class="section-number-2">2.</span> Reinstall ad-free</h2>
-<div class="outline-text-2" id="text-2">
-<p>
-Remove and reinstall ad-free. Upon first usage you are asked to grant
-notification access. Whether the notification service successfully
-connected can be seen in settings (three dots in about fragment) in
-the version segment. You can touch the <span class="underline">notification service is
-connected</span> / <span class="underline">notification service is disconnected</span> text to launch
-notification access settings to re-grant access.
-</p>
-
-
-<div id="orge47403f" class="figure">
-<p><img src="./res/img-not-service-conn.jpg" alt="img-not-service-conn.jpg" width="300" />
-</p>
-<p><span class="figure-number">Figure 1: </span>Notification service status</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org559fbaa" class="outline-2">
-<h2 id="org559fbaa"><span class="section-number-2">3.</span> Enable autostart</h2>
-<div class="outline-text-2" id="text-3">
-<p>
-Some flavors of Android support an autostart option. Go to Android app info
-and enable auto start.
-</p>
-
-
-<div id="org21b6b8b" class="figure">
-<p><img src="./res/app-info-autostart.jpg" alt="app-info-autostart.jpg" height="600" />
-</p>
-<p><span class="figure-number">Figure 2: </span>App info activity</p>
-</div>
-</div>
-</div>
-
-
-<div id="outline-container-orgc91a44d" class="outline-2">
-<h2 id="orgc91a44d"><span class="section-number-2">4.</span> Disable battery saver</h2>
-<div class="outline-text-2" id="text-4">
-<p>
-Remove ad-free from the list of battery saved apps. This option can be
-found in Android app info.
-</p>
-
-
-<div id="org14cea2d" class="figure">
-<p><img src="./res/app-info-battery-saver.jpg" alt="app-info-battery-saver.jpg" height="600" />
-</p>
-<p><span class="figure-number">Figure 3: </span>Battery saver options</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org9b6a701" class="outline-2">
-<h2 id="org9b6a701"><span class="section-number-2">5.</span> Enable always-on notifications</h2>
-<div class="outline-text-2" id="text-5">
-<p>
-On some flavors of Android ad-free is being killed if the activity
-runs in background. Go to ad-free settings (three dots in about
-fragment) and enable always-on option. A foreground notification
-should now appear in the notification drawer. This notification
-appears as soon as the notification listener is connected and running.
-</p>
-
-
-<div id="org199eae7" class="figure">
-<p><img src="./res/notification-always-on.jpg" alt="notification-always-on.jpg" height="400" />
-</p>
-<p><span class="figure-number">Figure 4: </span>Always On Notification</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org5efa5dd" class="outline-2">
-<h2 id="org5efa5dd"><span class="section-number-2">6.</span> Avoiding false-positives</h2>
-<div class="outline-text-2" id="text-6">
-<p>
-A false-positive may be resolved with a new ad-detector. You can try to
-screenshot the Spotify notification which caused the false-positive and file an
-issue on GitHub.
-</p>
-
-<p>
-Alternatively, we recommend to disable non-playback related notifications in the Android app settings for Spotify.
-</p>
-
-
-<div id="org999f8f5" class="figure">
-<p><img src="./res/spotify-notifications.jpg" alt="spotify-notifications.jpg" height="700" />
-</p>
-<p><span class="figure-number">Figure 5: </span>Disable non-playback related notifications</p>
-</div>
-</div>
-</div>
-
-<div id="outline-container-org383d013" class="outline-2">
-<h2 id="org383d013"><span class="section-number-2">7.</span> Ad-Detectors</h2>
-<div class="outline-text-2" id="text-7">
-</div>
-<div id="outline-container-generic-text-detector" class="outline-3">
-<h3 id="generic-text-detector"><span class="section-number-3">7.1.</span> Generic Text Detector (experimental)</h3>
-<div class="outline-text-3" id="text-generic-text-detector">
-<p>
-The generic text detector flags a notification based on the presence of some user defined text.
-</p>
-
-
-<div id="org9e82976" class="figure">
-<p><img src="./res/generic-text-detector.jpg" alt="generic-text-detector.jpg" height="700" />
-</p>
-<p><span class="figure-number">Figure 6: </span>UI of generic text detector</p>
-</div>
-
-
-<p>
-With <span class="underline">Add Entry</span>, a new entry is created. The package name corresponds to the name of the android package of the music player. The package name is typically found in the <span class="underline">App Info</span> activity of the Home screen launcher. Everything <b>containing</b> the entered package name will trigger the detector.
-</p>
-
-
-<div id="org8da34e9" class="figure">
-<p><img src="./res/package.jpg" alt="package.jpg" height="700" />
-</p>
-<p><span class="figure-number">Figure 7: </span>Find out package name of music player</p>
-</div>
-
-<p>
-The second text field contains a list of line-separated strings, which are matched against the notification. The example in the image above will match every text found in the notification of packages containing <span class="underline">com.spotify</span> which <b>contain</b> either <span class="underline">Advertisement</span> or <span class="underline">Werbung</span>.
-</p>
-
-<p>
-If you found new matching rules, please share it for others in the issue <a href="https://github.com/abertschi/ad-free/issues/83">https://github.com/abertschi/ad-free/issues/83</a>.
-</p>
-</div>
-</div>
-</div>
-
-
-<div id="outline-container-orgd520073" class="outline-2">
-<h2 id="orgd520073"><span class="section-number-2">8.</span> Advanced steps</h2>
-<div class="outline-text-2" id="text-8">
-</div>
-<div id="outline-container-org4206ffd" class="outline-3">
-<h3 id="org4206ffd"><span class="section-number-3">8.1.</span> Enable Developer Mode</h3>
-<div class="outline-text-3" id="text-8-1">
-<p>
-Ad-free supports a developer mode to test experimental features. Enable
-developer mode in ad-free by clicking multiple times on the title in the ad
-detectors screen. Go to ad-free settings (three dots) / ad detectors.
-</p>
-
-
-<div id="orgc4bb964" class="figure">
-<p><img src="./res/dev-mode.jpg" alt="dev-mode.jpg" height="700" />
-</p>
-<p><span class="figure-number">Figure 8: </span>Enable developer mode</p>
-</div>
-</div>
-</div>
-
-
-<div id="outline-container-org61b11c1" class="outline-3">
-<h3 id="org61b11c1"><span class="section-number-3">8.2.</span> Check if notification listener works</h3>
-<div class="outline-text-3" id="text-8-2">
-<p>
-Enable developer mode in ad-free by clicking multiple times on the
-title in the ad detectors screen. Go to ad-free settings (three dots)
-/ ad detectors. Enable the detector <span class="underline">Dummy global</span> which flags each
-incoming notification as advertisement. If audio is not being blocked
-then there is an issue with the notification listener. File an issue
-on GitHub; <a href="https://github.com/abertschi/ad-free/issues">https://github.com/abertschi/ad-free/issues</a>.
-</p>
-</div>
-</div>
-
-<div id="outline-container-org4d393d1" class="outline-3">
-<h3 id="org4d393d1"><span class="section-number-3">8.3.</span> Record notifications for a new detector.</h3>
-<div class="outline-text-3" id="text-8-3">
-<p>
-Unlock developer mode as described above. Enable Spotify tracer and
-submit the recording file as an issue on GitHub. The notification dump
-can help adding support for new devices.
-</p>
-</div>
-</div>
-</div>
-
-
-<div id="outline-container-org1c2017a" class="outline-2">
-<h2 id="org1c2017a"><span class="section-number-2">9.</span> Miscellaneous</h2>
-<div class="outline-text-2" id="text-9">
-</div>
-<div id="outline-container-orgf8b4577" class="outline-3">
-<h3 id="orgf8b4577"><span class="section-number-3">9.1.</span> Issues with Bluetooth Headphones</h3>
-<div class="outline-text-3" id="text-9-1">
-<p>
-See <a href="https://github.com/abertschi/ad-free/issues/64">https://github.com/abertschi/ad-free/issues/64</a> for troubleshooting steps.
-</p>
-</div>
-</div>
-</div>
-</div>
-<div id="postamble" class="status">
-<p class="author">Author: Andrin Bertschi</p>
-<p class="date">Created: 2022-08-15 Mon 15:39</p>
+<div class="status" id="postamble">
+    <p class="author">Author: Andrin Bertschi</p>
+    <p class="date">Created: 2022-08-15 Mon 15:39</p>
 </div>
 </body>
 </html>

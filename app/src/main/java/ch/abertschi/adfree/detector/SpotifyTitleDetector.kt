@@ -19,31 +19,35 @@ import java.util.Locale
  */
 // TODO: add option to tag ads manually
 class SpotifyTitleDetector(val trackRepository: TrackRepository) :
-        AbstractSpStatusBarDetector(), AppLogger {
+    AbstractSpStatusBarDetector(), AppLogger {
 
     private val keywords = listOf(
-            "Spotify —"
-            ,"Advertisement —")
+        "Spotify —", "Advertisement —"
+    )
 
     override fun canHandle(payload: AdPayload): Boolean {
         getTitle(payload).let { payload.ignoreKeys.add(it) }
         return super.canHandle(payload)
     }
 
-    override fun flagAsAdvertisement(payload: AdPayload): Boolean
-            = getTitle(payload).lowercase(Locale.ROOT).trim().run {
-                var isAdd = false
-                for(k in keywords) {
-                    isAdd = isAdd || k.lowercase(Locale.ROOT) == this
-                }
-                isAdd }
+    override fun flagAsAdvertisement(payload: AdPayload): Boolean =
+        getTitle(payload).lowercase(Locale.ROOT).trim().run {
+            var isAdd = false
+            for (k in keywords) {
+                isAdd = isAdd || k.lowercase(Locale.ROOT) == this
+            }
+            isAdd
+        }
 
-    override fun flagAsMusic(payload: AdPayload): Boolean
-            = getTitle(payload).let { trackRepository.getAllTracks().contains(it) }
+    override fun flagAsMusic(payload: AdPayload): Boolean =
+        getTitle(payload).let { trackRepository.getAllTracks().contains(it) }
 
-    fun getTitle(payload: AdPayload): String
-            = payload.statusbarNotification.notification?.tickerText?.toString() ?: ""
+    fun getTitle(payload: AdPayload): String =
+        payload.statusbarNotification.notification?.tickerText?.toString() ?: ""
 
-    override fun getMeta(): AdDetectorMeta
-            = AdDetectorMeta("Notification text", "spotify detector for text in notification", category = "Spotify")
+    override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
+        "Notification text",
+        "spotify detector for text in notification",
+        category = "Spotify"
+    )
 }

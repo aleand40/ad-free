@@ -10,20 +10,20 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
+import androidx.core.net.toUri
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.BuildConfig
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.info
-import androidx.core.net.toUri
 import ch.abertschi.adfree.util.toast
 
 class ModActivity : AppCompatActivity(), AppLogger {
@@ -82,11 +82,17 @@ class ModActivity : AppCompatActivity(), AppLogger {
         }
 
         val versionView = findViewById<TextView>(R.id.mod_version1)
-        versionView.text = getString(R.string.mod_version_format, BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE)
+        versionView.text = getString(
+            R.string.mod_version_format,
+            BuildConfig.VERSION_NAME,
+            BuildConfig.VERSION_CODE
+        )
 
         versionView.setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW,
-                "https://github.com/abertschi/ad-free/blob/master/CHANGELOG.md".toUri())
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW,
+                "https://github.com/abertschi/ad-free/blob/master/CHANGELOG.md".toUri()
+            )
             this.startActivity(browserIntent)
         }
 
@@ -163,11 +169,13 @@ class ModActivity : AppCompatActivity(), AppLogger {
     }
 
     fun showNotificationListenerConnected() {
-        findViewById<TextView>(R.id.mod_status_service).text = getString(R.string.mod_service_connected)
+        findViewById<TextView>(R.id.mod_status_service).text =
+            getString(R.string.mod_service_connected)
     }
 
     fun showNotificationListenerDisconnected() {
-        findViewById<TextView>(R.id.mod_status_service).text = getString(R.string.mod_service_disconnected)
+        findViewById<TextView>(R.id.mod_status_service).text =
+            getString(R.string.mod_service_disconnected)
     }
 
     fun hideDeveloperModeFeatures() {
@@ -182,8 +190,10 @@ class ModActivity : AppCompatActivity(), AppLogger {
         }
         findViewById<View>(R.id.google_cast_title).setOnClickListener { presenter.onGoogleCastToggle() }
         findViewById<View>(R.id.google_cast_subtitle).setOnClickListener {
-            val browserIntent = Intent(Intent.ACTION_VIEW,
-                "https://support.google.com/chromecast/answer/7206638?hl=en".toUri())
+            val browserIntent = Intent(
+                Intent.ACTION_VIEW,
+                "https://support.google.com/chromecast/answer/7206638?hl=en".toUri()
+            )
             this.startActivity(browserIntent)
         }
         findViewById<View>(R.id.google_cast_switch).setOnClickListener { presenter.onGoogleCastToggle() }

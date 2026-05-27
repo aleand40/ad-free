@@ -1,7 +1,7 @@
 package ch.abertschi.adfree.detector
 
 import android.app.Notification
-import ch.abertschi.adfree.util.*
+import ch.abertschi.adfree.util.AppLogger
 import java.util.Locale
 
 class DeezerTextDetector : AdDetectable, AppLogger {

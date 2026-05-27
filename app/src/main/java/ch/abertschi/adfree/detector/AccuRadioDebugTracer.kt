@@ -1,6 +1,6 @@
 package ch.abertschi.adfree.detector
 
-import ch.abertschi.adfree.util.*
+import ch.abertschi.adfree.util.AppLogger
 import java.io.File
 
 class AccuRadioDebugTracer(storageFolder: File?) : AdDetectable, AppLogger,
