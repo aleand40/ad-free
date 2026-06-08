@@ -47,7 +47,7 @@
     <string name="detector_title_format">&gt; %s</string>
     <string name="category_subtitle_format">configure detectors for %s</string>
     <string name="replacer_setting_item_name">item name</string>
-    <string name="mod_active_detectors_count">choose active detectors ( %1$d/%2$d )</string>
+    <string name="mod_active_detectors_count">choose active detectors (%1$d/%2$d)</string>
     <plurals name="mod_seconds_format">
         <item quantity="one">%1$d second</item>
         <item quantity="other">%1$d seconds</item>
