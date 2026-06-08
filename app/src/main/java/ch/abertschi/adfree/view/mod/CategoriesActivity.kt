@@ -27,7 +27,7 @@ class CategoriesActivity : AppCompatActivity(), AppLogger {
         setContentView(R.layout.mod_active_detectors)
 
         val textView = findViewById<TextView>(R.id.detectors_activity_title)
-        val text = "detectors <font color=#FFFFFF>find ads</font>. choose what's active."
+        val text = getString(R.string.categories_header_text)
 
         textView.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)

@@ -64,7 +64,7 @@ class AdFreeApplication : Application(), AppLogger {
         notificationChannel = NotificationChannel(notificationUtils, prefs)
 
         adPlugins = listOf(
-            MutePlugin(),
+            MutePlugin(applicationContext),
             LocalMusicPlugin(applicationContext, prefs, audioManager)
         )
         pluginHandler = PluginHandler(prefs, adPlugins)

@@ -60,4 +60,18 @@
     <string name="mod_version_format">&gt; version %1$s / %2$d</string>
     <string name="home_permission_required">touch here to grant permission</string>
     <string name="home_enjoy_adfree"><![CDATA[<font color="#FFFFFF">enjoy</font> your <font color="#FFFFFF">ad-free</font> music experience.]]></string>
+    <string name="whoops_error_chosen_directory">Whoops, error with chosen directory. Choose a different one. %1$s</string>
+    <string name="error_no_music_found_directory">Whoops, no music found in current audio directory</string>
+    <string name="error_audio">Whoops, there was an error with audio</string>
+    <string name="suggest_something">suggest something …</string>
+    <string name="categories_header_text"><![CDATA[detectors <font color=#FFFFFF>find ads</font>. choose what\'s active.]]></string>
+    <string name="options">Options</string>
+    <string name="delay_unmute"><![CDATA[> delay unmute]]></string>
+    <string name="trying_out_plugin">Trying out plugin</string>
+    <string name="mod_activity_header"><![CDATA[change how <font color=#FFFFFF>ad-free</font> internally works.]]></string>
+    <string name="local_music">local music</string>
+    <string name="mute_audio">mute audio</string>
+    <string name="ad_blocking_notification">Ad blocking notification</string>
+    <string name="fine_tune_detectors_for_category"><![CDATA[fine-tune detectors for <font color=#FFFFFF>%1$s</font>.]]></string>
+    <string name="settings_ads_action_question"><![CDATA[what do you want to do while <font color=#FFFFFF>ads </font>are <font color=#FFFFFF>being played ?</font>]]></string>
 </resources>

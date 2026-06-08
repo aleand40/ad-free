@@ -43,7 +43,7 @@ class ModActivity : AppCompatActivity(), AppLogger {
         presenter = ModPresenter(this, (application as AdFreeApplication).prefs)
 
         val textView = findViewById<TextView>(R.id.modTitle)
-        val text = "change how <font color=#FFFFFF>ad-free</font> internally works."
+        val text = getString(R.string.mod_activity_header)
 
         textView.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
@@ -97,7 +97,7 @@ class ModActivity : AppCompatActivity(), AppLogger {
         }
 
         val alert = AlertDialog.Builder(this)
-        alert.setTitle("> delay unmute")
+        alert.setTitle(getString(R.string.delay_unmute))
         alert.setView(delayLayout)
         delayDialog = alert.create()
         alwaysOnSwitch = findViewById(R.id.always_on_switch)

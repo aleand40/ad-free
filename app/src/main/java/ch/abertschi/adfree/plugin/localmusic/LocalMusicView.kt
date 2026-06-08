@@ -117,19 +117,19 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
 
     fun showErrorInChoosingDirectory(hint: String = "") {
         runOnUiThread {
-            context.longToast("Whoops, error with chosen directory. Choose a different one. $hint")
+            context.longToast(context.getString(R.string.whoops_error_chosen_directory, hint))
         }
     }
 
     fun showNoAudioTracksFoundMessage() {
         runOnUiThread {
-            context.longToast("Whoops, no music found in current audio directory")
+            context.longToast(context.getString(R.string.error_no_music_found_directory))
         }
     }
 
     fun showAudioError() {
         runOnUiThread {
-            context.longToast("Whoops, there was an error with audio")
+            context.longToast(context.getString(R.string.error_audio))
         }
     }
 

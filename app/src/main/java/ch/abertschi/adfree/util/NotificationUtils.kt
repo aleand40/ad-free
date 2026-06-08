@@ -107,7 +107,7 @@ class NotificationUtils(val context: Context) : AppLogger {
             "Ad blocking",
             NotificationManager.IMPORTANCE_DEFAULT
         ).apply {
-            description = "Ad blocking notification"
+            description = context.getString(R.string.ad_blocking_notification)
             lockscreenVisibility = Notification.VISIBILITY_PRIVATE
         }
         notificationManager.createNotificationChannel(channel)

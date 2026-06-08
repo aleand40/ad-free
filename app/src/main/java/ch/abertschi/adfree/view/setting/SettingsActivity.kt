@@ -96,8 +96,7 @@ class SettingsActivity : Fragment(), SettingsView, AppLogger, PluginActivityActi
 
         settingPresenter = SettingsModul(tryActivity(), this).provideSettingsPresenter()
 
-        val text = "what do you want to do while <font color=#FFFFFF>ads </font>are " +
-                "<font color=#FFFFFF>being played ?</font>"
+        val text = getString(R.string.settings_ads_action_question)
 
         settingsTitle?.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
@@ -179,7 +178,7 @@ class SettingsActivity : Fragment(), SettingsView, AppLogger, PluginActivityActi
     }
 
     override fun showTryOutMessage() {
-        this.tryActivity().toast("Trying out plugin")
+        this.tryActivity().toast(getString(R.string.trying_out_plugin))
     }
 
     @Deprecated("Deprecated in Java")

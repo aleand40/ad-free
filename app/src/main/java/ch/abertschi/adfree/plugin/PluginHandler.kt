@@ -28,7 +28,7 @@ class PluginHandler(
     private fun loadActivePlugin(): AdPlugin {
         val key: String? = prefs.getActivePlugin()
         val active = plugins.firstOrNull { serializeActivePluginId(it) == key }
-        return active ?: MutePlugin() // default plugin
+        return active ?: plugins.filterIsInstance<MutePlugin>().first() // default plugin
     }
 
     fun setActivePlugin(plugin: AdPlugin): AdPlugin {

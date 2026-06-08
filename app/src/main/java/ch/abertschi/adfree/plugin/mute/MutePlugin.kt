@@ -6,17 +6,20 @@
 
 package ch.abertschi.adfree.plugin.mute
 
+import android.content.Context
+import ch.abertschi.adfree.R
 import ch.abertschi.adfree.plugin.AdPlugin
 
 /**
  * Created by abertschi on 21.04.17.
  */
-class MutePlugin : AdPlugin {
+class MutePlugin(private val context: Context) : AdPlugin {
+
     override fun stop(onStopped: () -> Unit) {
         onStopped()
     }
 
-    override fun title() = "mute audio"
+    override fun title(): String = context.getString(R.string.mute_audio)
 
     override fun play() {
     }

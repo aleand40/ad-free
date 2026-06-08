@@ -16,6 +16,7 @@ import android.view.View
 import androidx.core.content.ContextCompat.checkSelfPermission
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.AudioController
+import ch.abertschi.adfree.R
 import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.AudioPlayer
@@ -111,7 +112,7 @@ class LocalMusicPlugin(
         }
     }
 
-    override fun title(): String = "local music"
+    override fun title(): String = context.getString(R.string.local_music)
 
     private fun getRandomTrackfromUri(path: String): File? {
         info { "choosing random track in $path" }

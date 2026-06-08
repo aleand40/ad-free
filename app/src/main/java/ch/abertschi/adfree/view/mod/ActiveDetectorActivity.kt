@@ -36,7 +36,7 @@ class ActiveDetectorActivity : AppCompatActivity(), AppLogger {
         val category: String = intent.extras?.getString(CategoriesPresenter.BUNDLE_CATEGORY_KEY)
             ?: throw IllegalStateException("must set category")
 
-        val text = "fine-tune detectors for <font color=#FFFFFF>$category</font>."
+        val text = getString(R.string.fine_tune_detectors_for_category, category)
 
         textView.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)

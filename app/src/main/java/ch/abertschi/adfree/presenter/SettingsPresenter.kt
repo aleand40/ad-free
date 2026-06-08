@@ -6,6 +6,7 @@
 
 package ch.abertschi.adfree.presenter
 
+import ch.abertschi.adfree.R
 import ch.abertschi.adfree.ad.AdObservable
 import ch.abertschi.adfree.plugin.AdPlugin
 import ch.abertschi.adfree.plugin.PluginHandler
@@ -85,7 +86,7 @@ class SettingsPresenter(
     fun getStringEntriesOfModel(): Array<String> {
         val result: ArrayList<String> = ArrayList()
         plugins.forEach { result.add(it.title()) }
-        result.add("suggest something ...")
+        result.add(settingView.getContext().getString(R.string.suggest_something))
         return result.toTypedArray()
     }
 }

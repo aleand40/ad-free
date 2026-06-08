@@ -66,7 +66,7 @@ class GenericTextDetectorActivity : AppCompatActivity(), AppLogger {
     @android.annotation.SuppressLint("InflateParams")
     fun showOptionDialog(entry: TextRepositoryData) {
         val d = AlertDialog.Builder(this)
-            .setTitle("Options")
+            .setTitle(getString(R.string.options))
             // Passing null is required here because the dialog window doesn't exist yet
             .setView(LayoutInflater.from(this).inflate(R.layout.delete_dialog, null))
             .setPositiveButton(android.R.string.ok) { _, _ ->
