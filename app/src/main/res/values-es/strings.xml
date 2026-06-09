@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ad-free</string>
+    <string name="enjoy">disfruta de tu experiencia musical <b>sin anuncios</b></string>
+    <string name="chromecast_subtitle">requiere chromecast audio para anunciar la reproducción actual como notificación del sistema. mira la opción <u>permitir que otros controlen tu contenido multimedia enviado</u> en la aplicación google home (experimental).</string>
+    <string name="troubleshooting_text"><![CDATA[> resolución de problemas]]></string>
+    <string name="new_version_text"><![CDATA[> hay una nueva versión]]></string>
+    <string name="pager_description">Pantallas principales de la aplicación</string>
+    <string name="detector_title_placeholder"><![CDATA[> título]]></string>
+    <string name="detector_subtitle_placeholder">subtítulo</string>
+    <string name="mod_activity_title">cambia el funcionamiento interno de ad-free</string>
+    <string name="mod_adfree_title"><![CDATA[> ad-free]]></string>
+    <string name="mod_adfree_subtitle_enabled">activado</string>
+    <string name="mod_active_detectors_title"><![CDATA[> detectores de anuncios]]></string>
+    <string name="mod_active_detectors_subtitle">elige los detectores activos</string>
+    <string name="mod_delay_unmute_title"><![CDATA[> retraso al reactivar el audio]]></string>
+    <string name="mod_delay_unmute_subtitle">sin retraso</string>
+    <string name="mod_always_on_title"><![CDATA[> notificación permanente]]></string>
+    <string name="mod_always_on_subtitle">evita que el sistema Android cierre ad-free. déjalo desactivado a menos que tengas problemas.</string>
+    <string name="mod_google_cast_title"><![CDATA[> silencia el audio de chromecast]]></string>
+    <string name="mod_version_title"><![CDATA[> versión X.X]]></string>
+    <string name="local_music_audio_volume_title"><![CDATA[> volumen del audio]]></string>
+    <string name="local_music_audio_volume_subtitle">configura el volumen de reproducción</string>
+    <string name="local_music_directory_title"><![CDATA[> directorio de música]]></string>
+    <string name="local_music_directory_subtitle">directorio no configurado</string>
+    <string name="local_music_play_until_end_title"><![CDATA[> reproduce hasta el final]]></string>
+    <string name="local_music_play_until_end_subtitle">reproduce la música hasta el final antes de reactivar el anuncio</string>
+    <string name="local_music_loop_title"><![CDATA[> reproduce en bucle]]></string>
+    <string name="local_music_loop_subtitle">reproduce la música en bucle hasta que termine el anuncio</string>
+    <string name="textdetector_activity_title">El detector de texto marca una notificación basándose en la presencia de texto.</string>
+    <string name="det_add_entry_title"><![CDATA[> Añade una entrada]]></string>
+    <string name="det_add_entry_subtitle">Añade una nueva entrada para el detector de texto</string>
+    <string name="det_browse_help_title"><![CDATA[> Consulta la ayuda]]></string>
+    <string name="det_browse_help_subtitle">Consulta la página de ayuda para más información</string>
+    <string name="hint_package_name">nombre del paquete</string>
+    <string name="hint_line_separated_list">lista de textos separados por líneas</string>
+    <string name="desc_more_options">Más opciones</string>
+    <string name="desc_website">Visita el sitio web</string>
+    <string name="desc_twitter">Visita el perfil de Twitter</string>
+    <string name="settings_title">qué quieres hacer mientras se reproducen los anuncios</string>
+    <string name="desc_try_plugin">Prueba el complemento</string>
+    <string name="crash_title">ad-free ha fallado</string>
+    <string name="send_logs">enviar_registros_error</string>
+    <string name="delete_dialog_message">¿Quieres borrar la entrada?</string>
+    <string name="detectors_mask_title">los detectores encuentran anuncios. elige qué está activo.</string>
+    <string name="delay_unmute_description">cambia cuánto tiempo se mantiene silenciado el anuncio antes de continuar la reproducción</string>
+    <string name="delay_unmute_default_value">0 segundos</string>
+    <string name="detector_title_format">&gt; %s</string>
+    <string name="category_subtitle_format">configura los detectores para %s</string>
+    <string name="replacer_setting_item_name">nombre del elemento</string>
+    <string name="mod_active_detectors_count">elige los detectores activos (%1$d/%2$d)</string>
+    <plurals name="mod_seconds_format">
+        <item quantity="one">%1$d segundo</item>
+        <item quantity="many">%1$d segundos</item>
+        <item quantity="other">%1$d segundos</item>
+    </plurals>
+    <string name="mod_status_enabled">activado</string>
+    <string name="mod_status_disabled">desactivado</string>
+    <string name="mod_status_toast_enabled">ad-free activado</string>
+    <string name="mod_service_connected">el servicio de notificaciones está conectado</string>
+    <string name="mod_service_disconnected">el servicio de notificaciones está desconectado</string>
+    <string name="mod_version_format">&gt; versión %1$s / %2$d</string>
+    <string name="home_permission_required">toca aquí para dar permiso</string>
+    <string name="home_enjoy_adfree"><![CDATA[<font color="#FFFFFF">disfruta</font> de tu experiencia musical <font color="#FFFFFF">sin anuncios</font>.]]></string>
+    <string name="whoops_error_chosen_directory">Vaya, hay un error con el directorio elegido. Elige otro. %1$s</string>
+    <string name="error_no_music_found_directory">Vaya, no se ha encontrado música en el directorio de audio actual</string>
+    <string name="error_audio">Vaya, ha habido un error con el audio</string>
+    <string name="suggest_something">sugiere algo…</string>
+    <string name="categories_header_text"><![CDATA[los detectores <font color=#FFFFFF>encuentran anuncios</font>. elige qué está activo.]]></string>
+    <string name="options">Opciones</string>
+    <string name="delay_unmute"><![CDATA[> retraso al reactivar el audio]]></string>
+    <string name="trying_out_plugin">Probando el complemento</string>
+    <string name="mod_activity_header"><![CDATA[cambia el funcionamiento interno <font color=#FFFFFF>de ad-free</font>.]]></string>
+    <string name="local_music">música local</string>
+    <string name="mute_audio">silencia el audio</string>
+    <string name="ad_blocking_notification">Notificación de bloqueo de anuncios</string>
+    <string name="fine_tune_detectors_for_category"><![CDATA[ajusta los detectores para <font color=#FFFFFF>%1$s</font>.]]></string>
+    <string name="settings_ads_action_question"><![CDATA[¿qué quieres hacer mientras los <font color=#FFFFFF>anuncios </font>se están <font color=#FFFFFF>reproduciendo?</font>]]></string>
+</resources>
