@@ -48,9 +48,7 @@ class AboutActivity : Fragment(), AboutView {
 
         val textView = view.findViewById<TextView>(R.id.authorTitle)
         textView.typeface = typeFace
-        val text =
-            "built with much &lt;3 by <font color=#FFFFFF>abertschi</font>. " +
-                    "get my latest hacks and follow me on twitter."
+        val text = getString(R.string.about_author_message)
 
         textView.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)

@@ -76,4 +76,5 @@
     <string name="ad_blocking_notification">Notificación de bloqueo de anuncios</string>
     <string name="fine_tune_detectors_for_category"><![CDATA[ajusta los detectores para <font color=#FFFFFF>%1$s</font>.]]></string>
     <string name="settings_ads_action_question"><![CDATA[¿qué quieres hacer mientras los <font color=#FFFFFF>anuncios </font>se están <font color=#FFFFFF>reproduciendo?</font>]]></string>
+    <string name="about_author_message"><![CDATA[creado con mucho &lt;3 por <font color=#FFFFFF>abertschi</font>. descubre mis últimos hacks y sígueme en twitter.]]></string>
 </resources>
