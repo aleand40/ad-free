@@ -17,7 +17,7 @@ import ch.abertschi.adfree.plugin.PluginActivityAction
 interface SettingsView : PluginActivityAction {
 
     fun setActivePlugin(index: Int)
-    fun getContext(): Context
+    fun provideContext(): Context
     fun showSuggestNewPlugin()
     fun setPluginView(view: View)
     fun clearPluginView()

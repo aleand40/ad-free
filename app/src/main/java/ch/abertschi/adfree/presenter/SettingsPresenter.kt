@@ -46,7 +46,7 @@ class SettingsPresenter(
         settingView.clearPluginView()
         if (activePlugin?.hasSettingsView() == true) {
             settingView.setPluginView(
-                activePlugin?.settingsView(settingView.getContext(), settingView)!!
+                activePlugin?.settingsView(settingView.provideContext(), settingView)!!
             )
         }
     }
@@ -86,7 +86,7 @@ class SettingsPresenter(
     fun getStringEntriesOfModel(): Array<String> {
         val result: ArrayList<String> = ArrayList()
         plugins.forEach { result.add(it.title()) }
-        result.add(settingView.getContext().getString(R.string.suggest_something))
+        result.add(settingView.provideContext().getString(R.string.suggest_something))
         return result.toTypedArray()
     }
 }
