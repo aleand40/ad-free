@@ -67,16 +67,38 @@ class AccuradioDetector : AdDetectable, AppLogger, AbstractNotificationDetector(
 
     @Suppress("DEPRECATION")
     override fun flagAsAdvertisement(payload: AdPayload): Boolean {
-        // TODO: Support old deprecated fields
-        val contentView = payload.statusbarNotification.notification?.contentView
-        val bigView = payload.statusbarNotification.notification?.bigContentView
-        val tickerView = payload.statusbarNotification.notification?.tickerView
+        val notification = payload.statusbarNotification.notification ?: return false
+
+        // Modern API: check notification extras bundle
+        val extras = notification.extras
+        if (extras != null) {
+            val texts = listOf(
+                extras.getCharSequence("android.title"),
+                extras.getCharSequence("android.text"),
+                extras.getCharSequence("android.subText"),
+                extras.getCharSequence("android.bigText"),
+                extras.getCharSequence("android.ticker"),
+            )
+            for (text in texts) {
+                if (text?.toString()?.trim()?.lowercase(Locale.ROOT)
+                        ?.contains("music will resume shortly") == true
+                ) {
+                    return true
+                }
+            }
+        }
+
+        // Fallback: deprecated RemoteViews (pre-API 16 devices or older notification styles)
+        val contentView = notification.contentView
+        val bigView = notification.bigContentView
+        val tickerView = notification.tickerView
 
         for (v in listOf(contentView, bigView, tickerView)) {
             if (inspectContentViews(v)) {
                 return true
             }
         }
+
         return false
     }
 }
