@@ -22,8 +22,9 @@ fun getPath(context: Context, uri: Uri): String? {
                     val storageRoot = baseFolder?.substringBefore("/Android/data")
 
                     return if (storageRoot != null) "$storageRoot/${split[1]}" else null
+                } else {
+                    return "/storage/${split[0]}/${split[1]}"
                 }
-                // TODO handle non-primary volumes
             }
 
             isDownloadsDocument(uri) -> {
