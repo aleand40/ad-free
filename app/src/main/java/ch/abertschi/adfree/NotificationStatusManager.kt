@@ -27,6 +27,9 @@ class NotificationStatusManager(val context: Context) : AppLogger {
     fun notifyStatusChanged(s: ListenerStatus) {
         info { "Notification Listener Status Changed: $s" }
         lastStatus = s
+        if (s == ListenerStatus.CONNECTED) {
+            cancelTimedRestart()
+        }
         observers.forEach { it.onStatusChanged(s) }
     }
 
@@ -43,7 +46,12 @@ class NotificationStatusManager(val context: Context) : AppLogger {
     }
 
     fun forceTimedRestart() {
-        // TODO: option to remove timer once enabled?
+        if (getStatus() == ListenerStatus.CONNECTED) {
+            info { "Notification listener already connected, cancelling restart timer" }
+            cancelTimedRestart() // reutilitzem el mètode que ja tenim
+            return
+        }
+
         val serviceIntent = Intent(this.context, NotificationsListeners::class.java)
         val pendingIntent = PendingIntent.getService(
             this.context, 0, serviceIntent,
@@ -59,6 +67,18 @@ class NotificationStatusManager(val context: Context) : AppLogger {
             pendingIntent
         )
         info { "Setting wakeup with alarm manager every $TIMER_INTERVAL_MS ms" }
+    }
+
+    fun cancelTimedRestart() {
+        val serviceIntent = Intent(this.context, NotificationsListeners::class.java)
+        val pendingIntent = PendingIntent.getService(
+            this.context, 0, serviceIntent,
+            PendingIntent.FLAG_NO_CREATE or PendingIntent.FLAG_IMMUTABLE
+        )
+        pendingIntent?.let {
+            (context.getSystemService(Context.ALARM_SERVICE) as AlarmManager).cancel(it)
+            info { "Restart timer cancelled, listener is already connected." }
+        }
     }
 
     fun restartNotificationListener() {
