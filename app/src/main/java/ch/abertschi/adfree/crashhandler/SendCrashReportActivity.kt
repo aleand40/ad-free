@@ -56,9 +56,13 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AppLo
             val file = File(applicationContext.filesDir, safeLogfile)
             val log = file.readText()
             info { "sending report with $file $log" }
-            launchSendIntent(summary!!)
+
+            val fullMessage = "--- Crash Summary ---\n$summary\n\n--- Logcat Output ---\n$log"
+            launchSendIntent(fullMessage)
+
         } catch (e: Exception) {
             warn { e }
+            launchSendIntent(summary ?: "No summary available")
         }
     }
 
@@ -76,7 +80,6 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AppLo
         setupUI()
     }
 
-    // TODO: Send logcat output and summary
     private fun setupUI() {
         setContentView(R.layout.crash_view)
         setFinishOnTouchOutside(false)
