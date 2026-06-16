@@ -6,6 +6,7 @@
 
 package ch.abertschi.adfree.detector
 
+import android.app.Notification
 import ch.abertschi.adfree.model.TrackRepository
 import ch.abertschi.adfree.util.AppLogger
 import java.util.Locale
@@ -14,15 +15,12 @@ import java.util.Locale
  * AdDetectable that checks for the Keyword Spotify
  *
  * Created by abertschi on 15.04.17.
- *
- *
  */
-// TODO: add option to tag ads manually
 class SpotifyTitleDetector(val trackRepository: TrackRepository) :
     AbstractSpStatusBarDetector(), AppLogger {
 
     private val keywords = listOf(
-        "Spotify —", "Advertisement —"
+        "spotify —", "advertisement —"
     )
 
     override fun canHandle(payload: AdPayload): Boolean {
@@ -30,20 +28,26 @@ class SpotifyTitleDetector(val trackRepository: TrackRepository) :
         return super.canHandle(payload)
     }
 
-    override fun flagAsAdvertisement(payload: AdPayload): Boolean =
-        getTitle(payload).lowercase(Locale.ROOT).trim().run {
-            var isAdd = false
-            for (k in keywords) {
-                isAdd = isAdd || k.lowercase(Locale.ROOT) == this
-            }
-            isAdd
-        }
+    override fun flagAsAdvertisement(payload: AdPayload): Boolean {
+        val title = getTitle(payload).lowercase(Locale.ROOT).trim()
+        if (title.isEmpty()) return false
+
+        return keywords.any { title.contains(it) }
+    }
 
     override fun flagAsMusic(payload: AdPayload): Boolean =
-        getTitle(payload).let { trackRepository.getAllTracks().contains(it) }
+        trackRepository.getAllTracks().contains(getTitle(payload))
 
-    fun getTitle(payload: AdPayload): String =
-        payload.statusbarNotification.notification?.tickerText?.toString() ?: ""
+    fun getTitle(payload: AdPayload): String {
+        val notification = payload.statusbarNotification.notification ?: return ""
+
+        val titleFromExtras = notification.extras?.getCharSequence(Notification.EXTRA_TITLE)?.toString()
+        if (!titleFromExtras.isNullOrBlank()) {
+            return titleFromExtras
+        }
+
+        return notification.tickerText?.toString() ?: ""
+    }
 
     override fun getMeta(): AdDetectorMeta = AdDetectorMeta(
         "Notification text",
