@@ -17,12 +17,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.util.AppLogger
-import ch.abertschi.adfree.util.info
 import ch.abertschi.adfree.util.warn
-import java.io.File
 
-// TODO: refactor this into presenter and view
-class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AppLogger {
+class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AppLogger, CrashReportView {
 
     companion object {
         const val EXTRA_LOGFILE = "ch.abertschi.adfree.extra.logfile"
@@ -34,50 +31,21 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AppLo
     private var logfile: String? = null
     private var summary: String? = null
 
+    private lateinit var presenter: CrashReportPresenter
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        presenter = CrashReportPresenter(this, applicationContext)
+
         try {
-            parseIntent(this.intent)
-            doOnCreate()
+            logfile = intent?.extras?.getString(EXTRA_LOGFILE)
+            summary = intent?.extras?.getString(EXTRA_SUMMARY) ?: ""
+            setupUI()
         } catch (e: Exception) {
             warn(e)
-            Toast.makeText(this, "Error: $e", Toast.LENGTH_LONG).show()
+            showError("Error: $e")
         }
-    }
-
-    private fun parseIntent(i: Intent?) {
-        logfile = i?.extras?.getString(EXTRA_LOGFILE)
-        summary = i?.extras?.getString(EXTRA_SUMMARY) ?: ""
-    }
-
-    private fun sendReport() {
-        try {
-            val safeLogfile = logfile ?: return
-            val file = File(applicationContext.filesDir, safeLogfile)
-            val log = file.readText()
-            info { "sending report with $file $log" }
-
-            val fullMessage = "--- Crash Summary ---\n$summary\n\n--- Logcat Output ---\n$log"
-            launchSendIntent(fullMessage)
-
-        } catch (e: Exception) {
-            warn { e }
-            launchSendIntent(summary ?: "No summary available")
-        }
-    }
-
-    private fun launchSendIntent(msg: String) {
-        val sendIntent = Intent(Intent.ACTION_SEND)
-        sendIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(MAIL_ADDRESS))
-        sendIntent.putExtra(Intent.EXTRA_TEXT, msg)
-        sendIntent.putExtra(Intent.EXTRA_SUBJECT, SUBJECT)
-        sendIntent.type = "text/plain"
-        this.applicationContext
-            .startActivity(Intent.createChooser(sendIntent, "Choose an Email client"))
-    }
-
-    private fun doOnCreate() {
-        setupUI()
     }
 
     private fun setupUI() {
@@ -119,19 +87,21 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AppLo
         }
     }
 
+    override fun launchEmailClient(message: String) {
+        val sendIntent = Intent(Intent.ACTION_SEND)
+        sendIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf(MAIL_ADDRESS))
+        sendIntent.putExtra(Intent.EXTRA_TEXT, message)
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, SUBJECT)
+        sendIntent.type = "text/plain"
+        this.applicationContext
+            .startActivity(Intent.createChooser(sendIntent, "Choose an Email client"))
+    }
+
+    override fun showError(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
     override fun onClick(v: View) {
-        info { "clicking view for crashReport" }
-        logfile?.let {
-            try {
-                sendReport()
-            } catch (e: Exception) {
-                warn { "cant send crash report" }
-                warn { e }
-                e.printStackTrace()
-                Toast.makeText(this, "No crash report available.", Toast.LENGTH_LONG).show()
-            }
-        } ?: run {
-            Toast.makeText(this, "No crash report available.", Toast.LENGTH_LONG).show()
-        }
+        presenter.onSendCrashReportClicked(logfile, summary)
     }
 }
