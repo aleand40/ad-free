@@ -8,13 +8,12 @@ package ch.abertschi.adfree.crashhandler
 
 import android.content.Intent
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.warn
@@ -64,12 +63,7 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AppLo
                 "<font color=#FFFFFF>courage</font> to <font color=#FFFFFF>continue</font> that counts. -- " +
                 "Winston Churchill"
 
-        title.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            @Suppress("DEPRECATION")
-            Html.fromHtml(text)
-        }
+        title.text = androidx.core.text.HtmlCompat.fromHtml(text, FROM_HTML_MODE_LEGACY)
 
         val subtitle = findViewById<TextView>(R.id.debugSubtitle)
         subtitle.typeface = typeFace
@@ -79,12 +73,7 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AppLo
             "<font color=#FFFFFF>ad-free</font> crashed. be courageous and continue. " +
                     "send the <font color=#FFFFFF>crash report </font>. tab here, choose your mail application and send the report.</font>"
 
-        subtitle.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(subtitleText, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            @Suppress("DEPRECATION")
-            Html.fromHtml(subtitleText)
-        }
+        subtitle.text = androidx.core.text.HtmlCompat.fromHtml(subtitleText, FROM_HTML_MODE_LEGACY)
     }
 
     override fun launchEmailClient(message: String) {
