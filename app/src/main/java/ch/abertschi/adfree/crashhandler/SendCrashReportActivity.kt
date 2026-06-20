@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat
 import androidx.core.text.HtmlCompat.FROM_HTML_MODE_LEGACY
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.util.AppLogger
@@ -59,21 +60,15 @@ class SendCrashReportActivity : AppCompatActivity(), View.OnClickListener, AppLo
         title.typeface = typeFace
         title.setOnClickListener(this)
 
-        val text = "success is not final, failure is not fatal: it is the " +
-                "<font color=#FFFFFF>courage</font> to <font color=#FFFFFF>continue</font> that counts. -- " +
-                "Winston Churchill"
-
-        title.text = androidx.core.text.HtmlCompat.fromHtml(text, FROM_HTML_MODE_LEGACY)
+        val textQuote = getString(R.string.crash_title_quote)
+        title.text = HtmlCompat.fromHtml(textQuote, FROM_HTML_MODE_LEGACY)
 
         val subtitle = findViewById<TextView>(R.id.debugSubtitle)
         subtitle.typeface = typeFace
         subtitle.setOnClickListener(this)
 
-        val subtitleText =
-            "<font color=#FFFFFF>ad-free</font> crashed. be courageous and continue. " +
-                    "send the <font color=#FFFFFF>crash report </font>. tab here, choose your mail application and send the report.</font>"
-
-        subtitle.text = androidx.core.text.HtmlCompat.fromHtml(subtitleText, FROM_HTML_MODE_LEGACY)
+        val textSubtitle = getString(R.string.crash_subtitle_text)
+        subtitle.text = HtmlCompat.fromHtml(textSubtitle, FROM_HTML_MODE_LEGACY)
     }
 
     override fun launchEmailClient(message: String) {

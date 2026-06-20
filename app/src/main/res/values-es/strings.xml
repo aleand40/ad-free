@@ -77,4 +77,6 @@
     <string name="fine_tune_detectors_for_category"><![CDATA[ajusta los detectores para <font color=#FFFFFF>%1$s</font>.]]></string>
     <string name="settings_ads_action_question"><![CDATA[¿qué quieres hacer mientras los <font color=#FFFFFF>anuncios </font>se están <font color=#FFFFFF>reproduciendo?</font>]]></string>
     <string name="about_author_message"><![CDATA[creado con mucho &lt;3 por <font color=#FFFFFF>abertschi</font>. descubre mis últimos hacks y sígueme en twitter.]]></string>
+    <string name="crash_title_quote"><![CDATA[el éxito no es definitivo, el fracaso no es fatal: es el <font color=#FFFFFF>valor</font> para <font color=#FFFFFF>continuar</font> lo que cuenta. — Winston Churchill]]></string>
+    <string name="crash_subtitle_text"><![CDATA[<font color=#FFFFFF>ad-free</font> ha fallado. sé valiente y continúa. envía el <font color=#FFFFFF>informe de errores</font>. toca aquí, elige tu aplicación de correo y envía el informe.]]></string>
 </resources>
