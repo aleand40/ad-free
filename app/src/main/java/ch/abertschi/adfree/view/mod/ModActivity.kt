@@ -8,9 +8,7 @@ package ch.abertschi.adfree.view.mod
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.SeekBar
@@ -19,6 +17,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
 import androidx.core.net.toUri
+import androidx.core.text.HtmlCompat
 import ch.abertschi.adfree.AdFreeApplication
 import ch.abertschi.adfree.BuildConfig
 import ch.abertschi.adfree.R
@@ -45,12 +44,8 @@ class ModActivity : AppCompatActivity(), AppLogger {
         val textView = findViewById<TextView>(R.id.modTitle)
         val text = getString(R.string.mod_activity_header)
 
-        textView.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            @Suppress("DEPRECATION")
-            Html.fromHtml(text)
-        }
+
+        textView.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
         val factory = LayoutInflater.from(this)
 

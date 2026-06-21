@@ -2,7 +2,6 @@ package ch.abertschi.adfree.view.mod
 
 import android.os.Bundle
 import android.text.Editable
-import android.text.Html
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +12,7 @@ import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.text.HtmlCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ch.abertschi.adfree.R
@@ -31,13 +31,7 @@ class GenericTextDetectorActivity : AppCompatActivity(), AppLogger {
         val text =
             "the <font color=#FFFFFF>text detector</font> flags a notification based on the presence of text."
 
-        // Handle HTML parsing depending on the Android version to avoid deprecation warnings
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
-            textView.text = Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            @Suppress("DEPRECATION")
-            textView.text = Html.fromHtml(text)
-        }
+        textView.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
         findViewById<ScrollView>(R.id.mod_text_scroll).scrollTo(0, 0)
 

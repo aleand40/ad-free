@@ -9,15 +9,14 @@ package ch.abertschi.adfree.view.about
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.core.net.toUri
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.di.AboutModul
@@ -50,12 +49,7 @@ class AboutActivity : Fragment(), AboutView {
         textView.typeface = typeFace
         val text = getString(R.string.about_author_message)
 
-        textView.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            @Suppress("DEPRECATION")
-            Html.fromHtml(text)
-        }
+        textView.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
         view.findViewById<ImageView>(R.id.twitter).setOnClickListener {
             val browserIntent = Intent(

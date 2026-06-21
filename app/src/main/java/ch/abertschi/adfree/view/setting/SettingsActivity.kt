@@ -11,9 +11,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
-import android.os.Build
 import android.os.Bundle
-import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,6 +21,7 @@ import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
 import androidx.core.net.toUri
+import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import ch.abertschi.adfree.R
 import ch.abertschi.adfree.di.SettingsModul
@@ -86,12 +85,7 @@ class SettingsActivity : Fragment(), SettingsView, AppLogger, PluginActivityActi
         settingPresenter = SettingsModul(requireContext(), this).provideSettingsPresenter()
 
         val text = getString(R.string.settings_ads_action_question)
-        settingsTitle?.text = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Html.fromHtml(text, Html.FROM_HTML_MODE_LEGACY)
-        } else {
-            @Suppress("DEPRECATION")
-            Html.fromHtml(text)
-        }
+        settingsTitle?.text = HtmlCompat.fromHtml(text, HtmlCompat.FROM_HTML_MODE_LEGACY)
 
         spinner = view.findViewById(R.id.spinner)
         spinnerAdapter = PluginSpinnerAdapter(
