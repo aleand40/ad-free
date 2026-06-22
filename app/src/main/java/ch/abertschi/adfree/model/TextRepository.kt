@@ -1,8 +1,11 @@
+/*
+ * Ad Free
+ * Copyright (c) 2017 by abertschi, www.abertschi.ch
+ * See the file "LICENSE" for the full license governing this code.
+ */
+
 package ch.abertschi.adfree.model
 
-import android.content.Context
-import android.content.SharedPreferences
-import androidx.core.content.edit
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.info
 import com.thoughtworks.xstream.XStream
@@ -32,9 +35,10 @@ data class TextRepositoryData(
     }
 }
 
+class TextRepository(
+    private val prefsFactory: PreferencesFactory
+) : AppLogger {
 
-class TextRepository : AppLogger {
-    private val context: Context
     private val idKey: String = "k_"
     private val idKeys: String = "keys"
 
@@ -42,23 +46,17 @@ class TextRepository : AppLogger {
 
     private fun formatKey(id: String) = idKey + "_" + id
 
-    private var sharedPreferences: SharedPreferences
-
-    @Suppress("DEPRECATION")
-    constructor(context: Context, sharedPreferences: PreferencesFactory) {
-        this.context = context
-        this.sharedPreferences = sharedPreferences.getPreferences()
+    init {
         dataEntries = deserializeAllEntries()
     }
 
     private fun getKeys(): MutableSet<String> {
-        return sharedPreferences.getStringSet(idKeys, HashSet<String>())?.toMutableSet()
+        return prefsFactory.getStringSet(idKeys, HashSet())?.toMutableSet()
             ?: mutableSetOf()
     }
 
-
     private fun getEntryByFormattedKey(key: String): TextRepositoryData? {
-        val dataStr: String = sharedPreferences.getString(key, null) ?: return null
+        val dataStr: String = prefsFactory.getString(key, null) ?: return null
         return TextRepositoryData.deserializeFromString(dataStr)
     }
 
@@ -94,7 +92,7 @@ class TextRepository : AppLogger {
         val keys = getKeys()
         keys.add(key)
         setAllKeys(keys)
-        sharedPreferences.edit { putString(key, data.serializeToString()) }
+        prefsFactory.storeString(key, data.serializeToString())
     }
 
     fun removeEntry(data: TextRepositoryData) {
@@ -107,10 +105,10 @@ class TextRepository : AppLogger {
         val keys = getKeys()
         keys.remove(key)
         setAllKeys(keys)
-        sharedPreferences.edit { remove(key) }
+        prefsFactory.remove(key)
     }
 
     private fun setAllKeys(keys: Set<String>) {
-        sharedPreferences.edit { putStringSet(idKeys, keys) }
+        prefsFactory.storeStringSet(idKeys, keys)
     }
 }

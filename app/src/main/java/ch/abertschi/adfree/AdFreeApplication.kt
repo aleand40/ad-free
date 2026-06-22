@@ -49,7 +49,7 @@ class AdFreeApplication : Application(), AppLogger {
         }
 
         prefs = PreferencesFactory(applicationContext)
-        textRepository = TextRepository(this, prefs)
+        textRepository = TextRepository(prefs)
 
         googleCast = GoogleCastManager(prefs)
         notificationStatus = NotificationStatusManager(applicationContext)

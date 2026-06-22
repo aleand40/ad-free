@@ -34,7 +34,7 @@ class AdDetectableFactory(
 
     private var adDetectors: List<AdDetectable> = listOf(
         NotificationActionDetector(),
-        SpotifyTitleDetector(TrackRepository(this.context, prefs)),
+        SpotifyTitleDetector(TrackRepository(prefs)),
         NotificationBundleAndroidTextDetector(),
         MiuiNotificationDetector(),
         ScDetector(),

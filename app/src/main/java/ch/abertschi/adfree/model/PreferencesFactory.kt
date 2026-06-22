@@ -69,9 +69,6 @@ class PreferencesFactory(context: Context) : AppLogger {
     fun setLocalMusicDirectory(value: String) =
         prefs.edit { putString(prefsLocalMusic, value) }
 
-    @Deprecated("Don't use shared prefs outside this class anymore")
-    fun getPreferences(): SharedPreferences = prefs
-
     fun getActivePlugin(): String? {
         return prefs.getString(prefsActivePlugin, null)
     }
@@ -111,5 +108,16 @@ class PreferencesFactory(context: Context) : AppLogger {
 
     fun storeString(key: String, value: String) {
         prefs.edit { putString(key, value) }
+    }
+
+    fun getStringSet(key: String, defValues: Set<String>? = null): Set<String>? =
+        prefs.getStringSet(key, defValues)
+
+    fun storeStringSet(key: String, values: Set<String>) {
+        prefs.edit { putStringSet(key, values) }
+    }
+
+    fun remove(key: String) {
+        prefs.edit { remove(key) }
     }
 }
