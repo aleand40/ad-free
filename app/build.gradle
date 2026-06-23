@@ -10,12 +10,11 @@ android {
 
     defaultConfig {
         applicationId "ch.abertschi.adfree"
-        minSdk 23
+        minSdk 31
         targetSdk 37
         versionCode 42
         versionName "3.2"
-        testInstrumentationRunner "com.androidx.test.runner.AndroidJUnitRunner"
-        multiDexEnabled = true
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -24,11 +23,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
     sourceSets {
         main { res.srcDirs = ['src/main/res', 'src/main/values-large/'] }
     }
 
-    lintOptions {
+    lint {
         abortOnError = false
     }
 }
@@ -40,16 +40,12 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.7.1'
     implementation 'com.google.android.material:material:1.14.0'
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
 
     implementation 'com.github.kittinunf.fuel:fuel:2.3.1'
     implementation 'com.github.kittinunf.fuel:fuel-android:2.3.1'
-
     implementation 'com.github.bmoliveira:snake-yaml:v1.18-android'
-
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.21'
 
     implementation('com.thoughtworks.xstream:xstream:1.4.21') {
         exclude group: 'xmlpull', module: 'xmlpull'
