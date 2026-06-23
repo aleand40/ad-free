@@ -36,7 +36,6 @@ fun AppLogger.debug(message: Any?) {
     Log.d(loggerTag, message?.toString() ?: "null")
 }
 
-@Suppress("unused")
 inline fun AppLogger.error(message: () -> Any?) {
     Log.e(loggerTag, message()?.toString() ?: "null")
 }
