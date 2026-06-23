@@ -31,6 +31,7 @@ class AccuradioDetector : AdDetectable, AppLogger, AbstractNotificationDetector(
     }
 
 
+    @Suppress("unused")
     private fun inspectContentViews(contentView: RemoteViews?): Boolean {
         try {
             if (contentView != null) {
@@ -65,36 +66,23 @@ class AccuradioDetector : AdDetectable, AppLogger, AbstractNotificationDetector(
         return false
     }
 
-    @Suppress("DEPRECATION")
     override fun flagAsAdvertisement(payload: AdPayload): Boolean {
         val notification = payload.statusbarNotification.notification ?: return false
 
-        // Modern API: check notification extras bundle
-        val extras = notification.extras
-        if (extras != null) {
-            val texts = listOf(
-                extras.getCharSequence("android.title"),
-                extras.getCharSequence("android.text"),
-                extras.getCharSequence("android.subText"),
-                extras.getCharSequence("android.bigText"),
-                extras.getCharSequence("android.ticker"),
-            )
-            for (text in texts) {
-                if (text?.toString()?.trim()?.lowercase(Locale.ROOT)
-                        ?.contains("music will resume shortly") == true
-                ) {
-                    return true
-                }
-            }
-        }
+        val extras = notification.extras ?: return false
 
-        // Fallback: deprecated RemoteViews (pre-API 16 devices or older notification styles)
-        val contentView = notification.contentView
-        val bigView = notification.bigContentView
-        val tickerView = notification.tickerView
+        val texts = listOf(
+            extras.getCharSequence(android.app.Notification.EXTRA_TITLE),
+            extras.getCharSequence(android.app.Notification.EXTRA_TEXT),
+            extras.getCharSequence(android.app.Notification.EXTRA_SUB_TEXT),
+            extras.getCharSequence(android.app.Notification.EXTRA_BIG_TEXT),
+            notification.tickerText
+        )
 
-        for (v in listOf(contentView, bigView, tickerView)) {
-            if (inspectContentViews(v)) {
+        for (text in texts) {
+            if (text?.toString()?.trim()?.lowercase(Locale.ROOT)
+                    ?.contains("music will resume shortly") == true
+            ) {
                 return true
             }
         }
