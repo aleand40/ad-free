@@ -35,7 +35,6 @@ import ch.abertschi.adfree.view.ViewSettings
  * Created by abertschi on 21.04.17.
  */
 
-@Suppress("DEPRECATION")
 class SettingsActivity : Fragment(), SettingsView, AppLogger, PluginActivityAction {
 
     override fun activity(): Activity = requireActivity()
@@ -152,7 +151,7 @@ class SettingsActivity : Fragment(), SettingsView, AppLogger, PluginActivityActi
         requireContext().toast(getString(R.string.trying_out_plugin))
     }
 
-    @Deprecated("Deprecated in Java")
+    @Suppress("DEPRECATION") @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         callablesOnActivityResult.forEach { it(requestCode, resultCode, data) }
