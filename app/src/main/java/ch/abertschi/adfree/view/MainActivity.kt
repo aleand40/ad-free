@@ -7,7 +7,6 @@
 package ch.abertschi.adfree.view
 
 import android.os.Bundle
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
@@ -44,9 +43,6 @@ class MainActivity : FragmentActivity() {
 
         TabLayoutMediator(tabLayout, mPager!!) { _, _ ->
         }.attach()
-
-        @Suppress("DEPRECATION")
-        window.navigationBarColor = ContextCompat.getColor(this, R.color.colorBackground)
 
         val app = applicationContext as AdFreeApplication
         app.mainActivity = this
