@@ -6,7 +6,6 @@
 
 package ch.abertschi.adfree.plugin.localmusic
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -29,11 +28,14 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
 
     private lateinit var presenter: LocalMusicPlugin
 
-    @SuppressLint("InflateParams")
     fun onCreate(presenter: LocalMusicPlugin): View {
         this.presenter = presenter
+
+        val tempParent = android.widget.FrameLayout(context)
+
         val inflater = LayoutInflater.from(context)
-        viewInstance = inflater.inflate(R.layout.plugin_localmusic, null, false)
+        viewInstance = inflater.inflate(R.layout.plugin_localmusic, tempParent, false)
+
         setupUi()
         return viewInstance
     }
