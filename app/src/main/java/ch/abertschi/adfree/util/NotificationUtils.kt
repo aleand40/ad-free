@@ -8,8 +8,6 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import ch.abertschi.adfree.R
@@ -21,13 +19,6 @@ class NotificationUtils(val context: Context) : AppLogger {
     companion object {
         const val ACTION_DISMISS = "actionDismiss"
 
-        // Keeping these constants for potential future implementations
-        @Suppress("unused")
-        const val BLOCKING_NOTIFICATION_ID = 1
-
-        @Suppress("unused")
-        const val TEXT_NOTIFICATION_ID = 2
-
         const val CHANNEL_ID = "ad_channel"
 
         private val actionDismissCallables: ArrayList<() -> Unit> = ArrayList()
@@ -36,9 +27,7 @@ class NotificationUtils(val context: Context) : AppLogger {
     private val updateNotificationMap: MutableMap<Int, NotificationCompat.Builder> = HashMap()
 
     init {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            createChannel()
-        }
+        createChannel()
     }
 
     fun updateTextNotificationIfAvailable(id: Int, title: String? = null, content: String? = null) {
@@ -71,9 +60,7 @@ class NotificationUtils(val context: Context) : AppLogger {
             .setPriority(priority)
             .setContentIntent(dismissIntent)
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            builder.setSmallIcon(R.drawable.ic_icon_logo)
-        }
+        builder.setSmallIcon(R.drawable.ic_icon_logo)
         if (content != "") {
             builder.setContentText(content)
         }
@@ -98,7 +85,6 @@ class NotificationUtils(val context: Context) : AppLogger {
         manager.cancel(id)
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun createChannel() {
         val notificationManager = context
             .getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

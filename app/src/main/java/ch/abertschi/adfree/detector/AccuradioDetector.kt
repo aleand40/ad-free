@@ -1,8 +1,6 @@
 package ch.abertschi.adfree.detector
 
-import android.widget.RemoteViews
 import ch.abertschi.adfree.util.AppLogger
-import ch.abertschi.adfree.util.warn
 import java.util.Locale
 
 class AccuradioDetector : AdDetectable, AppLogger, AbstractNotificationDetector() {
@@ -17,54 +15,6 @@ class AccuradioDetector : AdDetectable, AppLogger, AbstractNotificationDetector(
         category = "Accuradio",
         debugOnly = false
     )
-
-
-    private fun extractObject(target: Any, declaredField: String): Any? {
-        return try {
-            val f = target.javaClass.getDeclaredField(declaredField) //NoSuchFieldException
-            f.isAccessible = true
-            return f.get(target)
-        } catch (e: Exception) {
-            warn("Can not access $declaredField with reflection, $e")
-            null
-        }
-    }
-
-
-    @Suppress("unused")
-    private fun inspectContentViews(contentView: RemoteViews?): Boolean {
-        try {
-            if (contentView != null) {
-                val actions = extractObject(contentView, "mActions") as List<*>?
-                if (actions != null) {
-                    for (a in actions) {
-                        if (a == null) {
-                            continue
-                        }
-                        val methodName: Any = extractObject(a, "methodName") ?: continue
-                        if (methodName !is CharSequence) {
-                            continue
-                        }
-                        if (methodName != "setText") {
-                            continue
-                        }
-                        val value: Any = extractObject(a, "value") ?: continue
-                        if (value !is CharSequence) {
-                            continue
-                        }
-                        if (value.toString().trim().lowercase(Locale.ROOT)
-                                .contains("music will resume shortly")
-                        ) {
-                            return true
-                        }
-                    }
-                }
-            }
-        } catch (e: Exception) {
-            warn(e)
-        }
-        return false
-    }
 
     override fun flagAsAdvertisement(payload: AdPayload): Boolean {
         val notification = payload.statusbarNotification.notification ?: return false
