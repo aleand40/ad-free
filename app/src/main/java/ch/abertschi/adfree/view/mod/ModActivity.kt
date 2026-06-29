@@ -6,11 +6,11 @@
 
 package ch.abertschi.adfree.view.mod
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
@@ -49,8 +49,8 @@ class ModActivity : AppCompatActivity(), AppLogger {
 
         val factory = LayoutInflater.from(this)
 
-        @SuppressLint("InflateParams")
-        delayLayout = factory.inflate(R.layout.mod_delay_unmute, null)
+        val parentRoot = findViewById<ViewGroup>(android.R.id.content)
+        delayLayout = factory.inflate(R.layout.mod_delay_unmute, parentRoot, false)
 
         enabledSwitch = findViewById(R.id.enableAdfreeSwitch)
 
