@@ -6,7 +6,6 @@
 
 package ch.abertschi.adfree.view.about
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Typeface
 import android.os.Bundle
@@ -38,7 +37,6 @@ class AboutActivity : Fragment(), AboutView {
         return inflater.inflate(R.layout.about_view, container, false)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         typeFace = ViewSettings.instance(this.requireContext()).typeFace
