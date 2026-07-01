@@ -1,6 +1,6 @@
 package ch.abertschi.adfree.util
 
-import android.annotation.SuppressLint
+import android.Manifest
 import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -8,19 +8,17 @@ import android.app.PendingIntent
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import ch.abertschi.adfree.R
 
-
-@SuppressLint("MissingPermission")
 class NotificationUtils(val context: Context) : AppLogger {
 
     companion object {
         const val ACTION_DISMISS = "actionDismiss"
-
         const val CHANNEL_ID = "ad_channel"
-
         private val actionDismissCallables: ArrayList<() -> Unit> = ArrayList()
     }
 
@@ -37,11 +35,13 @@ class NotificationUtils(val context: Context) : AppLogger {
             if (content != null) it.setContentText(content)
 
             val manager = NotificationManagerCompat.from(context)
-            manager.notify(id, builder.build())
+
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                manager.notify(id, builder.build())
+            }
         }
     }
 
-    @SuppressLint("LaunchActivityFromNotification")
     fun showTextNotification(
         id: Int, title: String, content: String = "",
         dismissCallable: () -> Unit = {},
@@ -54,11 +54,20 @@ class NotificationUtils(val context: Context) : AppLogger {
             PendingIntent.FLAG_ONE_SHOT or PendingIntent.FLAG_IMMUTABLE
         )
 
+        val openAppIntent = PendingIntent.getActivity(
+            context, 0,
+            Intent(context, ch.abertschi.adfree.view.MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            },
+            PendingIntent.FLAG_IMMUTABLE
+        )
+
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
             .setContentTitle(title)
             .setSmallIcon(R.mipmap.adfree_logo)
             .setPriority(priority)
-            .setContentIntent(dismissIntent)
+            .setContentIntent(openAppIntent)
+            .setDeleteIntent(dismissIntent)
 
         builder.setSmallIcon(R.drawable.ic_icon_logo)
         if (content != "") {
@@ -74,7 +83,9 @@ class NotificationUtils(val context: Context) : AppLogger {
 
         val manager = NotificationManagerCompat.from(context)
         if (notify) {
-            manager.notify(id, notification)
+            if (ContextCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+                manager.notify(id, notification)
+            }
         }
         return notification
     }
