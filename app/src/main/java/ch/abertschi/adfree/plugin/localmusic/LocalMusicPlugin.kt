@@ -227,6 +227,13 @@ class LocalMusicPlugin(
 
     private fun requestStoragePermissions() {
         val permission = getRequiredStoragePermission()
-        view?.action!!.activity().requestPermissions(arrayOf(permission), 2)
+
+        view?.action?.requestPermission(permission) { isGranted ->
+            if (isGranted) {
+                view?.showFolderSelectionDialog()
+            } else {
+                info("Storage permission denied by user")
+            }
+        }
     }
 }

@@ -6,7 +6,7 @@
 
 package ch.abertschi.adfree.view.setting
 
-    import android.app.Activity
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Typeface
@@ -19,6 +19,8 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Spinner
 import android.widget.TextView
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
@@ -29,10 +31,6 @@ import ch.abertschi.adfree.presenter.SettingsPresenter
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.toast
 import ch.abertschi.adfree.view.ViewSettings
-
-/**
- * Created by abertschi on 21.04.17.
- */
 
 class SettingsActivity : Fragment(), SettingsView, AppLogger, PluginActivityAction {
 
@@ -45,8 +43,24 @@ class SettingsActivity : Fragment(), SettingsView, AppLogger, PluginActivityActi
     private var pluginViewContainer: LinearLayout? = null
     private var spinnerAdapter: PluginSpinnerAdapter? = null
     private var init: Boolean = false
+
     private val callablesOnActivityResult:
             MutableList<(requestCode: Int, resultCode: Int, data: Intent?) -> Unit> = ArrayList()
+
+    private var currentRequestCode = 0
+
+    private val intentLauncher: ActivityResultLauncher<Intent> =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            callablesOnActivityResult.forEach {
+                it(currentRequestCode, result.resultCode, result.data)
+            }
+        }
+    private var permissionCallback: ((Boolean) -> Unit)? = null
+
+    private val permissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+        permissionCallback?.invoke(isGranted)
+        permissionCallback = null
+    }
 
     lateinit var settingPresenter: SettingsPresenter
 
@@ -66,7 +80,6 @@ class SettingsActivity : Fragment(), SettingsView, AppLogger, PluginActivityActi
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
         )
-        pluginViewContainer = rootView?.findViewById(R.id.setting_plugin_view)
         clearPluginView()
         pluginViewContainer?.addView(view)
     }
@@ -74,6 +87,8 @@ class SettingsActivity : Fragment(), SettingsView, AppLogger, PluginActivityActi
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.rootView = view
+
+        pluginViewContainer = view.findViewById(R.id.setting_plugin_view)
 
         typeFace = ViewSettings.instance(requireContext()).typeFace
         settingsTitle = view.findViewById(R.id.settingsTitle)
@@ -148,15 +163,21 @@ class SettingsActivity : Fragment(), SettingsView, AppLogger, PluginActivityActi
         requireContext().toast(getString(R.string.trying_out_plugin))
     }
 
-    @Suppress("DEPRECATION") @Deprecated("Deprecated in Java")
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        callablesOnActivityResult.forEach { it(requestCode, resultCode, data) }
+    override fun launchPluginIntent(intent: Intent?, requestCode: Int) {
+        if (intent != null) {
+            currentRequestCode = requestCode
+            intentLauncher.launch(intent)
+        }
     }
 
     override fun addOnActivityResult(
         callable: (requestCode: Int, resultCode: Int, data: Intent?) -> Unit
     ) {
         callablesOnActivityResult.add(callable)
+    }
+
+    override fun requestPermission(permission: String, onResult: (Boolean) -> Unit) {
+        permissionCallback = onResult
+        permissionLauncher.launch(permission)
     }
 }

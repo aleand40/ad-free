@@ -8,16 +8,17 @@ package ch.abertschi.adfree.plugin
 
 import android.app.Activity
 import android.content.Intent
-import android.os.Bundle
 
 /**
  * Created by abertschi on 30.08.17.
  */
 interface PluginActivityAction {
 
-    fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?)
+    fun launchPluginIntent(intent: Intent?, requestCode: Int)
 
     fun addOnActivityResult(callable: (requestCode: Int, resultCode: Int, data: Intent?) -> Unit)
 
     fun activity(): Activity
+
+    fun requestPermission(permission: String, onResult: (Boolean) -> Unit)
 }

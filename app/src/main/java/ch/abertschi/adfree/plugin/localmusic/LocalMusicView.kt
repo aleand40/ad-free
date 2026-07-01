@@ -8,7 +8,6 @@ package ch.abertschi.adfree.plugin.localmusic
 
 import android.content.Context
 import android.content.Intent
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.TextView
@@ -106,15 +105,16 @@ class LocalMusicView(val context: Context, val action: PluginActivityAction) : A
         val i = Intent(Intent.ACTION_OPEN_DOCUMENT_TREE)
         i.addCategory(Intent.CATEGORY_DEFAULT)
         val chooser = Intent.createChooser(i, "Choose directory")
-        startActivityForResult(chooser, LocalMusicPlugin.PICK_DIRECTORY, null)
+
+        launchPluginIntent(chooser, LocalMusicPlugin.PICK_DIRECTORY)
     }
 
     fun showFolderSelectionDialog() {
         showDirectoryChooser()
     }
 
-    fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
-        action.startActivityForResult(intent, requestCode, options)
+    fun launchPluginIntent(intent: Intent?, requestCode: Int) {
+        action.launchPluginIntent(intent, requestCode)
     }
 
     fun showErrorInChoosingDirectory(hint: String = "") {
