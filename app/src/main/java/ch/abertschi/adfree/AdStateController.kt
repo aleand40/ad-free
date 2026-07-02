@@ -14,12 +14,14 @@ import ch.abertschi.adfree.model.PreferencesFactory
 import ch.abertschi.adfree.plugin.PluginHandler
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.info
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
-
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import kotlin.time.Duration.Companion.milliseconds
+import kotlin.time.Duration.Companion.seconds
 
 /**
  * Created by abertschi on 14.08.17.
@@ -34,8 +36,11 @@ class AdStateController(
     AdObserver, AppLogger {
 
     private var activeState: EventType? = EventType.NO_AD
-    private val timeoutInMs: Long = 120_000
-    private var timeoutDisposable: Disposable? = null
+
+    private val timeout = 120_000.milliseconds
+
+    private val stateScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+    private var timeoutJob: Job? = null
 
     override fun onAdEvent(event: AdEvent, observable: AdObservable) {
         if (activeState != EventType.IS_AD && event.eventType == EventType.IS_AD) {
@@ -92,15 +97,13 @@ class AdStateController(
             }
         }
 
-        val delay = prefs.getDelaySeconds()
-        if (delay > 0) {
-            Observable.just(true)
-                .delay(delay.toLong(), TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread()).map {
-                    info("delaying unmute by $delay seconds")
-                    doUnmute()
-                }.subscribe()
+        val delaySeconds = prefs.getDelaySeconds()
+        if (delaySeconds > 0) {
+            stateScope.launch {
+                info("delaying unmute by $delaySeconds seconds")
+                delay(delaySeconds.seconds)
+                doUnmute()
+            }
         } else doUnmute()
     }
 
@@ -119,17 +122,13 @@ class AdStateController(
     }
 
     private fun startTimeout(callable: () -> Unit) {
-        timeoutDisposable = Observable.just(true)
-            .delay(timeoutInMs, TimeUnit.MILLISECONDS)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread()).map {
-                callable()
-            }.subscribe()
+        timeoutJob = stateScope.launch {
+            delay(timeout)
+            callable()
+        }
     }
 
     private fun resetTimeout() {
-        if (timeoutDisposable?.isDisposed == false) {
-            timeoutDisposable!!.dispose()
-        }
+        timeoutJob?.cancel()
     }
 }
