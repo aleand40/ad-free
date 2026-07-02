@@ -6,12 +6,10 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.os.Build
 import android.service.notification.NotificationListenerService
 import androidx.core.app.NotificationManagerCompat
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.info
-import ch.abertschi.adfree.util.warn
 
 private const val TIMER_INTERVAL_MS: Long = 60 * 1000
 
@@ -64,15 +62,12 @@ class NotificationStatusManager(val context: Context) : AppLogger {
     fun restartNotificationListener() {
         info { "restarting notification listener" }
         restartComponentService()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val componentName = ComponentName(
-                context.applicationContext,
-                NotificationsListeners::class.java
-            )
-            NotificationListenerService.requestRebind(componentName)
-        } else {
-            warn { "restart notification listener is not supported for current v. of android" }
-        }
+
+        val componentName = ComponentName(
+            context.applicationContext,
+            NotificationsListeners::class.java
+        )
+        NotificationListenerService.requestRebind(componentName)
     }
 
     private fun restartComponentService() {
