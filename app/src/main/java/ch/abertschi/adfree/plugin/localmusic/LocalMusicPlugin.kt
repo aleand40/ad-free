@@ -6,7 +6,6 @@
 
 package ch.abertschi.adfree.plugin.localmusic
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -24,12 +23,15 @@ import ch.abertschi.adfree.plugin.PluginActivityAction
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.error
 import ch.abertschi.adfree.util.info
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.io.File
 import java.util.LinkedList
-import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.seconds
 
 class LocalMusicPlugin(
     val context: Context,
@@ -40,6 +42,8 @@ class LocalMusicPlugin(
     private val supportedFileExt = listOf(".mp3", ".wav", ".m4a", ".flac", ".ogg", ".opus")
     private var view: LocalMusicView? = null
     private var player: AudioPlayer = AudioPlayer(context, prefs, audioController)
+
+    private val pluginScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     companion object {
         const val PICK_DIRECTORY = 100
@@ -57,7 +61,6 @@ class LocalMusicPlugin(
         return settingsView
     }
 
-    @SuppressLint("CheckResult")
     override fun play() {
         val file = getRandomTrackfromUri(prefs.getLocalMusicDirectory())
         info { file }
@@ -67,17 +70,18 @@ class LocalMusicPlugin(
             info { "playing " + file.absolutePath }
             val ad = context.applicationContext as AdFreeApplication
             val name = file.absolutePath.split("/").last()
+
             runAndCatchException {
                 player.play(file.absolutePath, prefs.getLoopMusicPlayback())
-                Observable.just(true).delay(1000, TimeUnit.MILLISECONDS)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread()).subscribe {
-                        val content = when (prefs.getPlayUntilEnd()) {
-                            true -> "playing until end - touch to stop"
-                            else -> "touch to unmute ad"
-                        }
-                        ad.notificationChannel.updateAdNotification(title = name, content = content)
+
+                pluginScope.launch {
+                    delay(1.seconds)
+                    val content = when (prefs.getPlayUntilEnd()) {
+                        true -> "playing until end - touch to stop"
+                        else -> "touch to unmute ad"
                     }
+                    ad.notificationChannel.updateAdNotification(title = name, content = content)
+                }
             }
         }
     }
@@ -99,6 +103,7 @@ class LocalMusicPlugin(
     }
 
     override fun onPluginDeactivated() {
+        pluginScope.cancel()
         forceStop {}
     }
 
@@ -209,9 +214,9 @@ class LocalMusicPlugin(
 
     private fun getRequiredStoragePermission(): String {
         return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.TIRAMISU) {
-            android.Manifest.permission.READ_MEDIA_AUDIO // Android 13+
+            android.Manifest.permission.READ_MEDIA_AUDIO // Android > 13
         } else {
-            android.Manifest.permission.READ_EXTERNAL_STORAGE // Android 12 i inferior
+            android.Manifest.permission.READ_EXTERNAL_STORAGE // Android <= 12
         }
     }
 

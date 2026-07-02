@@ -88,4 +88,9 @@ class HomeActivity : Fragment(), HomeView, AppLogger {
         setSloganText(getString(R.string.home_enjoy_adfree))
         enjoySloganText.setOnClickListener(null)
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        homePresenter.onDestroy()
+    }
 }

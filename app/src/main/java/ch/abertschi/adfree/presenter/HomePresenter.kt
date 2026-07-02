@@ -6,7 +6,6 @@
 
 package ch.abertschi.adfree.presenter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.provider.Settings
@@ -17,6 +16,11 @@ import ch.abertschi.adfree.model.RemoteSetting
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.info
 import ch.abertschi.adfree.view.home.HomeView
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.launch
 
 /**
  * Created by abertschi on 15.04.17.
@@ -29,12 +33,20 @@ class HomePresenter(
     private var isInit: Boolean = false
     private var remoteSetting: RemoteSetting? = null
 
-    @SuppressLint("CheckResult")
+    private val presenterScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+
     fun onCreate(context: Context) {
         isInit = true
         showPermissionRequiredIfNecessary(context)
-        remoteManager.getRemoteSettingsObservable()
-            .subscribe { onRemoteSettingUpdate(it) }
+
+        presenterScope.launch {
+            try {
+                val setting = remoteManager.getRemoteSettings()
+                onRemoteSettingUpdate(setting)
+            } catch (e: Exception) {
+                info { "Error fetching remote settings: ${e.message}" }
+            }
+        }
     }
 
     private fun onRemoteSettingUpdate(s: RemoteSetting) {
@@ -76,5 +88,9 @@ class HomePresenter(
         val url = "https://abertschi.github.io/ad-free/troubleshooting/troubleshooting.html"
         val browserIntent = Intent(Intent.ACTION_VIEW, url.toUri())
         this.homeView.startActivity(browserIntent)
+    }
+
+    fun onDestroy() {
+        presenterScope.cancel()
     }
 }

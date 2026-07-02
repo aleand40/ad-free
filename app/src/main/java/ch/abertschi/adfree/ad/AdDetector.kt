@@ -6,13 +6,17 @@
 
 package ch.abertschi.adfree.ad
 
-import android.annotation.SuppressLint
 import ch.abertschi.adfree.detector.AdDetectable
 import ch.abertschi.adfree.detector.AdPayload
 import ch.abertschi.adfree.model.AdDetectableFactory
 import ch.abertschi.adfree.model.RemoteManager
 import ch.abertschi.adfree.util.AppLogger
 import ch.abertschi.adfree.util.debug
+import ch.abertschi.adfree.util.info
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.launch
 
 /**
  * Created by abertschi on 13.08.17.
@@ -27,6 +31,8 @@ class AdDetector(
     private var _pendingEvent: AdEvent? = null
     private var go: Boolean = true
     private var init: Boolean = false
+
+    private val detectorScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
     fun applyDetectors(payload: AdPayload) {
         if (!go || !detectors.isAdfreeEnabled()) return
@@ -79,10 +85,15 @@ class AdDetector(
         }
     }
 
-    @SuppressLint("CheckResult")
     private fun fetchRemote() {
-        remoteManager.getRemoteSettingsObservable()
-            .subscribe { go = it.enabled }
+        detectorScope.launch {
+            try {
+                val settings = remoteManager.getRemoteSettings()
+                go = settings.enabled
+            } catch (e: Exception) {
+                info("Error fetching remote settings: ${e.message}")
+            }
+        }
     }
 
     fun notifyObservers(event: AdEvent) {

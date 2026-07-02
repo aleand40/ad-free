@@ -7,11 +7,11 @@
 package ch.abertschi.adfree.model
 
 import com.github.kittinunf.fuel.httpGet
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.suspendCancellableCoroutine
 import org.yaml.snakeyaml.Yaml
 import org.yaml.snakeyaml.representer.Representer
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 /**
  * Created by abertschi on 26.04.17.
@@ -25,25 +25,29 @@ class YamlRemoteConfigFactory<MODEL>(
     private val settingPersistenceLocalKey =
         "YAML_CONFIG_FACTORY_PERSISTENCE_${modelType.canonicalName}"
 
-    fun downloadObservable(): Observable<Pair<MODEL, String>> =
-        Observable.create<Pair<MODEL, String>> { source ->
-            downloadUrl.httpGet().responseString { _, _, result ->
-                val (data, error) = result
-                if (error == null) {
-                    try {
-                        val yaml = createYamlInstance()
-                        val model = yaml.loadAs(data, modelType)
-                        source.onNext(Pair(model, data ?: ""))
-                    } catch (exception: Exception) {
-                        source.onError(exception)
-                    }
-                } else {
-                    source.onError(error)
+    suspend fun download(): MODEL = suspendCancellableCoroutine { continuation ->
+
+        // 2. Fem la petició d'internet
+        val request = downloadUrl.httpGet().responseString { _, _, result ->
+            val (data, error) = result
+            if (error == null) {
+                try {
+                    val yaml = createYamlInstance()
+                    val model = yaml.loadAs(data, modelType)
+
+                    continuation.resume(model)
+                } catch (exception: Exception) {
+                    continuation.resumeWithException(exception)
                 }
-                source.onComplete()
+            } else {
+                continuation.resumeWithException(error)
             }
-        }.observeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        }
+
+        continuation.invokeOnCancellation {
+            request.cancel()
+        }
+    }
 
     fun loadFromLocalStore(defaultReturn: MODEL? = null): MODEL? {
         val yaml = createYamlInstance()
